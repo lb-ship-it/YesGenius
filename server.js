@@ -2,21 +2,23 @@ require('dotenv').config();
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-
-// Načtení Stripe (pokud je klíč v .env)
 const stripe = process.env.STRIPE_SECRET_KEY ? require('stripe')(process.env.STRIPE_SECRET_KEY) : null;
 
-const PORT = process.env.PORT || 3000;
-
-const server = http.createServer(async (req, res) => {
-    // CORS
+// Hlavní funkce (Handler)
+const handler = async (req, res) => {
+    // 1. Hlavičky (CORS)
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
     if (req.method === 'OPTIONS') { res.writeHead(204); res.end(); return; }
 
-    // Statické soubory
+    // 2. Získání URL (pro Stripe)
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const host = req.headers.host;
+    const fullUrl = `${protocol}://${host}`;
+
+    // 3. Cesta k souboru (Vercel vs Local)
     let filePath = path.join(__dirname, req.url === '/' ? 'index.html' : decodeURI(req.url.split('?')[0]));
     let extname = path.extname(filePath);
     let contentType = 'text/html';
@@ -29,52 +31,43 @@ const server = http.createServer(async (req, res) => {
         case '.js': contentType = 'text/javascript'; break;
     }
 
-    // --- 1. API: PLATBA (STRIPE) ---
+    // 4. API: PLATBA
     if (req.url === '/platba' && req.method === 'POST') {
         try {
-            if (!stripe) throw new Error("Stripe klíč chybí v .env");
-
-            // Vytvoření platební brány
+            if (!stripe) throw new Error("Chybí Stripe klíč");
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card'],
                 line_items: [{
                     price_data: {
                         currency: 'czk',
-                        product_data: { name: 'YES Genius - Lifetime License 👑' }, // Název produktu
-                        unit_amount: 19900, // Cena v haléřích (199.00 CZK)
+                        product_data: { name: 'YES Genius - Lifetime License 👑' },
+                        unit_amount: 19900, 
                     },
                     quantity: 1,
                 }],
                 mode: 'payment',
-                // Tady je ten trik: použijeme adresu, ze které uživatel přišel (PC nebo mobil)
-                success_url: `http://${req.headers.host}/?status=success`,
-                cancel_url: `http://${req.headers.host}/?status=canceled`,
+                success_url: `${fullUrl}/?status=success`,
+                cancel_url: `${fullUrl}/?status=canceled`,
             });
-
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ url: session.url }));
         } catch (e) {
-            console.error("Chyba platby:", e.message);
             res.writeHead(500, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ error: e.message }));
         }
         return;
     }
 
-    // --- 2. API: GENEROVÁNÍ (AI) ---
+    // 5. API: GENEROVÁNÍ
     if (req.url === '/generovat' && req.method === 'POST') {
         let body = '';
         req.on('data', chunk => body += chunk);
         req.on('end', async () => {
             try {
-                if (!process.env.GEMINI_API_KEY) throw new Error("Chybí GEMINI_API_KEY");
-                
+                if (!process.env.GEMINI_API_KEY) throw new Error("Chybí API Key");
                 const { format, adresat, kategorie, styl, jazyk } = JSON.parse(body);
-                console.log(`🤖 Generuji (${jazyk}): ${kategorie}`);
-
-                const prompt = `Jsi "Excuse Genius". Vymysli 3 RŮZNÉ varianty omluvy.
-                Jazyk: ${jazyk}. Typ: ${format}. Komu: ${adresat}. Důvod: ${kategorie}. Styl: ${styl}.
-                Odpověz POUZE jako JSON pole stringů.`;
+                
+                const prompt = `Jsi "Excuse Genius". Vymysli 3 RŮZNÉ varianty omluvy. Jazyk: ${jazyk}. Typ: ${format}. Komu: ${adresat}. Důvod: ${kategorie}. Styl: ${styl}. Odpověz POUZE jako JSON pole stringů.`;
 
                 const apiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
                     method: 'POST',
@@ -98,7 +91,7 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    // --- 3. STATICKÉ SOUBORY ---
+    // 6. Statické soubory
     fs.readFile(filePath, (err, content) => {
         if (err) {
             if (err.code == 'ENOENT') {
@@ -112,8 +105,14 @@ const server = http.createServer(async (req, res) => {
             res.end(content, 'utf-8');
         }
     });
-});
+};
 
-server.listen(PORT, () => {
-    console.log(`\n🚀 YES GENIUS BĚŽÍ! http://localhost:${PORT}`);
-});
+module.exports = handler;
+
+// Spuštění lokálně
+if (require.main === module) {
+    const PORT = process.env.PORT || 3000;
+    http.createServer(handler).listen(PORT, () => {
+        console.log(`🚀 Běží na http://localhost:${PORT}`);
+    });
+}
