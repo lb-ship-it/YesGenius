@@ -144,7 +144,7 @@
             <div class="header-text">
                 <h1 class="app-title">YES Genius</h1>
                 <p class="subtitle-main" id="sub1">Profesionální generátor omluv</p>
-                <p class="subtitle-sec" id="sub2">Tvůj rychlý rádce</br>v kapse!</p>
+                <p class="subtitle-sec" id="sub2">Tvůj rychlý rádce v kapse!</p>
             </div>
         </div>
         <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">☀️</button>
@@ -160,13 +160,13 @@
 
     <div>
         <label id="lbl-rec">👤 Komu?</label>
-        <input list="recipients-list" id="recipient" placeholder="..." onchange="updateSuggestions()">
+        <input list="recipients-list" id="recipient" placeholder="..." onchange="updateSuggestions()" onfocus="this.value=''">
         <datalist id="recipients-list"></datalist>
     </div>
 
     <div>
         <label id="lbl-rea">🤔 Důvod</label>
-        <input list="reasons-list" id="reason" placeholder="...">
+        <input list="reasons-list" id="reason" placeholder="..." onfocus="this.value=''">
         <datalist id="reasons-list"></datalist>
     </div>
 
@@ -202,7 +202,7 @@
         { code: "fil", name: "🇵🇭 Filipino" }, { code: "fa", name: "🇮🇷 Persian" }
     ];
 
-    // --- 2. KOMPLETNÍ PŘEKLADY + NOVÉ FUNKCE ---
+    // --- 2. KOMPLETNÍ PŘEKLADY ---
     const t = {
         cs: {
             sub1: "Profesionální generátor omluv", sub2: "Tvůj rychlý rádce v kapse!",
@@ -472,7 +472,7 @@
         updateSuggestions();
     }
 
-    // --- FIX: NAŠEPTÁVAČ DŮVODŮ ---
+    // --- NAŠEPTÁVAČ DŮVODŮ ---
     function updateSuggestions() {
         const l = LS.value; 
         const dict = t[l] || t['en_us'];
@@ -561,7 +561,7 @@
 
     function koupit() {
         // !!! ZDE VLOŽ SVŮJ STRIPE ODKAZ !!!
-        window.location.href = 'https://https://buy.stripe.com/cNieVegBL0GwaFM0jga7C02'; 
+        window.location.href = 'https://buy.stripe.com/cNieVegBL0GwaFM0jga7C02'; 
     }
 
     window.onload = function() {
@@ -579,4 +579,3 @@
 </script>
 </body>
 </html>
-
