@@ -108,7 +108,7 @@
             width: 100%; margin-top: 0.5rem; display: flex; justify-content: center; align-items: center; gap: 8px;
         }
 
-        /* VÝSLEDEK A TLAČÍTKA AKCÍ */
+        /* VÝSLEDEK A TLAČÍTKA */
         #vysledek { margin-top: 1rem; display: none; }
         .result-card {
             background: var(--input-bg);
@@ -118,14 +118,10 @@
             box-shadow: 0 2px 4px var(--shadow);
             display: flex; flex-direction: column; gap: 10px;
         }
-        
-        .result-text { margin-bottom: 5px; }
-
         .result-actions {
             display: flex; gap: 10px; justify-content: flex-end;
             padding-top: 8px; border-top: 1px solid var(--input-border);
         }
-
         .btn-action {
             background: transparent; border: 1px solid var(--input-border);
             color: var(--text); padding: 5px 12px; border-radius: 8px;
@@ -159,7 +155,7 @@
     <div>
         <label id="lbl-fmt">📨 Formát</label>
         <select id="format">
-            </select>
+             </select>
     </div>
 
     <div>
@@ -206,16 +202,21 @@
         { code: "fil", name: "🇵🇭 Filipino" }, { code: "fa", name: "🇮🇷 Persian" }
     ];
 
-    // --- 2. PŘEKLADY vč. Formátu a Tlačítek ---
+    // --- 2. KOMPLETNÍ PŘEKLADY + NOVÉ FUNKCE ---
     const t = {
         cs: {
             sub1: "Profesionální generátor omluv", sub2: "Tvůj rychlý rádce v kapse!",
-            lblRec: "👤 Komu?", lblRea: "🤔 Důvod", lblSty: "🎭 Styl", lblFmt: "📨 Formát", 
+            lblRec: "👤 Komu?", lblRea: "🤔 Důvod", lblSty: "🎭 Styl", lblFmt: "📨 Formát",
             btnGen: "Generovat", btnBuy: "👑 Koupit Licenci (455 Kč)", phRec: "Vyberte nebo napište...", phRea: "Např. zaspal jsem...",
             rec: ["Šéf", "Partner", "Učitel", "Klient", "Kamarád", "Rodina", "Tchýně", "Tchán"],
             sty: ["Profesionální", "Upřímná", "Kreativní", "Stručná", "Dramatická"],
-            fmt: ["SMS / Chat", "E-mail"],
-            act: ["Kopírovat", "Sdílet"]
+            fmt: ["SMS / Chat", "E-mail"], act: ["Kopírovat", "Sdílet"],
+            sug: { 
+                0: ["Zaspal jsem", "Nemoc", "Dopravní kolaps", "Rodinná nouze", "Migréna"], 
+                1: ["Zapomněl jsem", "Zdržení v práci", "Jsem unavený", "Nestíhám", "Promiň"], 
+                6: ["Zapomněli jsme na návštěvu", "Nestíháme oběd", "Musíme nečekaně pryč", "Děti onemocněly"],
+                7: ["Nestíhám pomoct", "Zdržení v práci", "Auto stávkuje", "Bolí mě záda"]
+            }
         },
         en_us: {
             sub1: "Professional AI Excuse Generator", sub2: "Your pocket advisor!",
@@ -223,20 +224,198 @@
             btnGen: "Generate", btnBuy: "👑 Buy License ($20)", phRec: "Select or type...", phRea: "E.g. Overslept...",
             rec: ["Boss", "Partner", "Teacher", "Client", "Friend", "Family", "Mother-in-law", "Father-in-law"],
             sty: ["Professional", "Sincere", "Creative", "Brief", "Dramatic"],
-            fmt: ["SMS / Chat", "Email"],
-            act: ["Copy", "Share"]
+            fmt: ["SMS / Chat", "Email"], act: ["Copy", "Share"],
+            sug: { 0: ["Overslept", "Sick leave", "Traffic jam", "Emergency"], 1: ["Forgot", "Late work", "Tired", "Running late"] }
         },
-        // Ostatní jazyky s fallbacky pro nové funkce (aby to nepadalo)
         de: {
             sub1: "Profi-Ausredengenerator", sub2: "Ihr Taschenberater!",
             lblRec: "👤 An wen?", lblRea: "🤔 Grund", lblSty: "🎭 Stil", lblFmt: "📨 Format",
-            btnGen: "Generieren", btnBuy: "👑 Lizenz kaufen (18€)", phRec: "Wählen...", phRea: "z.B. Verschlafen...",
+            btnGen: "Generieren", btnBuy: "👑 Lizenz kaufen (18€)", phRec: "Wählen oder tippen...", phRea: "z.B. Verschlafen...",
             rec: ["Chef", "Partner", "Lehrer", "Kunde", "Freund", "Familie", "Schwiegermutter", "Schwiegervater"],
             sty: ["Professionell", "Aufrichtig", "Kreativ", "Kurz", "Dramatisch"],
-            fmt: ["SMS / Chat", "E-Mail"], act: ["Kopieren", "Teilen"]
+            fmt: ["SMS / Chat", "E-Mail"], act: ["Kopieren", "Teilen"],
+            sug: { 0: ["Verschlafen", "Krankheit", "Stau"], 1: ["Vergessen", "Arbeit", "Müde"] }
         },
-        // Pro zkrácení zde používám generátor pro zbytek jazyků (v reálu sem patří kompletní slovníky z minula + nové klíče 'fmt' a 'act')
-        // Zde je zjednodušený fallback mechanismus v JS níže
+        uk: {
+            sub1: "Професійний генератор виправдань", sub2: "Ваш кишеньковий радник!",
+            lblRec: "👤 Кому?", lblRea: "🤔 Причина", lblSty: "🎭 Стиль", lblFmt: "📨 Формат",
+            btnGen: "Згенерувати", btnBuy: "👑 Купити ліцензію", phRec: "Виберіть або напишіть...", phRea: "Напр. проспав...",
+            rec: ["Бос", "Партнер", "Вчитель", "Клієнт", "Друг", "Сім'я", "Теща/Свекруха", "Тесть/Свекор"],
+            sty: ["Професійний", "Щирий", "Креативний", "Короткий", "Драматичний"],
+            fmt: ["SMS / Чат", "Email"], act: ["Копіювати", "Поділитися"],
+            sug: { 0: ["Проспав", "Хвороба", "Затори"], 1: ["Забув", "Робота", "Втомився"] }
+        },
+        sk: {
+            sub1: "Profesionálny generátor ospravedlnení", sub2: "Tvoj rýchly radca!",
+            lblRec: "👤 Komu?", lblRea: "🤔 Dôvod", lblSty: "🎭 Štýl", lblFmt: "📨 Formát",
+            btnGen: "Generovať", btnBuy: "👑 Kúpiť licenciu (18€)", phRec: "Vyberte alebo napíšte...", phRea: "Napr. zaspal som...",
+            rec: ["Šéf", "Partner", "Učiteľ", "Klient", "Kamarát", "Rodina", "Svokra", "Svokor"],
+            sty: ["Profesionálny", "Úprimný", "Kreatívny", "Stručný", "Dramatický"],
+            fmt: ["SMS / Chat", "E-mail"], act: ["Kopírovať", "Zdieľať"],
+            sug: { 0: ["Zaspal som", "Choroba", "Zápcha"], 1: ["Zabudol som", "Práca", "Únava"] }
+        },
+        pl: {
+            sub1: "Profesjonalny generator wymówek", sub2: "Twój kieszonkowy doradca!",
+            lblRec: "👤 Do kogo?", lblRea: "🤔 Powód", lblSty: "🎭 Styl", lblFmt: "📨 Format",
+            btnGen: "Generuj", btnBuy: "👑 Kup licencję", phRec: "Wybierz lub wpisz...", phRea: "Np. zaspałem...",
+            rec: ["Szef", "Partner", "Nauczyciel", "Klient", "Przyjaciel", "Rodzina", "Teściowa", "Teść"],
+            sty: ["Profesjonalny", "Szczery", "Kreatywny", "Zwięzły", "Dramatyczny"],
+            fmt: ["SMS / Czat", "Email"], act: ["Kopiuj", "Udostępnij"],
+            sug: { 0: ["Zaspałem", "Choroba", "Korki"], 1: ["Zapomniałem", "Praca", "Zmęczony"] }
+        },
+        ru: {
+            sub1: "Генератор оправданий", sub2: "Ваш карманный советник!",
+            lblRec: "👤 Кому?", lblRea: "🤔 Причина", lblSty: "🎭 Стиль", lblFmt: "📨 Формат",
+            btnGen: "Создать", btnBuy: "👑 Купить лицензию", phRec: "Выберите или введите...", phRea: "Напр. проспал...",
+            rec: ["Босс", "Партнер", "Учитель", "Клиент", "Друг", "Семья", "Теща/Свекровь", "Тесть/Свекр"],
+            sty: ["Профессиональный", "Искренний", "Креативный", "Краткий", "Драматичный"],
+            fmt: ["SMS / Чат", "Email"], act: ["Копировать", "Поделиться"],
+            sug: { 0: ["Проспал", "Болезнь", "Пробки"], 1: ["Забыл", "Работа", "Устал"] }
+        },
+        fr: {
+            sub1: "Générateur d'excuses", sub2: "Votre conseiller de poche!",
+            lblRec: "👤 À qui ?", lblRea: "🤔 Raison", lblSty: "🎭 Style", lblFmt: "📨 Format",
+            btnGen: "Générer", btnBuy: "👑 Acheter la licence", phRec: "Sélectionnez ou tapez...", phRea: "Ex. Trop dormi...",
+            rec: ["Patron", "Partenaire", "Professeur", "Client", "Ami", "Famille", "Belle-mère", "Beau-père"],
+            sty: ["Professionnel", "Sincère", "Créatif", "Bref", "Dramatique"],
+            fmt: ["SMS / Chat", "E-mail"], act: ["Copier", "Partager"],
+            sug: { 0: ["Trop dormi", "Malade", "Trafic"], 1: ["Oublié", "Travail", "Fatigué"] }
+        },
+        es: {
+            sub1: "Generador de excusas", sub2: "¡Tu asesor de bolsillo!",
+            lblRec: "👤 ¿A quién?", lblRea: "🤔 Razón", lblSty: "🎭 Estilo", lblFmt: "📨 Formato",
+            btnGen: "Generar", btnBuy: "👑 Comprar licencia", phRec: "Selecciona o escribe...", phRea: "Ej. Me quedé dormido...",
+            rec: ["Jefe", "Pareja", "Profesor", "Cliente", "Amigo", "Familia", "Suegra", "Suegro"],
+            sty: ["Profesional", "Sincero", "Creativo", "Breve", "Dramático"],
+            fmt: ["SMS / Chat", "Email"], act: ["Copiar", "Compartir"],
+            sug: { 0: ["Dormido", "Enfermo", "Tráfico"], 1: ["Olvidé", "Trabajo", "Cansado"] }
+        },
+        it: {
+            sub1: "Generatore di scuse", sub2: "Il tuo consulente tascabile!",
+            lblRec: "👤 A chi?", lblRea: "🤔 Motivo", lblSty: "🎭 Stile", lblFmt: "📨 Formato",
+            btnGen: "Generare", btnBuy: "👑 Compra licenza", phRec: "Seleziona o scrivi...", phRea: "Es. Ho dormito troppo...",
+            rec: ["Capo", "Partner", "Insegnante", "Cliente", "Amico", "Famiglia", "Suocera", "Suocero"],
+            sty: ["Professionale", "Sincero", "Creativo", "Breve", "Drammatico"],
+            fmt: ["SMS / Chat", "Email"], act: ["Copia", "Condividi"],
+            sug: { 0: ["Dormito troppo", "Malato", "Traffico"], 1: ["Dimenticato", "Lavoro", "Stanco"] }
+        },
+        pt: {
+            sub1: "Gerador de desculpas", sub2: "Seu consultor de bolso!",
+            lblRec: "👤 Para quem?", lblRea: "🤔 Razão", lblSty: "🎭 Estilo", lblFmt: "📨 Formato",
+            btnGen: "Gerar", btnBuy: "👑 Comprar licença", phRec: "Selecione ou digite...", phRea: "Ex. Dormi demais...",
+            rec: ["Chefe", "Parceiro", "Professor", "Cliente", "Amigo", "Família", "Sogra", "Sogro"],
+            sty: ["Profissional", "Sincero", "Criativo", "Breve", "Dramático"],
+            fmt: ["SMS / Chat", "Email"], act: ["Copiar", "Partilhar"],
+            sug: { 0: ["Dormi demais", "Doente", "Trânsito"], 1: ["Esqueci", "Trabalho", "Cansado"] }
+        },
+        zh: {
+            sub1: "专业借口生成器", sub2: "您的袖珍顾问！",
+            lblRec: "👤 给谁？", lblRea: "🤔 原因", lblSty: "🎭 风格", lblFmt: "📨 格式",
+            btnGen: "生成", btnBuy: "👑 购买许可证", phRec: "选择或输入...", phRea: "例如：睡过头了...",
+            rec: ["老板", "伴侣", "老师", "客户", "朋友", "家人", "岳母/婆婆", "岳父/公公"],
+            sty: ["专业", "真诚", "创意", "简洁", "戏剧性"],
+            fmt: ["短信 / 聊天", "邮件"], act: ["复制", "分享"],
+            sug: { 0: ["睡过头", "生病", "堵车"], 1: ["忘了", "加班", "太累"] }
+        },
+        ja: {
+            sub1: "プロの言い訳ジェネレーター", sub2: "あなたのポケットアドバイザー！",
+            lblRec: "👤 誰に？", lblRea: "🤔 理由", lblSty: "🎭 スタイル", lblFmt: "📨 フォーマット",
+            btnGen: "生成", btnBuy: "👑 ライセンス購入", phRec: "選択または入力...", phRea: "例：寝坊しました...",
+            rec: ["上司", "パートナー", "先生", "クライアント", "友達", "家族", "義母", "義父"],
+            sty: ["プロフェッショナル", "誠実", "クリエイティブ", "簡潔", "ドラマチック"],
+            fmt: ["SMS / チャット", "メール"], act: ["コピー", "共有"],
+            sug: { 0: ["寝坊", "病気", "渋滞"], 1: ["忘れた", "仕事", "疲れた"] }
+        },
+        ko: {
+            sub1: "전문 변명 생성기", sub2: "당신의 주머니 조언자!",
+            lblRec: "👤 누구에게?", lblRea: "🤔 이유", lblSty: "🎭 스타일", lblFmt: "📨 형식",
+            btnGen: "생성", btnBuy: "👑 라이센스 구매", phRec: "선택하거나 입력...", phRea: "예: 늦잠...",
+            rec: ["상사", "파트너", "선생님", "고객", "친구", "가족", "장모/시어머니", "장인/시아버지"],
+            sty: ["전문적", "진심", "창의적", "간결", "드라마틱"],
+            fmt: ["SMS / 채팅", "이메일"], act: ["복사", "공유"],
+            sug: { 0: ["늦잠", "아픔", "교통체증"], 1: ["깜빡함", "야근", "피곤"] }
+        },
+        tr: {
+            sub1: "Profesyonel Bahane Üretici", sub2: "Cep danışmanınız!",
+            lblRec: "👤 Kime?", lblRea: "🤔 Sebep", lblSty: "🎭 Tarz", lblFmt: "📨 Biçim",
+            btnGen: "Oluştur", btnBuy: "👑 Lisans Satın Al", phRec: "Seçin veya yazın...", phRea: "Örn. Uyuyakaldım...",
+            rec: ["Patron", "Partner", "Öğretmen", "Müşteri", "Arkadaş", "Aile", "Kayınvalide", "Kayınpeder"],
+            sty: ["Profesyonel", "Samimi", "Yaratıcı", "Kısa", "Dramatik"],
+            fmt: ["SMS / Sohbet", "E-posta"], act: ["Kopyala", "Paylaş"],
+            sug: { 0: ["Uyuyakaldım", "Hasta", "Trafik"], 1: ["Unuttum", "İş", "Yorgun"] }
+        },
+        vi: {
+            sub1: "Trình tạo lời bào chữa", sub2: "Cố vấn bỏ túi của bạn!",
+            lblRec: "👤 Cho ai?", lblRea: "🤔 Lý do", lblSty: "🎭 Phong cách", lblFmt: "📨 Định dạng",
+            btnGen: "Tạo", btnBuy: "👑 Mua giấy phép", phRec: "Chọn hoặc nhập...", phRea: "Vd: Ngủ quên...",
+            rec: ["Sếp", "Người yêu", "Giáo viên", "Khách hàng", "Bạn bè", "Gia đình", "Mẹ vợ/chồng", "Bố vợ/chồng"],
+            sty: ["Chuyên nghiệp", "Chân thành", "Sáng tạo", "Ngắn gọn", "Kịch tính"],
+            fmt: ["SMS / Chat", "Email"], act: ["Sao chép", "Chia sẻ"],
+            sug: { 0: ["Ngủ quên", "Ốm", "Kẹt xe"], 1: ["Quên", "Công việc", "Mệt"] }
+        },
+        ar: {
+            sub1: "مولد الأعذار الاحترافي", sub2: "مستشارك الخاص!",
+            lblRec: "👤 لمن؟", lblRea: "🤔 السبب", lblSty: "🎭 الأسلوب", lblFmt: "📨 التنسيق",
+            btnGen: "توليد", btnBuy: "👑 شراء الترخيص", phRec: "اختر أو اكتب...", phRea: "مثال: نمت طويلاً...",
+            rec: ["المدير", "الشريك", "المعلم", "العميل", "صديق", "العائلة", "الحماة", "الحمو"],
+            sty: ["مهني", "صادق", "إبداعي", "موجز", "درامي"],
+            fmt: ["رسالة نصية", "بريد إلكتروني"], act: ["نسخ", "مشاركة"],
+            sug: { 0: ["نمت طويلاً", "مريض", "ازدحام"], 1: ["نسيت", "عمل", "تعب"] }
+        },
+        hi: {
+            sub1: "पेशेवर बहाना जनरेटर", sub2: "आपका पॉकेट सलाहकार!",
+            lblRec: "👤 किसे?", lblRea: "🤔 कारण", lblSty: "🎭 शैली", lblFmt: "📨 प्रारूप",
+            btnGen: "उत्पन्न करें", btnBuy: "👑 लाइसेंस खरीदें", phRec: "चुनें या टाइप करें...", phRea: "जैसे: देर तक सो गया...",
+            rec: ["बॉस", "साथी", "शिक्षक", "ग्राहक", "दोस्त", "परिवार", "सास", "ससुर"],
+            sty: ["पेशेवर", "ईमानदार", "रचनात्मक", "संक्षिप्त", "नाटकीय"],
+            fmt: ["SMS / चैट", "ईमेल"], act: ["कॉपी", "शेयर"],
+            sug: { 0: ["देर तक सोया", "बीमार", "ट्रैफिक"], 1: ["भूल गया", "काम", "थका हुआ"] }
+        },
+        th: {
+            sub1: "เครื่องมือสร้างข้อแก้ตัว", sub2: "ที่ปรึกษาส่วนตัวของคุณ!",
+            lblRec: "👤 ถึงใคร?", lblRea: "🤔 เหตุผล", lblSty: "🎭 สไตล์", lblFmt: "📨 รูปแบบ",
+            btnGen: "สร้าง", btnBuy: "👑 ซื้อใบอนุญาต", phRec: "เลือกหรือพิมพ์...", phRea: "เช่น ตื่นสาย...",
+            rec: ["เจ้านาย", "แฟน", "ครู", "ลูกค้า", "เพื่อน", "ครอบครัว", "แม่ยาย", "พ่อตา"],
+            sty: ["เป็นมืออาชีพ", "จริงใจ", "สร้างสรรค์", "สั้นกระชับ", "ดราม่า"],
+            fmt: ["SMS / แชท", "อีเมล"], act: ["คัดลอก", "แชร์"],
+            sug: { 0: ["ตื่นสาย", "ป่วย", "รถติด"], 1: ["ลืม", "งานยุ่ง", "เหนื่อย"] }
+        },
+        id: {
+            sub1: "Pembuat Alasan Profesional", sub2: "Penasihat saku Anda!",
+            lblRec: "👤 Kepada siapa?", lblRea: "🤔 Alasan", lblSty: "🎭 Gaya", lblFmt: "📨 Format",
+            btnGen: "Buat", btnBuy: "👑 Beli Lisensi", phRec: "Pilih atau ketik...", phRea: "Cth. Ketiduran...",
+            rec: ["Bos", "Pasangan", "Guru", "Klien", "Teman", "Keluarga", "Ibu mertua", "Ayah mertua"],
+            sty: ["Profesional", "Tulus", "Kreatif", "Singkat", "Dramatis"],
+            fmt: ["SMS / Chat", "Email"], act: ["Salin", "Bagikan"],
+            sug: { 0: ["Ketiduran", "Sakit", "Macet"], 1: ["Lupa", "Kerja", "Lelah"] }
+        },
+        bn: {
+            sub1: "পেশাদার অজুহাত জেনারেটর", sub2: "আপনার পকেট উপদেষ্টা!",
+            lblRec: "👤 কাকে?", lblRea: "🤔 কারণ", lblSty: "🎭 ধরণ", lblFmt: "📨 বিন্যাস",
+            btnGen: "তৈরি করুন", btnBuy: "👑 লাইসেন্স কিনুন", phRec: "বাছুন বা লিখুন...", phRea: "যেমন: ঘুম থেকে উঠতে দেরি...",
+            rec: ["বস", "সঙ্গী", "শিক্ষক", "ক্লায়েন্ট", "বন্ধু", "পরিবার", "শাশুড়ি", "শ্বশুর"],
+            sty: ["পেশাদার", "আন্তরিক", "সৃজনশীল", "সংক্ষিপ্ত", "নাটকীয়"],
+            fmt: ["SMS / চ্যাট", "ইমেল"], act: ["কপি", "শেয়ার"],
+            sug: { 0: ["দেরি হয়েছে", "অসুস্থ", "ট্রাফিক"], 1: ["ভুলে গেছি", "কাজ", "ক্লান্ত"] }
+        },
+        fil: {
+            sub1: "Professional Excuse Generator", sub2: "Ang iyong pocket advisor!",
+            lblRec: "👤 Kanino?", lblRea: "🤔 Dahilan", lblSty: "🎭 Estilo", lblFmt: "📨 Format",
+            btnGen: "Bumuo", btnBuy: "👑 Bumili ng Lisensya", phRec: "Pumili o mag-type...", phRea: "Hal. Nakatulog...",
+            rec: ["Boss", "Partner", "Guro", "Kliyente", "Kaibigan", "Pamilya", "Biyenan (Babae)", "Biyenan (Lalaki)"],
+            sty: ["Propesyonal", "Taos-puso", "Malikhain", "Maikli", "Madrama"],
+            fmt: ["SMS / Chat", "Email"], act: ["Kopyahin", "Ibahagi"],
+            sug: { 0: ["Nakatulog", "May sakit", "Trapik"], 1: ["Nakalimutan", "Trabaho", "Pagod"] }
+        },
+        fa: {
+            sub1: "تولید کننده بهانه حرفه‌ای", sub2: "مشاور جیبی شما!",
+            lblRec: "👤 به چه کسی؟", lblRea: "🤔 دلیل", lblSty: "🎭 سبک", lblFmt: "📨 فرمت",
+            btnGen: "تولید کنید", btnBuy: "👑 خرید لایسنس", phRec: "انتخاب کنید یا بنویسید...", phRea: "مثال: خواب ماندم...",
+            rec: ["رئیس", "همسر", "معلم", "مشتری", "دوست", "خانواده", "مادر زن/شوهر", "پدر زن/شوهر"],
+            sty: ["حرفه‌ای", "صادقانه", "خلاقانه", "مختصر", "دراماتیک"],
+            fmt: ["پیامک / چت", "ایمیل"], act: ["کپی", "اشتراک"],
+            sug: { 0: ["خواب ماندم", "بیمار", "ترافیک"], 1: ["فراموش کردم", "کار", "خسته"] }
+        }
     };
 
     // --- LOGIKA A FUNKCE ---
@@ -259,10 +438,7 @@
 
     function changeLanguage() {
         const l = LS.value;
-        // Fallback na EN, pokud chybí překlad
-        let dict = t[l] || t['en_us']; 
-        
-        // Bezpečné načtení textů (pokud chybí v daném jazyce, vezme EN)
+        const dict = t[l] || t['en_us']; 
         const getVal = (key) => dict[key] || t['en_us'][key];
 
         document.getElementById('sub1').innerText = getVal('sub1');
@@ -270,7 +446,7 @@
         document.getElementById('lbl-rec').innerText = getVal('lblRec');
         document.getElementById('lbl-rea').innerText = getVal('lblRea');
         document.getElementById('lbl-sty').innerText = getVal('lblSty');
-        document.getElementById('lbl-fmt').innerText = getVal('lblFmt') || "📨 Format"; // Nové
+        document.getElementById('lbl-fmt').innerText = getVal('lblFmt') || "📨 Format";
         document.getElementById('btn-text').innerText = "YES " + getVal('btnGen');
         document.getElementById('btn-buy').querySelector('span').innerText = getVal('btnBuy');
         document.getElementById('recipient').placeholder = getVal('phRec');
@@ -279,30 +455,45 @@
         // Aktualizace seznamu 'Komu'
         const recList = document.getElementById('recipients-list');
         recList.innerHTML = "";
-        (getVal('rec')).forEach(txt => { const o = document.createElement('option'); o.value = txt; recList.appendChild(o); });
+        getVal('rec').forEach(txt => { const o = document.createElement('option'); o.value = txt; recList.appendChild(o); });
 
         // Aktualizace 'Styl'
         const stySel = document.getElementById('style');
         stySel.innerHTML = "";
-        (getVal('sty')).forEach(txt => { const o = document.createElement('option'); o.value = txt; o.text = txt; stySel.add(o); });
+        getVal('sty').forEach(txt => { const o = document.createElement('option'); o.value = txt; o.text = txt; stySel.add(o); });
 
-        // Aktualizace 'Formát' (NOVÉ)
+        // Aktualizace 'Formát'
         const fmtSel = document.getElementById('format');
         const fmtOpts = getVal('fmt') || ["SMS / Chat", "Email"];
         fmtSel.innerHTML = "";
         const smsOpt = document.createElement('option'); smsOpt.value = "sms"; smsOpt.text = fmtOpts[0]; fmtSel.add(smsOpt);
         const emailOpt = document.createElement('option'); emailOpt.value = "email"; emailOpt.text = fmtOpts[1]; fmtSel.add(emailOpt);
 
-        // Reset inputs
-        document.getElementById('recipient').value = "";
-        document.getElementById('reason').value = "";
+        updateSuggestions();
     }
 
+    // --- FIX: NAŠEPTÁVAČ DŮVODŮ ---
     function updateSuggestions() {
+        const l = LS.value; 
+        const dict = t[l] || t['en_us'];
+        const recipientsList = dict.rec || t['en_us'].rec;
+        const inputVal = document.getElementById('recipient').value;
+        
+        // Zjistíme index vybraného příjemce
+        const index = recipientsList.indexOf(inputVal);
+        
+        // Fallback důvody
+        let suggestions = ["Nestíhám", "Nemoc", "Zácpa", "Rodina"];
+        if (l === 'en_us' || !t[l]) suggestions = ["Running late", "Sick", "Traffic", "Family"];
+
+        // Pokud najdeme shodu v 'sug' pro daný jazyk
+        if (index > -1 && dict.sug && dict.sug[index]) {
+            suggestions = dict.sug[index];
+        }
+
         const dl = document.getElementById('reasons-list');
-        dl.innerHTML = '';
-        const commonReasons = ["Nestíhám / Late", "Nemoc / Sick", "Zácpa / Traffic", "Rodina / Family"];
-        commonReasons.forEach(s => { const o = document.createElement('option'); o.value = s; dl.appendChild(o); });
+        dl.innerHTML = ''; 
+        suggestions.forEach(s => { const o = document.createElement('option'); o.value = s; dl.appendChild(o); });
     }
 
     // --- COPY & SHARE FUNKCE ---
@@ -312,21 +503,14 @@
             const originalText = btn.innerHTML;
             btn.innerHTML = "✅ OK";
             setTimeout(() => btn.innerHTML = originalText, 1500);
-        } catch (err) {
-            alert("Error copying text");
-        }
+        } catch (err) { alert("Error copying text"); }
     }
 
     async function shareText(text) {
         if (navigator.share) {
-            try {
-                await navigator.share({
-                    title: 'YES Genius Excuse',
-                    text: text
-                });
-            } catch (err) { console.log('Share closed'); }
+            try { await navigator.share({ title: 'YES Genius Excuse', text: text }); } 
+            catch (err) { console.log('Share closed'); }
         } else {
-            // Fallback pro PC
             copyText(event.target, text);
             alert("Sharing not supported on this device. Text copied!");
         }
@@ -349,44 +533,35 @@
                     adresat: document.getElementById('recipient').value || "Neznámý",
                     kategorie: document.getElementById('reason').value || "Důvod neuveden",
                     styl: document.getElementById('style').value,
-                    format: document.getElementById('format').value // Odesíláme vybraný formát
+                    format: document.getElementById('format').value
                 })
             });
             const data = await res.json();
             
-            // Načtení popisků pro tlačítka
             const l = LS.value;
             const dict = t[l] || t['en_us'];
             const labels = dict.act || ["Copy", "Share"];
 
-            // Vykreslení výsledků s tlačítky
             document.getElementById('results-container').innerHTML = data.variants.map(v => {
-                // Escapování uvozovek pro JS onclick
                 const safeText = v.replace(/'/g, "\\'").replace(/"/g, '&quot;');
                 return `
                 <div class="result-card">
                     <div class="result-text">${v}</div>
                     <div class="result-actions">
-                        <button class="btn-action" onclick="copyText(this, '${safeText}')">
-                            📋 ${labels[0]}
-                        </button>
-                        <button class="btn-action" onclick="shareText('${safeText}')">
-                            🔗 ${labels[1]}
-                        </button>
+                        <button class="btn-action" onclick="copyText(this, '${safeText}')">📋 ${labels[0]}</button>
+                        <button class="btn-action" onclick="shareText('${safeText}')">🔗 ${labels[1]}</button>
                     </div>
                 </div>`;
             }).join('');
             
             document.getElementById('vysledek').style.display = 'block';
-        } catch (e) { 
-            alert("Connection Error / Chyba spojení"); 
-        }
+        } catch (e) { alert("Connection Error / Chyba spojení"); }
         bt.style.display = 'block'; ld.style.display = 'none';
     }
 
     function koupit() {
         // !!! ZDE VLOŽ SVŮJ STRIPE ODKAZ !!!
-        window.location.href = 'https://buy.stripe.com/cNieVegBL0GwaFM0jga7C02'; 
+        window.location.href = 'https://https://buy.stripe.com/cNieVegBL0GwaFM0jga7C02'; 
     }
 
     window.onload = function() {
@@ -404,4 +579,3 @@
 </script>
 </body>
 </html>
-
