@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>YES Genius | Professional Excuse Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -19,37 +21,37 @@
                 --bg-gradient: linear-gradient(135deg, #4c1d95 0%, #065f46 100%);
             }
         }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; transition: all 0.2s ease; }
         body { font-family: 'Outfit', sans-serif; background: var(--bg-gradient); background-attachment: fixed; margin: 0; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 1rem; color: var(--text); }
         
-        .glass-panel { background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 1.8rem; width: 100%; max-width: 500px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3); display: flex; flex-direction: column; gap: 1rem; }
+        .glass-panel { background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 1.5rem; width: 100%; max-width: 500px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3); display: flex; flex-direction: column; gap: 0.8rem; }
 
-        /* OPRAVA HLAVIČKY - LOGO VLEVO, TEXT VPRAVO */
+        /* HLAVIČKA */
         .header-row { display: flex; align-items: center; gap: 15px; margin-bottom: 5px; }
-        .logo { width: 65px; height: auto; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1)); }
+        .logo { width: 60px; height: auto; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1)); cursor: pointer; }
         .header-text { display: flex; flex-direction: column; justify-content: center; text-align: left; }
-        .app-title { margin: 0; font-weight: 800; font-size: 1.5rem; line-height: 1.2; background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .subtitle-main { font-size: 0.85rem; font-weight: 600; opacity: 0.9; margin: 2px 0 0 0; line-height: 1.2; }
-        .subtitle-sec { font-size: 0.75rem; opacity: 0.7; margin: 0; }
+        .app-title { margin: 0; font-weight: 800; font-size: 1.4rem; line-height: 1.2; background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle-main { font-size: 0.8rem; font-weight: 600; opacity: 0.9; margin: 2px 0 0 0; }
+        .subtitle-sec { font-size: 0.7rem; opacity: 0.7; margin: 0; }
 
-        label { font-weight: 600; font-size: 0.8rem; margin-left: 0.5rem; opacity: 0.9; margin-bottom: 0.2rem; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+        label { font-weight: 700; font-size: 0.75rem; margin-left: 0.5rem; opacity: 0.8; margin-bottom: 0.2rem; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        /* INPUTY A SELECTY */
-        select, input { width: 100%; padding: 0.9rem; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255, 255, 255, 0.5); font-size: 1rem; color: var(--text); outline: none; appearance: none; font-family: inherit; }
+        /* INPUTY - FIX ČITELNOSTI */
+        select, input { width: 100%; padding: 0.8rem; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255, 255, 255, 0.5); font-size: 1rem; color: var(--text); outline: none; appearance: none; font-family: inherit; }
         @media (prefers-color-scheme: dark) { select, input { background: rgba(0, 0, 0, 0.3); border-color: rgba(255,255,255,0.1); } }
         
-        /* !!! OPRAVA ČITELNOSTI ROLETEK !!! */
-        select option { background-color: #ffffff; color: #000000; }
+        /* TOTO OPRAVUJE BÍLÉ PÍSMO NA BÍLÉM POZADÍ */
+        select option { background-color: #ffffff; color: #000000; } 
         @media (prefers-color-scheme: dark) { select option { background-color: #1f2937; color: #ffffff; } }
 
-        .btn-main { background: linear-gradient(90deg, var(--primary), #7c3aed); color: white; font-weight: 800; border: none; padding: 1.1rem; border-radius: 14px; cursor: pointer; font-size: 1.1rem; width: 100%; box-shadow: 0 10px 20px -5px rgba(124, 58, 237, 0.4); margin-top: 0.5rem; text-transform: uppercase; }
-        .btn-main:active { transform: scale(0.98); }
+        .btn-main { background: linear-gradient(90deg, var(--primary), #7c3aed); color: white; font-weight: 800; border: none; padding: 1rem; border-radius: 14px; cursor: pointer; font-size: 1.1rem; width: 100%; box-shadow: 0 10px 20px -5px rgba(124, 58, 237, 0.4); margin-top: 0.5rem; text-transform: uppercase; }
+        .btn-main:active { transform: scale(0.97); }
         
-        .btn-vip { background: #10b981; color: white; font-weight: 700; border: none; padding: 0.8rem; border-radius: 12px; cursor: pointer; font-size: 0.95rem; width: 100%; margin-top: 1rem; }
+        .btn-vip { background: #10b981; color: white; font-weight: 700; border: none; padding: 0.8rem; border-radius: 12px; cursor: pointer; font-size: 0.9rem; width: 100%; margin-top: 0.5rem; display: flex; justify-content: center; align-items: center; gap: 5px; }
 
         #vysledek { margin-top: 1rem; display: none; }
-        .result-card { background: rgba(255,255,255,0.5); padding: 1rem; border-radius: 10px; margin-bottom: 0.8rem; border-left: 4px solid var(--primary); font-weight: 500; }
-        @media (prefers-color-scheme: dark) { .result-card { background: rgba(0,0,0,0.3); } }
+        .result-card { background: rgba(255,255,255,0.6); padding: 1rem; border-radius: 10px; margin-bottom: 0.5rem; border-left: 4px solid var(--primary); font-weight: 500; font-size: 0.95rem; }
+        @media (prefers-color-scheme: dark) { .result-card { background: rgba(0,0,0,0.4); } }
         
         .loader { border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top: 3px solid white; width: 20px; height: 20px; animation: spin 0.8s linear infinite; display: none; margin: 0 auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -62,25 +64,17 @@
         <img src="logo.png" alt="Logo" class="logo" onclick="location.reload()">
         <div class="header-text">
             <h1 class="app-title">YES Genius</h1>
-            <p class="subtitle-main" id="sub1">Profesionální generátor omluv s AI.</p>
+            <p class="subtitle-main" id="sub1">Profesionální generátor omluv</p>
             <p class="subtitle-sec" id="sub2">Tvůj rychlý rádce v kapse!</p>
         </div>
     </div>
 
-    <select id="language-select" onchange="changeLanguage()" style="padding: 0.6rem; font-size: 0.9rem; margin-bottom: 0.5rem;"></select>
+    <select id="language-select" onchange="changeLanguage()" style="margin-bottom: 0.5rem; font-weight: bold;"></select>
 
     <div>
         <label id="lbl-rec">👤 Komu?</label>
         <select id="recipient" onchange="updateSuggestions()">
-            <option value="boss">Šéf / Nadřízený</option>
-            <option value="partner">Partner / Partnerka</option>
-            <option value="teacher">Učitel / Profesor</option>
-            <option value="client">Klient / Zákazník</option>
-            <option value="friend">Kamarád</option>
-            <option value="family">Rodina</option>
-            <option value="motherinlaw">Tchýně</option>
-            <option value="fatherinlaw">Tchán</option>
-        </select>
+            </select>
     </div>
 
     <div>
@@ -92,11 +86,11 @@
     <div>
         <label id="lbl-sty">🎭 Styl</label>
         <select id="style">
-            <option value="professional">Profesionální</option>
-            <option value="sincere">Upřímná</option>
-            <option value="creative">Kreativní</option>
-            <option value="brief">Stručná</option>
-            <option value="dramatic">Dramatická</option>
+            <option value="Profesionální">Profesionální</option>
+            <option value="Upřímná">Upřímná</option>
+            <option value="Kreativní">Kreativní</option>
+            <option value="Stručná">Stručná</option>
+            <option value="Dramatická">Dramatická</option>
         </select>
     </div>
 
@@ -110,15 +104,15 @@
     </div>
 
     <button class="btn-vip" onclick="koupit()" id="btn-buy">
-        <span>👑 Koupit Doživotní Licenci (455 Kč)</span>
+        <span>👑 Koupit Licenci (455 Kč)</span>
     </button>
 </div>
 
 <script>
-    // --- JAZYKY ---
+    // --- KOMPLETNÍ SEZNAM JAZYKŮ ---
     const languages = [
-        { code: "cs", name: "🇨🇿 Čeština" }, { code: "en_us", name: "🇺🇸 English" }, { code: "de", name: "🇩🇪 Deutsch" },
-        { code: "sk", name: "🇸🇰 Slovenčina" }, { code: "pl", name: "🇵🇱 Polski" }, { code: "uk", name: "🇺🇦 Українська" },
+        { code: "cs", name: "🇨🇿 Čeština" }, { code: "en_us", name: "🇺🇸 English (US)" }, { code: "uk", name: "🇺🇦 Українська" },
+        { code: "de", name: "🇩🇪 Deutsch" }, { code: "sk", name: "🇸🇰 Slovenčina" }, { code: "pl", name: "🇵🇱 Polski" },
         { code: "ru", name: "🇷🇺 Русский" }, { code: "fr", name: "🇫🇷 Français" }, { code: "es", name: "🇪🇸 Español" },
         { code: "it", name: "🇮🇹 Italiano" }, { code: "pt", name: "🇵🇹 Português" }, { code: "zh", name: "🇨🇳 中文" },
         { code: "ja", name: "🇯🇵 日本語" }, { code: "ko", name: "🇰🇷 한국어" }, { code: "vi", name: "🇻🇳 Tiếng Việt" },
@@ -127,62 +121,97 @@
         { code: "fil", name: "🇵🇭 Filipino" }, { code: "fa", name: "🇮🇷 Persian" }
     ];
 
+    // --- SLOVNÍK PŘEKLADŮ (CS a EN plně, zbytek fallback) ---
     const t = {
         cs: {
-            sub1: "Profesionální generátor omluv s AI.", sub2: "Tvůj rychlý rádce v kapse!",
+            sub1: "Profesionální generátor omluv", sub2: "Tvůj rychlý rádce v kapse!",
             lblRec: "👤 Komu?", lblRea: "🤔 Důvod", lblSty: "🎭 Styl",
             btnGen: "Generovat", btnBuy: "👑 Koupit Licenci (455 Kč)", phRea: "Např. zaspal jsem...",
             rec: ["Šéf", "Partner", "Učitel", "Klient", "Kamarád", "Rodina", "Tchýně", "Tchán"],
-            sug: { boss: ["Zaspal jsem", "Nemoc", "Dopravní kolaps"], partner: ["Zapomněl jsem", "Zdržení v práci"], motherinlaw: ["Zapomněli jsme na návštěvu", "Nestíháme oběd"], fatherinlaw: ["Nestíhám pomoct", "Auto stávkuje"] }
+            sty: ["Profesionální", "Upřímná", "Kreativní", "Stručná", "Dramatická"],
+            sug: { 
+                0: ["Zaspal jsem", "Nemoc", "Dopravní kolaps", "Rodinná nouze", "Migréna"], 
+                1: ["Zapomněl jsem", "Zdržení v práci", "Jsem unavený", "Nestíhám", "Promiň"], 
+                6: ["Zapomněli jsme na návštěvu", "Nestíháme oběd", "Musíme nečekaně pryč", "Děti onemocněly", "Auto stávkuje"],
+                7: ["Nestíhám pomoct", "Zdržení v práci", "Auto stávkuje", "Bolí mě záda", "Musím do práce"]
+            }
         },
         en_us: {
-            sub1: "Professional AI Excuse Generator.", sub2: "Your pocket advisor!",
+            sub1: "Professional AI Excuse Generator", sub2: "Your pocket advisor!",
             lblRec: "👤 To Whom?", lblRea: "🤔 Reason", lblSty: "🎭 Style",
-            btnGen: "Generate", btnBuy: "👑 Buy License ($20)", phRea: "E.g. Overslept...",
+            btnGen: "Generate", btnBuy: "👑 Buy License (455 CZK)", phRea: "E.g. Overslept...",
             rec: ["Boss", "Partner", "Teacher", "Client", "Friend", "Family", "Mother-in-law", "Father-in-law"],
-            sug: { boss: ["Overslept", "Sick leave"], partner: ["Forgot", "Stuck at work"], motherinlaw: ["Forgot visit", "Late"], fatherinlaw: ["Can't help", "Car issue"] }
+            sty: ["Professional", "Sincere", "Creative", "Brief", "Dramatic"],
+            sug: { 0: ["Overslept", "Sick leave", "Traffic jam", "Emergency", "Car issues"], 1: ["Forgot", "Late work", "Tired", "Running late", "Sorry"] }
         },
         de: {
-            sub1: "Profi-Ausredengenerator.", sub2: "Ihr Taschenberater!",
+            sub1: "Profi-Ausredengenerator", sub2: "Ihr Taschenberater!",
             lblRec: "👤 An wen?", lblRea: "🤔 Grund", lblSty: "🎭 Stil",
             btnGen: "Generieren", btnBuy: "👑 Lizenz kaufen (18€)", phRea: "z.B. Verschlafen...",
-            rec: ["Chef", "Partner", "Lehrer", "Kunde", "Freund", "Familie", "Schwiegermutter", "Schwiegervater"]
+            rec: ["Chef", "Partner", "Lehrer", "Kunde", "Freund", "Familie", "Schwiegermutter", "Schwiegervater"],
+            sty: ["Professionell", "Aufrichtig", "Kreativ", "Kurz", "Dramatisch"]
         }
     };
 
-    function getT(lang, key) { return (t[lang] && t[lang][key]) ? t[lang][key] : t['en_us'][key]; }
+    function getT(lang, key) { 
+        // Pokud nemáme přesný překlad, použijeme angličtinu, ale název jazyka zůstane
+        return (t[lang] && t[lang][key]) ? t[lang][key] : t['en_us'][key]; 
+    }
 
+    // Inicializace
     const LS = document.getElementById('language-select');
     languages.forEach(l => { const o = document.createElement('option'); o.value = l.code; o.innerText = l.name; LS.appendChild(o); });
 
     function changeLanguage() {
         const l = LS.value;
-        document.getElementById('sub1').innerText = getT(l, 'sub1');
-        document.getElementById('sub2').innerText = getT(l, 'sub2');
-        document.getElementById('lbl-rec').innerText = getT(l, 'lblRec');
-        document.getElementById('lbl-rea').innerText = getT(l, 'lblRea');
-        document.getElementById('lbl-sty').innerText = getT(l, 'lblSty');
-        document.getElementById('btn-text').innerText = "YES " + getT(l, 'btnGen');
-        document.getElementById('btn-buy').querySelector('span').innerText = getT(l, 'btnBuy');
-        document.getElementById('reason').placeholder = getT(l, 'phRea');
+        const dict = t[l] || t['en_us']; // Vybere slovník nebo EN fallback
         
-        const recList = getT(l, 'rec');
-        const recSelect = document.getElementById('recipient');
-        Array.from(recSelect.options).forEach((opt, i) => { if(recList[i]) opt.text = recList[i]; });
+        document.getElementById('sub1').innerText = dict.sub1 || t['en_us'].sub1;
+        document.getElementById('sub2').innerText = dict.sub2 || t['en_us'].sub2;
+        document.getElementById('lbl-rec').innerText = dict.lblRec || "👤";
+        document.getElementById('lbl-rea').innerText = dict.lblRea || "🤔";
+        document.getElementById('lbl-sty').innerText = dict.lblSty || "🎭";
+        document.getElementById('btn-text').innerText = "YES " + (dict.btnGen || "Generate");
+        document.getElementById('btn-buy').querySelector('span').innerText = dict.btnBuy || "Buy License";
+        document.getElementById('reason').placeholder = dict.phRea || "...";
         
+        // Aktualizace roletek (zachová index, změní text)
+        const recSel = document.getElementById('recipient');
+        const stySel = document.getElementById('style');
+        const savedRec = recSel.selectedIndex;
+        
+        // Vyčistit a naplnit Komu
+        recSel.innerHTML = "";
+        (dict.rec || t['en_us'].rec).forEach((txt, i) => {
+            const o = document.createElement('option'); o.value = i; o.text = txt; recSel.add(o);
+        });
+        recSel.selectedIndex = savedRec > -1 ? savedRec : 0;
+
+        // Vyčistit a naplnit Styl
+        const savedSty = stySel.selectedIndex;
+        stySel.innerHTML = "";
+        (dict.sty || t['en_us'].sty).forEach((txt) => {
+            const o = document.createElement('option'); o.value = txt; o.text = txt; stySel.add(o);
+        });
+        stySel.selectedIndex = savedSty > -1 ? savedSty : 0;
+
         updateSuggestions();
     }
 
     function updateSuggestions() {
-        const l = LS.value; const val = document.getElementById('recipient').value;
-        const tr = t[l] || t['en_us'];
-        const sug = tr.sug?.[val] || ["Nestíhám", "Nemoc", "Osobní důvody"];
+        const l = LS.value; 
+        const recIdx = document.getElementById('recipient').value; // Bere index (0 = Boss, 6 = Tchýně)
+        const dict = t[l] || t['en_us'];
+        
+        // Získá návrhy pro danou osobu, nebo fallback
+        const suggestions = dict.sug?.[recIdx] || (t['en_us'].sug?.[recIdx] || ["Nestíhám", "Nemoc", "Osobní důvody", "Zácpa", "Rodina"]);
+        
         const dl = document.getElementById('reasons-list');
         dl.innerHTML = ''; 
-        sug.forEach(s => { const o = document.createElement('option'); o.value = s; dl.appendChild(o); });
+        suggestions.forEach(s => { const o = document.createElement('option'); o.value = s; dl.appendChild(o); });
     }
 
-    // --- LOGIKA 3 KLIKNUTÍ ---
+    // --- LOGIKA 3 KLIKNUTÍ A GENERACE ---
     let clicks = 0;
 
     async function generuj() {
@@ -196,31 +225,33 @@
         bt.style.display = 'none'; ld.style.display = 'block'; document.getElementById('vysledek').style.display = 'none';
 
         try {
-            // VOLÁNÍ API SKRZE vercel.json PŘESMĚROVÁNÍ
+            // Voláme /api/generovat (díky vercel.json to server najde)
             const res = await fetch('/api/generovat', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     jazyk: LS.options[LS.selectedIndex].text,
                     adresat: document.getElementById('recipient').options[document.getElementById('recipient').selectedIndex].text,
                     kategorie: document.getElementById('reason').value || "Důvod neuveden",
-                    styl: document.getElementById('style').options[document.getElementById('style').selectedIndex].text,
+                    styl: document.getElementById('style').value,
                     format: "email"
                 })
             });
             const data = await res.json();
             document.getElementById('results-container').innerHTML = data.variants.map(v => `<div class="result-card">${v}</div>`).join('');
             document.getElementById('vysledek').style.display = 'block';
-        } catch (e) { alert("Chyba AI. Zkuste to znovu."); }
+        } catch (e) { 
+            alert("Spojení selhalo. Zkuste to znovu."); 
+        }
         bt.style.display = 'block'; ld.style.display = 'none';
     }
 
     function koupit() {
         // !!! ZDE VLOŽ SVŮJ STRIPE ODKAZ !!!
-        window.location.href = 'https://buy.stripe.com/cNieVegBL0GwaFM0jga7C02'; 
+        window.location.href = 'https://buy.stripe.com/6oEg1...'; 
     }
 
     window.onload = function() {
-        changeLanguage();
+        changeLanguage(); // Inicializace textů
         if (new URLSearchParams(window.location.search).get('status') === 'success') {
             alert("Děkujeme! YES Genius je odemčen. 👑");
             document.getElementById('btn-buy').style.display = 'none';
