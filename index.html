@@ -116,11 +116,20 @@
     }
 
     async function koupit() {
-        const response = await fetch('/api/platba', { method: 'POST' });
-        const data = await response.json();
-        if(data.url) window.location.href = data.url;
+       // Přesměrování přímo na tvůj Stripe Payment Link
+    window.location.href = 'https://buy.stripe.com/cNieVegBL0GwaFM0jga7C02';
     }
+    // Kontrola, jestli se uživatel vrátil po úspěšné platbě
+window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('status') === 'success') {
+        alert("Děkujeme! Vaše licence YES Genius je aktivní. 👑");
+        // Tady můžeme později schovat tlačítko 'Koupit'
+        document.getElementById('btn-buy').style.display = 'none';
+    }
+};
 </script>
 
 </body>
 </html>
+
