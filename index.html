@@ -3,133 +3,432 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excuse Genius | Witdesign.cz</title>
+    <title>YES Genius | Professional Excuse Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #2563eb; --bg: #f8fafc; }
-        body { font-family: sans-serif; background: var(--bg); margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        .container { max-width: 600px; width: 90%; background: white; padding: 2rem; border-radius: 1rem; shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 2rem; text-align: center; }
-        img.logo { width: 120px; margin-bottom: 1rem; }
-        select, button { width: 100%; padding: 0.8rem; margin: 0.5rem 0; border-radius: 0.5rem; border: 1px solid #ddd; font-size: 1rem; }
-        button { background: var(--primary); color: white; border: none; cursor: pointer; font-weight: bold; }
-        .result-box { margin-top: 1.5rem; text-align: left; background: #f1f5f9; padding: 1rem; border-radius: 0.5rem; }
+        :root {
+            --primary: #8b5cf6; /* Fialová z loga */
+            --accent: #10b981;  /* Zelená z loga */
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text: #1f2937;
+            --bg-gradient: linear-gradient(135deg, #a78bfa 0%, #34d399 100%);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --glass: rgba(17, 24, 39, 0.7);
+                --glass-border: rgba(255, 255, 255, 0.1);
+                --text: #f3f4f6;
+                --bg-gradient: linear-gradient(135deg, #4c1d95 0%, #065f46 100%);
+            }
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed; /* Parallax efekt */
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            color: var(--text);
+        }
+
+        .glass-panel {
+            background: var(--glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 550px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        /* LOGO */
+        .logo-container { text-align: center; margin-bottom: 0.5rem; }
+        .logo { 
+            max-width: 140px; 
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); 
+            cursor: pointer;
+        }
+        .logo:hover { transform: scale(1.05); }
+
+        h1, h2 { text-align: center; margin: 0; }
+        .subtitle { 
+            text-align: center; 
+            opacity: 0.8; 
+            font-size: 0.9rem; 
+            margin-bottom: 1rem; 
+        }
+
+        /* INPUTY A SELECTY */
+        label { font-weight: 500; font-size: 0.85rem; margin-left: 0.5rem; opacity: 0.9; }
+        
+        select, input, textarea {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.3);
+            font-size: 1rem;
+            color: inherit;
+            outline: none;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+             select, input, textarea { background: rgba(0, 0, 0, 0.3); }
+        }
+
+        select:focus, input:focus {
+            background: rgba(255, 255, 255, 0.5);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+        /* TLAČÍTKA */
+        .btn-main {
+            background: linear-gradient(90deg, var(--primary), #7c3aed);
+            color: white;
+            font-weight: 700;
+            border: none;
+            padding: 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 15px -3px rgba(124, 58, 237, 0.3);
+            margin-top: 1rem;
+        }
+
+        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 20px 25px -5px rgba(124, 58, 237, 0.4); }
+        .btn-main:active { transform: scale(0.98); }
+
+        .btn-vip {
+            background: linear-gradient(90deg, var(--accent), #059669);
+            color: white;
+            font-weight: 700;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+        }
+        
+        .btn-vip:hover { filter: brightness(1.1); }
+
+        /* VÝSLEDKY */
+        #vysledek {
+            margin-top: 1.5rem;
+            display: none;
+        }
+        .result-card {
+            background: rgba(255, 255, 255, 0.4);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid var(--primary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        @media (prefers-color-scheme: dark) {
+            .result-card { background: rgba(0, 0, 0, 0.3); }
+        }
+
+        /* LOADING ANIMACE */
+        .loader {
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top: 3px solid white;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
     </style>
 </head>
 <body>
 
-<div class="container">
-    <img src="logo.png" alt="Excuse Genius Logo" class="logo" id="app-logo">
+<div class="glass-panel">
+    <div class="logo-container">
+        <img src="logo.png" alt="YES Genius Logo" class="logo" onclick="location.reload()">
+    </div>
     
-    <h1 id="txt-title">Excuse Genius</h1>
-    <p id="txt-subtitle">Vytvořte si dokonalou omluvu během vteřiny.</p>
+    <p class="subtitle" id="txt-subtitle">Profesionální generátor omluv s umělou inteligencí.</p>
 
-    <select id="language-select" onchange="zmenJazyk(this.value)">
-        <option value="cs">Čeština 🇨🇿</option>
-        <option value="en">English 🇬🇧</option>
-        <option value="de">Deutsch 🇩🇪</option>
-    </select>
-
-    <select id="kategorie">
-        <option value="Práce" id="opt-work">Práce / Škola</option>
-        <option value="Rande" id="opt-date">Rande / Společnost</option>
-        <option value="Rodina" id="opt-family">Rodinné důvody</option>
-    </select>
-
-    <button onclick="generuj()" id="btn-generate">Generovat omluvu</button>
-
-    <div id="vysledek" class="result-box" style="display:none;">
-        <h3 id="txt-results-title">Návrhy pro vás:</h3>
-        <div id="omluvy-list"></div>
+    <div>
+        <label for="language-select">🌍 Language / Jazyk</label>
+        <select id="language-select" onchange="changeLanguage()">
+            </select>
     </div>
 
-    <hr>
-    <button onclick="koupit()" style="background: #059669;" id="btn-buy">Koupit plnou licenci (199 Kč)</button>
+    <div>
+        <label id="lbl-recipient" for="recipient">👤 Komu se omlouváte?</label>
+        <select id="recipient" onchange="updateSuggestions()">
+            <option value="boss">Šéf / Nadřízený</option>
+            <option value="partner">Partner / Partnerka</option>
+            <option value="teacher">Učitel / Profesor</option>
+            <option value="client">Klient / Zákazník</option>
+            <option value="friend">Kamarád / Známý</option>
+            <option value="parents">Rodiče / Rodina</option>
+        </select>
+    </div>
+
+    <div>
+        <label id="lbl-reason" for="reason">🤔 Důvod (nebo si vymyslete vlastní)</label>
+        <input list="reasons-list" id="reason" placeholder="Např. zaspal jsem...">
+        <datalist id="reasons-list">
+            </datalist>
+    </div>
+
+    <div>
+        <label id="lbl-style" for="style">🎭 Styl omluvy</label>
+        <select id="style">
+            <option value="professional">Profesionální & Formální</option>
+            <option value="regretful">Upřímná & Kajícná</option>
+            <option value="creative">Kreativní & Vtipná</option>
+            <option value="brief">Stručná & Věcná</option>
+            <option value="dramatic">Dramatická & Naléhavá</option>
+        </select>
+    </div>
+
+    <button class="btn-main" onclick="generuj()" id="btn-generate">
+        <span id="btn-text">Generovat omluvu ✨</span>
+        <div class="loader" id="loader"></div>
+    </button>
+
+    <div id="vysledek">
+        <label id="lbl-result">💡 Zde jsou vaše omluvy:</label>
+        <div id="results-container"></div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid var(--glass-border); width: 100%; margin: 1rem 0;">
+
+    <button class="btn-vip" onclick="koupit()" id="btn-buy">
+        <span>👑 Koupit Doživotní Licenci (455 Kč)</span>
+    </button>
 </div>
 
 <script>
-    const preklady = {
+    // --- 1. DATABÁZE JAZYKŮ A PŘEKLADŮ ---
+    const languages = [
+        { code: "cs", name: "🇨🇿 Čeština" },
+        { code: "en_us", name: "🇺🇸 English (US)" },
+        { code: "uk", name: "🇺🇦 Українська" },
+        { code: "de", name: "🇩🇪 Deutsch" },
+        { code: "sk", name: "🇸🇰 Slovenčina" },
+        { code: "pl", name: "🇵🇱 Polski" },
+        { code: "ru", name: "🇷🇺 Русский" },
+        { code: "fr", name: "🇫🇷 Français" },
+        { code: "es", name: "🇪🇸 Español" },
+        { code: "it", name: "🇮🇹 Italiano" },
+        { code: "pt", name: "🇵🇹 Português" },
+        { code: "zh", name: "🇨🇳 中文 (Chinese)" },
+        { code: "ja", name: "🇯🇵 日本語 (Japanese)" },
+        { code: "ko", name: "🇰🇷 한국어 (Korean)" },
+        { code: "vi", name: "🇻🇳 Tiếng Việt" },
+        { code: "tr", name: "🇹🇷 Türkçe" },
+        { code: "ar", name: "🇸🇦 العربية (Arabic)" },
+        { code: "hi", name: "🇮🇳 हिन्दी (Hindi)" },
+        { code: "th", name: "🇹🇭 ไทย (Thai)" },
+        { code: "id", name: "🇮🇩 Indonesia" },
+        { code: "bn", name: "🇧🇩 বাংলা (Bengali)" },
+        { code: "fil", name: "🇵🇭 Filipino" },
+        { code: "fa", name: "🇮🇷 فارسی (Persian)" }
+    ];
+
+    const translations = {
         cs: {
-            title: "Excuse Genius",
-            subtitle: "Vytvořte si dokonalou omluvu během vteřiny.",
-            work: "Práce / Škola",
-            date: "Rande / Společnost",
-            family: "Rodinné důvody",
-            generate: "Generovat omluvu",
-            results: "Návrhy pro vás:",
-            buy: "Koupit plnou licenci (199 Kč)"
+            subtitle: "Profesionální generátor omluv s AI.",
+            lblRecipient: "👤 Komu se omlouváte?",
+            lblReason: "🤔 Důvod (nebo napište vlastní)",
+            lblStyle: "🎭 Styl omluvy",
+            btnGenerate: "Generovat omluvu ✨",
+            btnBuy: "👑 Koupit Doživotní Licenci (455 Kč)",
+            placeholderReason: "Např. zaspal jsem, nemoc...",
+            recipients: ["Šéf", "Partner", "Učitel", "Klient", "Kamarád", "Rodina"],
+            styles: ["Profesionální", "Upřímná", "Kreativní", "Stručná", "Dramatická"],
+            suggestions: {
+                boss: ["Zaspal jsem", "Nemoc", "Dopravní zácpa", "Rodinná nouze", "Technické problémy"],
+                partner: ["Zapomněl jsem na výročí", "Jdu pozdě na večeři", "Nevynesl jsem koš", "Byl jsem dlouho v práci"],
+                teacher: ["Zapomněl jsem úkol", "Nestihl jsem termín", "Zaspal jsem", "Nerozuměl jsem zadání"]
+            }
         },
-        en: {
-            title: "Excuse Genius",
-            subtitle: "Create the perfect excuse in seconds.",
-            work: "Work / School",
-            date: "Date / Social",
-            family: "Family reasons",
-            generate: "Generate Excuse",
-            results: "Suggestions for you:",
-            buy: "Buy Full License ($9)"
+        en_us: {
+            subtitle: "Professional AI Excuse Generator.",
+            lblRecipient: "👤 Who are you apologizing to?",
+            lblReason: "🤔 Reason (or type your own)",
+            lblStyle: "🎭 Apology Style",
+            btnGenerate: "Generate Excuse ✨",
+            btnBuy: "👑 Buy Lifetime License ($20)",
+            placeholderReason: "E.g. Overslept, Sick...",
+            recipients: ["Boss", "Partner", "Teacher", "Client", "Friend", "Family"],
+            styles: ["Professional", "Sincere", "Creative", "Brief", "Dramatic"],
+            suggestions: {
+                boss: ["Overslept", "Sick leave", "Traffic jam", "Family emergency", "Car trouble"],
+                partner: ["Forgot anniversary", "Late for date", "Stuck at work", "Too tired"],
+                teacher: ["Forgot homework", "Missed deadline", "Overslept", "Computer crashed"]
+            }
         },
         de: {
-            title: "Excuse Genius",
-            subtitle: "Erstellen Sie die perfekte Ausrede in Sekunden.",
-            work: "Arbeit / Schule",
-            date: "Date / Sozial",
-            family: "Familiäre Gründe",
-            generate: "Entschuldigung generieren",
-            results: "Vorschläge für Sie:",
-            buy: "Vollversion kaufen (9€)"
-        }
+            subtitle: "Professioneller KI-Ausredengenerator.",
+            lblRecipient: "👤 Entschuldigung an wen?",
+            lblReason: "🤔 Grund (oder eigenen eingeben)",
+            lblStyle: "🎭 Stil",
+            btnGenerate: "Ausrede generieren ✨",
+            btnBuy: "👑 Lebenslange Lizenz kaufen (18€)",
+            placeholderReason: "z.B. Verschlafen, Krank...",
+            recipients: ["Chef", "Partner", "Lehrer", "Kunde", "Freund", "Familie"],
+            styles: ["Professionell", "Aufrichtig", "Kreativ", "Kurz", "Dramatisch"],
+            suggestions: {
+                boss: ["Verschlafen", "Krankheit", "Stau", "Notfall", "Autopanne"],
+                partner: ["Jahrestag vergessen", "Zu spät", "Lange Arbeit", "Müde"],
+                teacher: ["Hausaufgabe vergessen", "Frist verpasst", "Verschlafen"]
+            }
+        },
+        // ... Zde by byly další jazyky. Pro ukázku používám fallback na EN pro ostatní, 
+        // ale reálně by se doplnily všechny. Kód je připraven.
     };
 
-    function zmenJazyk(jazyk) {
-        const t = preklady[jazyk];
-        document.getElementById('txt-title').innerText = t.title;
-        document.getElementById('txt-subtitle').innerText = t.subtitle;
-        document.getElementById('opt-work').innerText = t.work;
-        document.getElementById('opt-date').innerText = t.date;
-        document.getElementById('opt-family').innerText = t.family;
-        document.getElementById('btn-generate').innerText = t.generate;
-        document.getElementById('txt-results-title').innerText = t.results;
-        document.getElementById('btn-buy').innerText = t.buy;
+    // Fallback funkce pro jazyky, které nejsou plně vypsané nahoře
+    function getTranslation(langCode, key) {
+        if (translations[langCode] && translations[langCode][key]) return translations[langCode][key];
+        return translations['en_us'][key]; // Výchozí angličtina
     }
 
-    async function generuj() {
-        const btn = document.getElementById('btn-generate');
-        const lang = document.getElementById('language-select').value;
-        btn.innerText = "...";
+    // --- 2. INICIALIZACE A LOGIKA ---
+
+    const langSelect = document.getElementById('language-select');
+    const recipientSelect = document.getElementById('recipient');
+    const styleSelect = document.getElementById('style');
+    const reasonInput = document.getElementById('reason');
+    const datalist = document.getElementById('reasons-list');
+
+    // Naplnění selectu jazyků
+    languages.forEach(lang => {
+        const option = document.createElement('option');
+        option.value = lang.code;
+        option.innerText = lang.name;
+        langSelect.appendChild(option);
+    });
+
+    // HLAVNÍ FUNKCE: ZMĚNA JAZYKA
+    function changeLanguage() {
+        const lang = langSelect.value;
         
+        // 1. Texty UI
+        document.getElementById('txt-subtitle').innerText = getTranslation(lang, 'subtitle');
+        document.getElementById('lbl-recipient').innerText = getTranslation(lang, 'lblRecipient');
+        document.getElementById('lbl-reason').innerText = getTranslation(lang, 'lblReason');
+        document.getElementById('lbl-style').innerText = getTranslation(lang, 'lblStyle');
+        document.getElementById('btn-text').innerText = getTranslation(lang, 'btnGenerate');
+        document.getElementById('btn-buy').querySelector('span').innerText = getTranslation(lang, 'btnBuy');
+        reasonInput.placeholder = getTranslation(lang, 'placeholderReason');
+
+        // 2. Přepsání možností v Selectech (Komu, Styl)
+        const recipientList = getTranslation(lang, 'recipients');
+        Array.from(recipientSelect.options).forEach((opt, i) => { if(recipientList[i]) opt.text = recipientList[i]; });
+
+        const styleList = getTranslation(lang, 'styles');
+        Array.from(styleSelect.options).forEach((opt, i) => { if(styleList[i]) opt.text = styleList[i]; });
+
+        // 3. Refresh našeptávače
+        updateSuggestions();
+    }
+
+    // FUNKCE: NAŠEPTÁVAČ (Smart Suggestions)
+    function updateSuggestions() {
+        const lang = langSelect.value;
+        const recipientVal = recipientSelect.value; // boss, partner...
+        const t = translations[lang] || translations['en_us'];
+        
+        // Získání pole důvodů podle příjemce (nebo obecné)
+        let suggestions = [];
+        if (recipientVal === 'boss') suggestions = t.suggestions?.boss || t.suggestions?.boss;
+        else if (recipientVal === 'partner') suggestions = t.suggestions?.partner || t.suggestions?.partner;
+        else if (recipientVal === 'teacher') suggestions = t.suggestions?.teacher || t.suggestions?.teacher;
+        else suggestions = ["Nestíhám", "Zapomněl jsem", "Nemoc", "Osobní důvody"]; // Fallback
+
+        // Vyčištění a naplnění datalistu
+        datalist.innerHTML = '';
+        if (suggestions) {
+            suggestions.forEach(item => {
+                const opt = document.createElement('option');
+                opt.value = item;
+                datalist.appendChild(opt);
+            });
+        }
+    }
+
+    // --- 3. API A PLATBA ---
+
+    async function generuj() {
+        const btnText = document.getElementById('btn-text');
+        const loader = document.getElementById('loader');
+        
+        btnText.style.display = 'none';
+        loader.style.display = 'block';
+
+        const dataToSend = {
+            jazyk: langSelect.options[langSelect.selectedIndex].text,
+            adresat: recipientSelect.options[recipientSelect.selectedIndex].text,
+            kategorie: reasonInput.value || "Obecný důvod",
+            styl: styleSelect.options[styleSelect.selectedIndex].text,
+            format: "email"
+        };
+
         try {
             const response = await fetch('/api/generovat', {
                 method: 'POST',
-                body: JSON.stringify({
-                    jazyk: lang,
-                    kategorie: document.getElementById('kategorie').value
-                })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dataToSend)
             });
             const data = await response.json();
             
-            const list = document.getElementById('omluvy-list');
-            list.innerHTML = data.variants.map(v => `<p>• ${v}</p>`).join('');
+            const container = document.getElementById('results-container');
+            container.innerHTML = data.variants.map(v => `<div class="result-card">${v}</div>`).join('');
             document.getElementById('vysledek').style.display = 'block';
         } catch (e) {
-            alert("Chyba při spojení s AI.");
+            alert("Chyba: " + e.message);
         }
-        btn.innerText = preklady[lang].generate;
+
+        btnText.style.display = 'block';
+        loader.style.display = 'none';
     }
 
-    async function koupit() {
-       // Přesměrování přímo na tvůj Stripe Payment Link
-    window.location.href = 'https://buy.stripe.com/cNieVegBL0GwaFM0jga7C02';
+    function koupit() {
+        // ZDE VLOŽ SVŮJ NOVÝ ODKAZ ZE STRIPE PRO CENU 455 KČ
+        window.location.href = 'https://buy.stripe.com/6oEg1...'; 
     }
-    // Kontrola, jestli se uživatel vrátil po úspěšné platbě
-window.onload = function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('status') === 'success') {
-        alert("Děkujeme! Vaše licence YES Genius je aktivní. 👑");
-        // Tady můžeme později schovat tlačítko 'Koupit'
-        document.getElementById('btn-buy').style.display = 'none';
-    }
-};
+
+    // Po načtení stránky zkontrolovat platbu a nastavit výchozí našeptávač
+    window.onload = function() {
+        updateSuggestions(); // Inicializace našeptávače
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('status') === 'success') {
+            alert("Děkujeme za nákup! Vítejte v klubu YES Genius 👑");
+            document.getElementById('btn-buy').style.display = 'none';
+        }
+    };
 </script>
 
 </body>
 </html>
-
