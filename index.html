@@ -160,13 +160,13 @@
 
     <div>
         <label id="lbl-rec">👤 Komu?</label>
-        <input list="recipients-list" id="recipient" placeholder="..." onchange="updateSuggestions()" onfocus="this.value=''">
+        <input list="recipients-list" id="recipient" placeholder="..." onchange="updateSuggestions()" onclick="this.value=''">
         <datalist id="recipients-list"></datalist>
     </div>
 
     <div>
         <label id="lbl-rea">🤔 Důvod</label>
-        <input list="reasons-list" id="reason" placeholder="..." onfocus="this.value=''">
+        <input list="reasons-list" id="reason" placeholder="..." onclick="this.value=''">
         <datalist id="reasons-list"></datalist>
     </div>
 
@@ -472,7 +472,7 @@
         updateSuggestions();
     }
 
-    // --- NAŠEPTÁVAČ DŮVODŮ ---
+    // --- FIX: NAŠEPTÁVAČ DŮVODŮ ---
     function updateSuggestions() {
         const l = LS.value; 
         const dict = t[l] || t['en_us'];
