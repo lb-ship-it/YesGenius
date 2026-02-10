@@ -10,11 +10,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v1.9 (FULL LUXURY) --- */
+        /* --- CSS: YES GENIUS v2.0 (SALES EDITION) --- */
         :root {
             --bg-black: #000000;
             --card-bg: rgba(18, 18, 18, 0.95);
             --gold: #d4af37;
+            --gold-light: #f3e5ab;
             --gold-dim: #aa8a2e;
             --accent-purple: #8b5cf6;
             --text-white: #ffffff;
@@ -35,6 +36,7 @@
             display: flex;
             justify-content: center;
             min-height: 100vh;
+            padding-bottom: 40px; /* Místo pro footer na mobilech */
         }
 
         .app-container {
@@ -43,7 +45,7 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         /* HEADER */
@@ -230,28 +232,106 @@
         }
         .btn-action:hover { background: rgba(255,255,255,0.15); }
 
-        /* FOOTER */
+        /* --- NOVÝ PRODEJNÍ FOOTER (MARKETING) --- */
         .vip-footer {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(180deg, rgba(20,20,20,0.95) 0%, rgba(10,10,10,1) 100%);
+            border: 2px solid var(--gold);
+            border-radius: 20px;
             text-align: center;
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px dashed #333;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn-vip {
-            background: transparent;
-            color: var(--accent-purple);
-            border: 2px solid var(--accent-purple);
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-weight: 700;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            transition: 0.3s;
+        /* Lesk na pozadí footeru */
+        .vip-footer::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
         }
-        .btn-vip:hover { background: rgba(139, 92, 246, 0.1); box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+
+        .vip-title {
+            color: var(--gold);
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Mřížka výhod */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .benefit-item {
+            font-size: 0.75rem;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .benefit-icon { color: var(--gold); font-size: 1rem; }
+
+        /* Obří prodejní tlačítko */
+        .btn-vip-large {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--gold) 0%, #d6ae36 40%, #aa8a2e 100%);
+            border: none;
+            border-radius: 50px;
+            color: #000;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            animation: pulse 2s infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.2;
+        }
+
+        .btn-vip-large:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 35px rgba(212, 175, 55, 0.6);
+        }
+
+        .vip-btn-main-text {
+            font-size: 1.1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .vip-btn-sub-text {
+            font-size: 0.75rem;
+            font-weight: 600;
+            opacity: 0.85;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.6); }
+            100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
+        }
 
         #loader { display: none; text-align: center; margin-top: 15px; color: var(--gold); font-weight: 600; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -312,8 +392,7 @@
             <label id="lbl-target">Recipient</label>
             <div class="smart-input-wrapper">
                 <input list="recipients-list" type="text" id="adresat" class="smart-input" placeholder="Select or type..." oninput="toggleReset(this)">
-                <datalist id="recipients-list">
-                    </datalist>
+                <datalist id="recipients-list"></datalist>
                 <button class="reset-btn" onclick="clearInput('adresat')">✕</button>
             </div>
         </div>
@@ -322,8 +401,7 @@
             <label id="lbl-reason">Reason</label>
             <div class="smart-input-wrapper">
                 <input list="reasons-list" id="kategorie" class="smart-input" placeholder="Select or type..." oninput="toggleReset(this)">
-                <datalist id="reasons-list">
-                    </datalist>
+                <datalist id="reasons-list"></datalist>
                 <button class="reset-btn" onclick="clearInput('kategorie')">✕</button>
             </div>
         </div>
@@ -332,8 +410,7 @@
             <label id="lbl-style">Style</label>
             <div class="smart-input-wrapper">
                 <input list="styles-list" id="styl" class="smart-input" placeholder="Select or type..." oninput="toggleReset(this)">
-                <datalist id="styles-list">
-                    </datalist>
+                <datalist id="styles-list"></datalist>
                 <button class="reset-btn" onclick="clearInput('styl')">✕</button>
             </div>
         </div>
@@ -350,45 +427,61 @@
     </section>
 
     <footer class="vip-footer">
-        <button class="btn-vip" onclick="koupit()">👑 <span id="vip-text">UNLOCK FULL ($79)</span></button>
+        <div class="vip-title">👑 UNLOCK FULL POTENTIAL</div>
+        <div class="benefits-grid">
+            <div class="benefit-item"><span class="benefit-icon">🚫</span> <span id="b1">No Fees</span></div>
+            <div class="benefit-item"><span class="benefit-icon">♾️</span> <span id="b2">Lifetime Access</span></div>
+            <div class="benefit-item"><span class="benefit-icon">🔄</span> <span id="b3">Free Updates</span></div>
+            <div class="benefit-item"><span class="benefit-icon">🔒</span> <span id="b4">Secure Payment</span></div>
+        </div>
+        <button class="btn-vip-large" onclick="koupit()">
+            <span class="vip-btn-main-text" id="vip-btn-main">GET LIFETIME ACCESS</span>
+            <span class="vip-btn-sub-text" id="vip-btn-sub">One-time payment $79</span>
+        </button>
     </footer>
 
 </div>
 
 <script>
-    /* --- YES GENIUS v1.9 (COMPLETE EDITION) --- */
+    /* --- YES GENIUS v2.0 (SALES EDITION) --- */
 
-    // !!! TVŮJ FUNKČNÍ ODLAZ NA PLATBU !!!
     const PAYMENT_LINK = "https://buy.stripe.com/bJefZi4T3blacNUfeaa7C03"; 
 
-    // --- DATABÁZE PŘEKLADŮ A SEZNAMŮ (VŠECHNY MOŽNOSTI ZPĚT) ---
+    // DATA PŘEKLADŮ + MARKETINGOVÉ TEXTY
     const translations = {
         en: { 
             sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", 
             fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Tone & Style", 
-            ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vip: "UNLOCK FULL ($79)",
-            // ZDE JSOU VRÁCENY VŠECHNY MOŽNOSTI V AJ
-            recList: ["Boss", "Partner", "Wife", "Husband", "Girlfriend", "Boyfriend", "Client", "Colleague", "Mom", "Dad", "Teacher", "Coach"],
-            rsnList: ["Running Late", "Feeling Sick", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble", "Doctor's Appointment", "Burnout / Mental Health"],
-            styList: ["Professional", "Creative / Funny", "Dramatic / Urgent", "Strictly Formal", "Casual / Chill", "Apologetic", "Brief / Direct"]
+            ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share",
+            // Marketing
+            b1: "No Monthly Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment",
+            vMain: "GET LIFETIME ACCESS", vSub: "One-time payment $79",
+            // Lists
+            recList: ["Boss", "Partner", "Wife", "Husband", "Client", "Colleague", "Mom", "Dad", "Teacher"],
+            rsnList: ["Running Late", "Feeling Sick", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"],
+            styList: ["Professional", "Creative / Funny", "Dramatic", "Strictly Formal", "Casual", "Apologetic"]
         },
         cs: { 
             sub: "DIGITÁLNÍ DIPLOMAT", verb: "GENERUJ!", 
             fmt: "Formát", tgt: "Adresát", rsn: "Důvod", sty: "Tón a Styl", 
-            ph: "Vyber nebo napiš...", res: "Tvé návrhy:", copy: "Kopírovat", share: "Sdílet", vip: "ODEMKNOUT FULL ($79)",
-            // ZDE JSOU VRÁCENY PŘEKLADY DO ČEŠTINY
-            recList: ["Šéf", "Partner", "Manželka", "Manžel", "Přítelkyně", "Přítel", "Klient", "Kolega", "Máma", "Táta", "Učitel", "Trenér"],
-            rsnList: ["Jdu pozdě", "Jsem nemocný/á", "Nestíhám termín", "Ruším plány", "Rodinné důvody", "Porucha auta", "Lékař", "Vyhoření / Volno"],
-            styList: ["Profesionální", "Kreativní / Vtipný", "Dramatický", "Formální", "Neformální", "Omluvný", "Stručný"]
+            ph: "Vyber nebo napiš...", res: "Tvé návrhy:", copy: "Kopírovat", share: "Sdílet",
+            // Marketing
+            b1: "Žádné předplatné", b2: "Doživotní přístup", b3: "Aktualizace zdarma", b4: "Bezpečná platba",
+            vMain: "ZÍSKAT DOŽIVOTNÍ PŘÍSTUP", vSub: "Jednorázová platba $79",
+            // Lists
+            recList: ["Šéf", "Partner", "Manželka", "Manžel", "Klient", "Kolega", "Máma", "Táta", "Učitel"],
+            rsnList: ["Jdu pozdě", "Jsem nemocný/á", "Nestíhám termín", "Ruším plány", "Rodinné důvody", "Porucha auta"],
+            styList: ["Profesionální", "Kreativní / Vtipný", "Dramatický", "Formální", "Neformální", "Omluvný"]
         },
-        // Ostatní jazyky - Fallback UI (data bereme z EN, aby byl seznam plný)
         default: {
             sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", 
             fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", 
-            ph: "Select...", res: "Drafts:", copy: "Copy", share: "Share", vip: "UNLOCK FULL ($79)",
-            recList: ["Boss", "Partner", "Client", "Friend", "Family"], 
-            rsnList: ["Late", "Sick", "Emergency", "Work"], 
-            styList: ["Professional", "Casual", "Formal"]
+            ph: "Select...", res: "Drafts:", copy: "Copy", share: "Share",
+            b1: "No Monthly Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment",
+            vMain: "GET LIFETIME ACCESS", vSub: "One-time payment $79",
+            recList: ["Boss", "Partner", "Client", "Friend"], 
+            rsnList: ["Late", "Sick", "Emergency"], 
+            styList: ["Professional", "Casual"]
         }
     };
 
@@ -396,19 +489,13 @@
         return translations[lang] || translations['en']; 
     }
 
-    // --- LOGIKA UI (SMART FEATURES) ---
+    // --- LOGIKA UI ---
 
-    // 1. Zobrazení/Skrytí Reset tlačítka
     function toggleReset(input) {
         const btn = input.parentElement.querySelector('.reset-btn');
-        if (input.value.length > 0) {
-            btn.style.display = 'block';
-        } else {
-            btn.style.display = 'none';
-        }
+        btn.style.display = input.value.length > 0 ? 'block' : 'none';
     }
 
-    // 2. Vymazání a focus (Aby vyskočil našeptávač)
     function clearInput(id) {
         const input = document.getElementById(id);
         input.value = '';
@@ -416,11 +503,10 @@
         setTimeout(() => { input.focus(); }, 50); 
     }
 
-    // 3. Naplnění Datalistů (Dynamické seznamy)
     function populateDatalist(id, items) {
         const list = document.getElementById(id);
         if(!list) return;
-        list.innerHTML = ''; // Vyčistit staré
+        list.innerHTML = '';
         items.forEach(item => {
             const option = document.createElement('option');
             option.value = item;
@@ -428,12 +514,11 @@
         });
     }
 
-    // 4. Změna jazyka (Volá se při přepnutí roletky)
     function changeLanguage() {
         const lang = document.getElementById('lang-select').value;
         const t = getTexts(lang);
 
-        // UI Texty
+        // UI Core
         document.getElementById('subtitle').innerText = t.sub;
         document.getElementById('btn-verb').innerText = t.verb;
         document.getElementById('lbl-format').innerText = t.fmt;
@@ -441,17 +526,24 @@
         document.getElementById('lbl-reason').innerText = t.rsn;
         document.getElementById('lbl-style').innerText = t.sty;
         document.getElementById('lbl-results').innerText = t.res;
-        document.getElementById('vip-text').innerText = "👑 " + t.vip;
+
+        // Marketing Footer Update
+        document.getElementById('b1').innerText = t.b1;
+        document.getElementById('b2').innerText = t.b2;
+        document.getElementById('b3').innerText = t.b3;
+        document.getElementById('b4').innerText = t.b4;
+        document.getElementById('vip-btn-main').innerText = t.vMain;
+        document.getElementById('vip-btn-sub').innerText = t.vSub;
 
         // Placeholdery
         document.querySelectorAll('.smart-input').forEach(inp => inp.placeholder = t.ph);
 
-        // Přegenerování seznamů (Klíčové pro Smart Inputs!)
+        // Smart Lists
         populateDatalist('recipients-list', t.recList);
         populateDatalist('reasons-list', t.rsnList);
         populateDatalist('styles-list', t.styList);
 
-        // Asijské chaty - Logika
+        // Asijské chaty
         const smsOption = document.getElementById('opt-sms');
         if (['zh'].includes(lang)) smsOption.innerText = "WeChat / SMS";
         else if (['ja', 'th'].includes(lang)) smsOption.innerText = "LINE / SMS";
@@ -460,14 +552,13 @@
         else smsOption.innerText = "SMS / WhatsApp";
     }
 
-    // --- KOMUNIKACE SE SERVEREM (REAL AI) ---
+    // --- SERVER LOGIC ---
 
     async function generovat() {
         const btn = document.getElementById('btn-generate');
         const loader = document.getElementById('loader');
         const results = document.getElementById('vysledek');
         
-        // Data z formuláře
         const requestData = {
             format: document.getElementById('format').value,
             adresat: document.getElementById('adresat').value,
@@ -476,17 +567,14 @@
             jazyk: document.getElementById('lang-select').value
         };
 
-        // Jednoduchá validace
         if(!requestData.adresat) { alert("Please specify a Recipient / Zadejte adresáta!"); return; }
 
-        // UI Loading State
         results.style.display = 'none';
         btn.style.opacity = '0.5';
-        btn.style.pointerEvents = 'none'; // Zákaz klikání
+        btn.style.pointerEvents = 'none';
         loader.style.display = 'block';
 
         try {
-            // VOLÁNÍ TVÉHO API (server.js)
             const response = await fetch('/api/generovat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -497,7 +585,6 @@
             
             const data = await response.json();
 
-            // Očekáváme pole variant: { variants: ["Text 1", "Text 2", ...] }
             if (data.variants && Array.isArray(data.variants)) {
                 zobrazitVysledky(data.variants);
             } else {
@@ -506,10 +593,8 @@
 
         } catch (error) {
             console.error("GEN ERROR:", error);
-            // Zobrazit chybu uživateli
-            alert("Connection Error: " + error.message + "\n\n(Ujistěte se, že server.js běží a máte API klíč.)");
+            alert("Connection Error: " + error.message);
         } finally {
-            // Reset stavu tlačítka
             loader.style.display = 'none';
             btn.style.opacity = '1';
             btn.style.pointerEvents = 'auto';
@@ -525,7 +610,6 @@
         data.forEach(text => {
             const div = document.createElement('div');
             div.className = 'result-card';
-            // Bezpečné escapování pro HTML atribut
             const safeText = text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
             
             div.innerHTML = `
@@ -556,7 +640,6 @@
 
     function koupit() { window.location.href = PAYMENT_LINK; }
     
-    // Inicializace aplikace
     window.onload = function() { changeLanguage(); }
 </script>
 
