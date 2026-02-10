@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v1.3.1 (Luxury Dark) --- */
+        /* --- CSS: YES GENIUS v1.3.2 (Luxury Dark) --- */
         :root {
             --bg-black: #000000;
             --card-bg: rgba(18, 18, 18, 0.95);
@@ -106,7 +106,7 @@
             cursor: pointer;
             font-weight: 600;
             text-align: right;
-            max-width: 120px;
+            max-width: 140px;
         }
 
         /* FORMULÁŘ */
@@ -165,7 +165,7 @@
             color: #666;
             font-size: 1.1rem;
             cursor: pointer;
-            padding: 8px; /* Větší dotyková plocha */
+            padding: 8px;
             display: none; 
             transition: color 0.2s;
             z-index: 10;
@@ -263,7 +263,7 @@
     
     <header>
         <div class="brand-section">
-            <img src="logo.jpg" alt="YES Genius Logo" class="logo-img">
+            <img src="logo.png" alt="YES Genius Logo" class="logo-img">
             <div class="title-wrapper">
                 <h1>YES Genius</h1>
                 <div id="subtitle" class="subtitle">DIGITAL DIPLOMAT</div>
@@ -274,6 +274,7 @@
             <option value="en" selected>🇺🇸 English</option>
             <option value="cs">🇨🇿 Čeština</option>
             <option value="de">🇩🇪 Deutsch</option>
+            <option value="uk">🇺🇦 Українська</option>
             <option value="es">🇪🇸 Español</option>
             <option value="fr">🇫🇷 Français</option>
             <option value="it">🇮🇹 Italiano</option>
@@ -281,7 +282,6 @@
             <option value="pl">🇵🇱 Polski</option>
             <option value="nl">🇳🇱 Nederlands</option>
             <option value="ru">🇷🇺 Русский</option>
-            <option value="uk">🇺🇦 Українська</option>
             <option value="tr">🇹🇷 Türkçe</option>
             <option value="ar">🇸🇦 العربية</option>
             <option value="zh">🇨🇳 中文</option>
@@ -382,12 +382,12 @@
 </div>
 
 <script>
-    /* --- YES GENIUS v1.3.1 JAVASCRIPT --- */
+    /* --- YES GENIUS v1.3.2 JAVASCRIPT --- */
 
     // 1. LINK NA PLATBU
     const PAYMENT_LINK = "https://your-payment-link.com/79usd"; 
 
-    // 2. PŘEKLADY
+    // 2. PŘEKLADY - OPRAVA 3: Přidána podpora pro UK (Ukrajinštinu) a další jazyky, aby se překládaly labely
     const translations = {
         en: { 
             sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", 
@@ -399,6 +399,7 @@
             fmt: "Formát", tgt: "Adresát", rsn: "Důvod", sty: "Tón a Styl", 
             ph: "Vyber nebo napiš...", res: "Tvé návrhy:", copy: "Kopírovat", share: "Sdílet", vip: "ODEMKNOUT FULL ($79)" 
         },
+        uk: { sub: "ЦИФРОВИЙ ДИПЛОМАТ", verb: "СТВОРИТИ!", fmt: "Формат", tgt: "Отримувач", rsn: "Причина", sty: "Стиль", ph: "Виберіть або введіть...", res: "Чернетки:", copy: "Копіювати", share: "Поділитися", vip: "РОЗБЛОКУВАТИ ($79)" },
         de: { sub: "DIGITALER DIPLOMAT", verb: "GENERIEREN!", fmt: "Format", tgt: "Empfänger", rsn: "Grund", sty: "Stil", ph: "Wählen oder tippen...", res: "Entwürfe:", copy: "Kopieren", share: "Teilen", vip: "VOLLVERSION ($79)" },
         es: { sub: "DIPLOMÁTICO DIGITAL", verb: "¡GENERAR!", fmt: "Formato", tgt: "Destinatario", rsn: "Razón", sty: "Estilo", ph: "Selecciona o escribe...", res: "Borradores:", copy: "Copiar", share: "Compartir", vip: "DESBLOQUEAR ($79)" },
         fr: { sub: "DIPLOMATE NUMÉRIQUE", verb: "GÉNÉRER!", fmt: "Format", tgt: "Destinataire", rsn: "Raison", sty: "Style", ph: "Sélectionner ou écrire...", res: "Brouillons:", copy: "Copier", share: "Partager", vip: "DÉBLOQUER ($79)" },
@@ -407,13 +408,12 @@
         pt: { sub: "DIPLOMATA DIGITAL", verb: "GERAR!", fmt: "Formato", tgt: "Destinatário", rsn: "Razão", sty: "Estilo", ph: "Selecione ou digite...", res: "Rascunhos:", copy: "Copiar", share: "Compartilhar", vip: "DESBLOQUEAR ($79)" },
         nl: { sub: "DIGITALE DIPLOMAAT", verb: "GENEREREN!", fmt: "Formaat", tgt: "Ontvanger", rsn: "Reden", sty: "Stijl", ph: "Selecteer of typ...", res: "Concepten:", copy: "Kopiëren", share: "Delen", vip: "ONTGRENDELEN ($79)" },
         ru: { sub: "ЦИФРОВОЙ ДИПЛОМАТ", verb: "СОЗДАТЬ!", fmt: "Формат", tgt: "Получатель", rsn: "Причина", sty: "Стиль", ph: "Выберите или введите...", res: "Черновики:", copy: "Копировать", share: "Поделиться", vip: "РАЗБЛОКИРОВАТЬ ($79)" },
-        uk: { sub: "ЦИФРОВИЙ ДИПЛОМАТ", verb: "СТВОРИТИ!", fmt: "Формат", tgt: "Отримувач", rsn: "Причина", sty: "Стиль", ph: "Виберіть або введіть...", res: "Чернетки:", copy: "Копіювати", share: "Поділитися", vip: "РОЗБЛОКУВАТИ ($79)" },
         tr: { sub: "DİJİTAL DİPLOMAT", verb: "OLUŞTUR!", fmt: "Biçim", tgt: "Alıcı", rsn: "Sebep", sty: "Tarz", ph: "Seç veya yaz...", res: "Taslaklar:", copy: "Kopyala", share: "Paylaş", vip: "KİLİDİ AÇ ($79)" },
         ar: { sub: "دبلوماسي رقمي", verb: "توليد!", fmt: "صيغة", tgt: "المستلم", rsn: "السبب", sty: "النمط", ph: "اختر أو اكتب...", res: "المسودات:", copy: "نسخ", share: "مشاركة", vip: "فتح النسخة الكاملة ($79)" },
         zh: { sub: "数字外交官", verb: "生成！", fmt: "格式", tgt: "收件人", rsn: "原因", sty: "风格", ph: "选择或输入...", res: "草稿：", copy: "复制", share: "分享", vip: "解锁完整版 ($79)" },
         ja: { sub: "デジタル外交官", verb: "作成！", fmt: "形式", tgt: "受信者", rsn: "理由", sty: "スタイル", ph: "選択または入力...", res: "下書き：", copy: "コピー", share: "共有", vip: "フル解除 ($79)" },
         ko: { sub: "디지털 외교관", verb: "생성!", fmt: "형식", tgt: "수신자", rsn: "이유", sty: "스타일", ph: "선택 또는 입력...", res: "초안:", copy: "복사", share: "공유", vip: "잠금 해제 ($79)" },
-        hi: { sub: "डिजिटल राजनयिक", verb: "उत्पन्न करें!", fmt: "प्रारूप", tgt: "प्राप्तकर्ता", rsn: "कारण", sty: "शैली", ph: "चुनें या टाइप करें...", res: "مسودہ:", copy: "कॉपी", share: "साझा करें", vip: "अनलॉक ($79)" },
+        hi: { sub: "डिजिटल राजनयिक", verb: "उत्पन्न करें!", fmt: "प्रारूप", tgt: "प्राप्तकर्ता", rsn: "कारण", sty: "शैली", ph: "चुनें या टाइप करें...", res: "مسودह:", copy: "कॉपी", share: "साझा करें", vip: "अनलॉक ($79)" },
         sv: { sub: "DIGITAL DIPLOMAT", verb: "SKAPA!", fmt: "Format", tgt: "Mottagare", rsn: "Orsak", sty: "Stil", ph: "Välj eller skriv...", res: "Utkast:", copy: "Kopiera", share: "Dela", vip: "LÅS UPP ($79)" },
         no: { sub: "DIGITAL DIPLOMAT", verb: "GENERER!", fmt: "Format", tgt: "Mottaker", rsn: "Årsak", sty: "Stil", ph: "Velg eller skriv...", res: "Utkast:", copy: "Kopier", share: "Del", vip: "LÅS OPP ($79)" },
         da: { sub: "DIGITAL DIPLOMAT", verb: "GENERER!", fmt: "Format", tgt: "Modtager", rsn: "Årsag", sty: "Stil", ph: "Vælg eller skriv...", res: "Kladder:", copy: "Kopier", share: "Del", vip: "LÅS OP ($79)" },
@@ -444,7 +444,7 @@
         input.value = '';
         toggleReset(input);
         
-        // Zde je ten klíčový trik: Vrátíme focus do pole, prohlížeč nabídne datalist
+        // Okamžitě vrátí focus do pole
         setTimeout(() => {
             input.focus();
         }, 50);
@@ -457,6 +457,8 @@
 
         document.getElementById('subtitle').innerText = t.sub;
         document.getElementById('btn-verb').innerText = t.verb;
+        
+        // OPRAVA 3b: Správné mapování ID labelů na překlady
         document.getElementById('lbl-format').innerText = t.fmt;
         document.getElementById('lbl-target').innerText = t.tgt;
         document.getElementById('lbl-reason').innerText = t.rsn;
@@ -541,6 +543,7 @@
 
     function koupit() { window.location.href = PAYMENT_LINK; }
     
+    // Inicializace při načtení
     window.onload = function() { changeLanguage(); }
 </script>
 
