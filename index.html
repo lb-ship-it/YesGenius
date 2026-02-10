@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v1.3 (Luxury Dark) --- */
+        /* --- CSS: YES GENIUS v1.3.1 (Luxury Dark) --- */
         :root {
             --bg-black: #000000;
             --card-bg: rgba(18, 18, 18, 0.95);
@@ -46,10 +46,10 @@
             gap: 10px;
         }
 
-        /* 1. HEADER (Logo VLEVO - Jazyk VPRAVO) */
+        /* HEADER */
         header {
             display: flex;
-            justify-content: space-between; /* Rozhodí prvky do krajů */
+            justify-content: space-between;
             align-items: center;
             padding: 10px 0 20px 0;
         }
@@ -94,7 +94,7 @@
             text-transform: uppercase;
         }
 
-        /* Výběr jazyka (VPRAVO) */
+        /* Lang Select */
         .lang-select {
             background: #0a0a0a;
             color: var(--gold);
@@ -109,7 +109,7 @@
             max-width: 120px;
         }
 
-        /* 2. FORMULÁŘ */
+        /* FORMULÁŘ */
         .glass-card {
             background: var(--card-bg);
             border: 1px solid var(--glass-border);
@@ -131,7 +131,6 @@
             font-weight: 600;
         }
 
-        /* Wrapper pro inputy s reset tlačítkem */
         .smart-input-wrapper {
             position: relative;
             display: flex;
@@ -141,7 +140,7 @@
         input, select {
             width: 100%;
             padding: 14px;
-            padding-right: 40px; /* Místo pro reset tlačítko */
+            padding-right: 40px; 
             background: #050505;
             border: 1px solid #333;
             border-radius: 12px;
@@ -157,25 +156,24 @@
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
         }
 
-        /* Tlačítko RESET (Křížek) */
+        /* Reset tlačítko (Křížek) */
         .reset-btn {
             position: absolute;
             right: 10px;
             background: transparent;
             border: none;
-            color: #555;
-            font-size: 1.2rem;
+            color: #666;
+            font-size: 1.1rem;
             cursor: pointer;
-            padding: 5px;
-            display: none; /* Zobrazí se jen když je text */
+            padding: 8px; /* Větší dotyková plocha */
+            display: none; 
             transition: color 0.2s;
+            z-index: 10;
         }
         
         .reset-btn:hover { color: var(--gold); }
-        
-        /* Zobrazit reset tlačítko, pokud input není prázdný (řešeno JS eventy) */
 
-        /* TLAČÍTKO YES */
+        /* Tlačítko YES */
         .btn-main {
             width: 100%;
             padding: 18px;
@@ -232,7 +230,7 @@
         }
         .btn-action:hover { background: rgba(255,255,255,0.15); }
 
-        /* VIP FOOTER */
+        /* FOOTER */
         .vip-footer {
             text-align: center;
             margin-top: 25px;
@@ -313,7 +311,20 @@
         <div class="input-group">
             <label id="lbl-target">Recipient</label>
             <div class="smart-input-wrapper">
-                <input type="text" id="adresat" class="smart-input" placeholder="Select or type..." oninput="toggleReset(this)">
+                <input list="recipients-list" type="text" id="adresat" class="smart-input" placeholder="Select or type..." oninput="toggleReset(this)">
+                <datalist id="recipients-list">
+                    <option value="Boss">
+                    <option value="Partner">
+                    <option value="Wife">
+                    <option value="Husband">
+                    <option value="Girlfriend">
+                    <option value="Boyfriend">
+                    <option value="Client">
+                    <option value="Colleague">
+                    <option value="Mom">
+                    <option value="Dad">
+                    <option value="Teacher">
+                </datalist>
                 <button class="reset-btn" onclick="clearInput('adresat')">✕</button>
             </div>
         </div>
@@ -328,6 +339,9 @@
                     <option value="Missed Deadline">
                     <option value="Canceling Plans">
                     <option value="Family Emergency">
+                    <option value="Car Trouble">
+                    <option value="Doctor's Appointment">
+                    <option value="Burnout / Mental Health">
                 </datalist>
                 <button class="reset-btn" onclick="clearInput('kategorie')">✕</button>
             </div>
@@ -343,6 +357,8 @@
                     <option value="Dramatic / Urgent">
                     <option value="Strictly Formal">
                     <option value="Casual / Chill">
+                    <option value="Apologetic">
+                    <option value="Brief / Direct">
                 </datalist>
                 <button class="reset-btn" onclick="clearInput('styl')">✕</button>
             </div>
@@ -366,23 +382,22 @@
 </div>
 
 <script>
-    /* --- YES GENIUS v1.3 JAVASCRIPT --- */
+    /* --- YES GENIUS v1.3.1 JAVASCRIPT --- */
 
-    // 1. NASTAVENÍ LINKU NA PLATBU
-    // !!! ZDE VLOŽ SVŮJ PŘESNÝ ODKAZ NA PLATBU $79 !!!
+    // 1. LINK NA PLATBU
     const PAYMENT_LINK = "https://your-payment-link.com/79usd"; 
 
-    // 2. DATABÁZE PŘEKLADŮ (23 Jazyků)
+    // 2. PŘEKLADY
     const translations = {
         en: { 
             sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", 
             fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Tone & Style", 
-            ph: "Select or type custom...", res: "Your Drafts:", copy: "Copy", share: "Share", vip: "UNLOCK FULL ($79)" 
+            ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vip: "UNLOCK FULL ($79)" 
         },
         cs: { 
             sub: "DIGITÁLNÍ DIPLOMAT", verb: "GENERUJ!", 
             fmt: "Formát", tgt: "Adresát", rsn: "Důvod", sty: "Tón a Styl", 
-            ph: "Vyber nebo napiš vlastní...", res: "Tvé návrhy:", copy: "Kopírovat", share: "Sdílet", vip: "ODEMKNOUT FULL ($79)" 
+            ph: "Vyber nebo napiš...", res: "Tvé návrhy:", copy: "Kopírovat", share: "Sdílet", vip: "ODEMKNOUT FULL ($79)" 
         },
         de: { sub: "DIGITALER DIPLOMAT", verb: "GENERIEREN!", fmt: "Format", tgt: "Empfänger", rsn: "Grund", sty: "Stil", ph: "Wählen oder tippen...", res: "Entwürfe:", copy: "Kopieren", share: "Teilen", vip: "VOLLVERSION ($79)" },
         es: { sub: "DIPLOMÁTICO DIGITAL", verb: "¡GENERAR!", fmt: "Formato", tgt: "Destinatario", rsn: "Razón", sty: "Estilo", ph: "Selecciona o escribe...", res: "Borradores:", copy: "Copiar", share: "Compartir", vip: "DESBLOQUEAR ($79)" },
@@ -411,11 +426,10 @@
         return translations[lang] || translations['en'];
     }
 
-    // 3. LOGIKA APLIKACE (Reset, Změna jazyka, Generování)
+    // 3. LOGIKA APLIKACE 
     
-    // Funkce pro Reset tlačítko "X"
+    // Zobrazení tlačítka Reset
     function toggleReset(input) {
-        // Najdi tlačítko v parent wrapperu
         const btn = input.parentElement.querySelector('.reset-btn');
         if (input.value.length > 0) {
             btn.style.display = 'block';
@@ -424,19 +438,23 @@
         }
     }
 
+    // Funkce vymazání + okamžitý Focus (otevře nabídku)
     function clearInput(id) {
         const input = document.getElementById(id);
         input.value = '';
-        toggleReset(input); // Schovat křížek
-        input.focus(); // Vrátit focus uživateli
+        toggleReset(input);
+        
+        // Zde je ten klíčový trik: Vrátíme focus do pole, prohlížeč nabídne datalist
+        setTimeout(() => {
+            input.focus();
+        }, 50);
     }
 
-    // Funkce Změna jazyka
+    // Změna jazyka
     function changeLanguage() {
         const lang = document.getElementById('lang-select').value;
         const t = getTexts(lang);
 
-        // Update textů
         document.getElementById('subtitle').innerText = t.sub;
         document.getElementById('btn-verb').innerText = t.verb;
         document.getElementById('lbl-format').innerText = t.fmt;
@@ -446,11 +464,10 @@
         document.getElementById('lbl-results').innerText = t.res;
         document.getElementById('vip-text').innerText = "👑 " + t.vip;
 
-        // Update Placeholders (Smart pole)
         const inputs = document.querySelectorAll('.smart-input');
         inputs.forEach(inp => inp.placeholder = t.ph);
 
-        // Update Option pro asijské chaty
+        // Asijské chaty
         const smsOption = document.getElementById('opt-sms');
         if (['zh'].includes(lang)) smsOption.innerText = "WeChat / SMS";
         else if (['ja', 'th'].includes(lang)) smsOption.innerText = "LINE / SMS";
@@ -459,14 +476,13 @@
         else smsOption.innerText = "SMS / WhatsApp";
     }
 
-    // Simulace Generování
+    // Generování (Demo)
     function generovat() {
         const btn = document.getElementById('btn-generate');
         const loader = document.getElementById('loader');
         const results = document.getElementById('vysledek');
         const lang = document.getElementById('lang-select').value;
 
-        // Validace
         const tgt = document.getElementById('adresat').value;
         if(!tgt) { alert("Please fill in the Recipient!"); return; }
 
@@ -475,20 +491,11 @@
         loader.style.display = 'block';
 
         setTimeout(() => {
-            // Mock Data
             let mocks = [];
             if (lang === 'cs') {
-                mocks = [
-                    "Omlouvám se, ale vyskytla se neodkladná záležitost. Ozvu se hned, jak to půjde.",
-                    "Bohužel to dneska nestihnu, zasekl jsem se v dopravě. Mrzí mě to.",
-                    "Necítím se dnes úplně ve své kůži, raději zůstanu doma."
-                ];
+                mocks = ["Omlouvám se, vyskytla se neodkladná záležitost.", "Bohužel to nestihnu kvůli dopravě.", "Není mi dobře, zůstanu doma."];
             } else {
-                mocks = [
-                    "I'm so sorry, an unexpected matter came up. I'll update you soon.",
-                    "Unfortunately, I'm running really late due to heavy traffic. Apologies!",
-                    "I'm feeling under the weather today, best if I stay home."
-                ];
+                mocks = ["So sorry, urgent matter came up.", "Running late due to traffic!", "Feeling sick, staying home."];
             }
 
             zobrazitVysledky(mocks);
@@ -509,12 +516,8 @@
             div.innerHTML = `
                 <div class="result-text">${text}</div>
                 <div class="action-row">
-                    <button class="btn-action" onclick="kopirovat(this, '${text.replace(/'/g, "\\'")}')">
-                        📋 ${t.copy}
-                    </button>
-                    <button class="btn-action" onclick="sdilet('${text.replace(/'/g, "\\'")}')">
-                        🔗 ${t.share}
-                    </button>
+                    <button class="btn-action" onclick="kopirovat(this, '${text.replace(/'/g, "\\'")}')">📋 ${t.copy}</button>
+                    <button class="btn-action" onclick="sdilet('${text.replace(/'/g, "\\'")}')">🔗 ${t.share}</button>
                 </div>
             `;
             container.appendChild(div);
@@ -536,15 +539,9 @@
         else kopirovat(this, text);
     }
 
-    function koupit() {
-        // Použití tvého odkazu
-        window.location.href = https://buy.stripe.com/bJefZi4T3blacNUfeaa7C03;
-    }
+    function koupit() { window.location.href = PAYMENT_LINK; }
     
-    // Inicializace při načtení
-    window.onload = function() {
-        changeLanguage(); // Nastavit defaultní texty
-    }
+    window.onload = function() { changeLanguage(); }
 </script>
 
 </body>
