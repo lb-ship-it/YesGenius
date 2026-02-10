@@ -2,6 +2,25 @@ export const config = {
     runtime: 'edge',
 };
 
+// SEZNAM VŠECH MOŽNÝCH MODELŮ A VERZÍ
+// Toto je "kobercový nálet". Zkusíme všechno.
+const ENDPOINTS = [
+    // 1. Stabilní Flash (v1) - Nejčastější pro nové klíče
+    "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent",
+    
+    // 2. Beta Flash (v1beta) - Pro starší klíče
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent",
+    
+    // 3. Stabilní Pro (v1) - Kdyby Flash nešel
+    "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent",
+    
+    // 4. Beta Pro (v1beta)
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent",
+    
+    // 5. Experimentální Flash 2.0 (často funguje, když ostatní ne)
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent"
+];
+
 export default async function handler(req) {
     // 1. CORS
     if (req.method === 'OPTIONS') {
@@ -33,29 +52,46 @@ export default async function handler(req) {
         CRITICAL: Return ONLY a raw JSON array of strings. No markdown.
         Example: ["Text 1", "Text 2", "Text 3"]`;
 
-        // 2. VOLÁNÍ MODELU PRO AI STUDIO KLÍČE
-        // Používáme v1beta a gemini-1.5-flash. Toto je defaultní model pro nové klíče.
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-        });
+        // 2. SMYČKA SMRTI (Zkoušíme modely jeden po druhém)
+        let lastError = "";
+        let successData = null;
+        let workingModel = "";
 
-        const data = await response.json();
+        for (const url of ENDPOINTS) {
+            try {
+                // console.log("Zkouším:", url); 
+                const response = await fetch(`${url}?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                });
 
-        if (data.error) {
-            // Pokud to selže, vrátíme přesnou chybu, ať víme, co se děje
-            console.error("Google Error:", data.error);
-            return new Response(JSON.stringify({ error: `Google Error: ${data.error.message}` }), { status: 500 });
+                const data = await response.json();
+
+                if (data.error) {
+                    lastError = `${url} -> ${data.error.message}`;
+                    continue; // Jdeme na další
+                }
+
+                if (data.candidates && data.candidates[0].content) {
+                    successData = data;
+                    workingModel = url;
+                    break; // MÁME TO!
+                }
+            } catch (e) {
+                lastError = e.message;
+            }
         }
 
-        // 3. Zpracování
-        let text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (!text) return new Response(JSON.stringify({ error: 'AI nic nevygenerovala' }), { status: 500 });
+        if (!successData) {
+            console.error("Vše selhalo. Poslední chyba:", lastError);
+            return new Response(JSON.stringify({ error: `Google API Error: Všechny modely odmítly přístup. Poslední chyba: ${lastError}` }), { status: 500 });
+        }
 
+        // 3. Zpracování (když se jeden chytil)
+        let text = successData.candidates[0].content.parts[0].text;
         text = text.replace(/```json/g, "").replace(/```/g, "").trim();
-        
-        // Extrakce JSONu
+
         const firstBracket = text.indexOf('[');
         const lastBracket = text.lastIndexOf(']');
         let variants = [];
@@ -67,6 +103,9 @@ export default async function handler(req) {
         } else {
             variants = [text];
         }
+
+        // Vrátíme i informaci o tom, který model zafungoval (pro debug, můžeš to pak smazat)
+        // console.log("Zafungoval model:", workingModel);
 
         return new Response(JSON.stringify({ variants }), {
             status: 200,
