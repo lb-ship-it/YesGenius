@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="cs" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,7 @@
     
     <script>
         tailwind.config = {
+            darkMode: 'class', // Zapnutí manuálního přepínání dark mode
             theme: {
                 extend: {
                     colors: {
@@ -16,14 +17,16 @@
                         goldLight: '#FDE68A',
                         neonPurple: '#8B5CF6',
                         darkBg: '#050505',
-                        panelBg: '#0a0a0a',
+                        glassDark: 'rgba(20, 20, 20, 0.6)',
+                        glassLight: 'rgba(255, 255, 255, 0.7)',
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                     },
                     animation: {
                         'shine': 'shine 1.5s infinite',
-                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'slide-up': 'slideUp 0.8s ease-out forwards',
                     },
                     keyframes: {
                         shine: {
@@ -31,7 +34,11 @@
                             '100%': { left: '100%' },
                         },
                         fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         }
                     }
@@ -42,164 +49,247 @@
 
     <script src="https://unpkg.com/lucide@latest"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        /* Skrytí výsledku na začátku */
-        #result-card { display: none; }
+        body { font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; }
+        
+        /* Glassmorphism Classes */
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.2); /* Jemná zlatá linka */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
     </style>
 </head>
-<body class="bg-darkBg text-gray-100 min-h-screen flex flex-col items-center justify-center p-4 selection:bg-neonPurple selection:text-white">
+<body class="bg-gray-100 dark:bg-darkBg text-gray-900 dark:text-gray-100 min-h-screen flex flex-col items-center overflow-x-hidden">
 
-    <div class="w-full max-w-md text-center mb-10 relative">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 bg-purple-900/40 blur-[80px] rounded-full pointer-events-none"></div>
-        
-        <div class="relative z-10 flex flex-col items-center">
-            <h1 class="text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-gold via-goldLight to-gold drop-shadow-sm">
-                YES Genius
-            </h1>
-            <p class="text-xs uppercase tracking-[0.3em] text-gold mt-3 opacity-80 font-semibold">
-                Digital Diplomat
-            </p>
-        </div>
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px] dark:bg-purple-900/30"></div>
+        <div class="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] bg-yellow-600/10 rounded-full blur-[100px] dark:bg-yellow-600/20"></div>
     </div>
 
-    <div class="w-full max-w-md bg-panelBg border border-gold/30 rounded-2xl shadow-[0_0_40px_-10px_rgba(139,92,246,0.15)] overflow-hidden relative backdrop-blur-sm">
+    <nav class="w-full max-w-5xl flex justify-between items-center p-6 z-10 relative animate-fade-in">
+        <div class="flex items-center gap-2">
+            <div class="text-2xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-gold via-goldLight to-gold">
+                YES Genius
+            </div>
+        </div>
         
-        <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent opacity-50"></div>
+        <button id="theme-toggle" class="text-xs uppercase tracking-widest font-semibold text-gray-500 hover:text-gold transition-colors">
+            Switch to Light Mode
+        </button>
+    </nav>
 
-        <div class="p-6 space-y-6">
+    <main class="w-full max-w-2xl px-4 pb-20 z-10 flex flex-col items-center text-center">
+        
+        <div class="mb-8 animate-slide-up">
+            <h1 class="text-4xl md:text-5xl font-bold mb-3 dark:text-white text-gray-800">
+                Digital Diplomat
+            </h1>
+            <p class="text-gray-600 dark:text-gray-400 max-w-md mx-auto leading-relaxed">
+                We handle every awkward and unpleasant conversation together.
+            </p>
+        </div>
+
+        <div class="w-full bg-white/60 dark:bg-glassDark glass-panel rounded-3xl p-6 md:p-8 text-left transition-all duration-300 animate-slide-up" style="animation-delay: 0.2s;">
             
-            <div class="space-y-2 group">
-                <label class="text-xs text-gold font-semibold tracking-wide uppercase ml-1">Komu píšete?</label>
-                <div class="relative">
-                    <select id="recipient" class="w-full bg-[#111] text-gray-200 border border-[#333] rounded-xl px-4 py-3 appearance-none focus:outline-none focus:border-neonPurple focus:ring-1 focus:ring-neonPurple transition-all duration-300 group-hover:border-gold/50 cursor-pointer">
-                        <option>Šéf / Nadřízený</option>
-                        <option>Klient</option>
-                        <option>Partner / Partnerka</option>
-                        <option>Učitel / Profesor</option>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+                
+                <div class="space-y-2">
+                    <label class="text-[10px] uppercase tracking-widest text-gold font-bold ml-1">Whom / Komu</label>
+                    <select id="recipient" class="w-full bg-gray-50/50 dark:bg-[#111]/80 border border-gray-200 dark:border-[#333] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neonPurple focus:ring-1 focus:ring-neonPurple transition-all cursor-pointer text-gray-800 dark:text-gray-200">
+                        <option>Boss (Šéf)</option>
+                        <option>Client (Klient)</option>
+                        <option>Partner (Partner/ka)</option>
+                        <option>Landlord (Pronajímatel)</option>
+                        <option>Mother-in-law (Tchyně)</option>
                     </select>
-                    <div class="absolute right-4 top-3.5 pointer-events-none text-gray-500">▼</div>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] uppercase tracking-widest text-gold font-bold ml-1">Language / Jazyk</label>
+                    <select id="language" class="w-full bg-gray-50/50 dark:bg-[#111]/80 border border-gray-200 dark:border-[#333] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neonPurple focus:ring-1 focus:ring-neonPurple transition-all cursor-pointer text-gray-800 dark:text-gray-200">
+                        <option>🇨🇿 Čeština</option>
+                        <option>🇸🇰 Slovenčina</option>
+                        <option>🇺🇸 English (US)</option>
+                        <option>🇩🇪 Deutsch</option>
+                        <option>🇪🇸 Español</option>
+                        <option>🇫🇷 Français</option>
+                        </select>
                 </div>
             </div>
 
-            <div class="space-y-2 group">
-                <label class="text-xs text-gold font-semibold tracking-wide uppercase ml-1">Co se stalo?</label>
+            <div class="space-y-2 mb-6">
+                <label class="text-[10px] uppercase tracking-widest text-gold font-bold ml-1">Topic / O co jde?</label>
                 <textarea 
-                    id="reason"
+                    id="topic"
                     rows="2"
-                    placeholder="Např. Zaspal jsem, ujel mi vlak..." 
-                    class="w-full bg-[#111] text-gray-200 border border-[#333] rounded-xl px-4 py-3 focus:outline-none focus:border-neonPurple focus:ring-1 focus:ring-neonPurple transition-all duration-300 resize-none group-hover:border-gold/50 placeholder-gray-600"
+                    placeholder="Např. Late rent payment, Zaspal jsem..." 
+                    class="w-full bg-gray-50/50 dark:bg-[#111]/80 border border-gray-200 dark:border-[#333] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neonPurple focus:ring-1 focus:ring-neonPurple transition-all resize-none text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-600"
                 ></textarea>
             </div>
 
-            <div class="space-y-2 group">
-                <label class="text-xs text-gold font-semibold tracking-wide uppercase ml-1">Tón komunikace</label>
-                <div class="grid grid-cols-2 gap-3">
-                    <button type="button" class="tone-btn border border-neonPurple bg-neonPurple/10 text-neonPurple py-2 rounded-lg text-sm font-medium transition-all shadow-[0_0_15px_-5px_rgba(139,92,246,0.4)] active-tone">
-                        Profesionální
-                    </button>
-                    <button type="button" class="tone-btn border border-[#333] bg-[#111] text-gray-400 py-2 rounded-lg text-sm font-medium hover:border-gold/50 hover:text-gold transition-all">
-                        Lidský & Upřímný
-                    </button>
+            <div class="space-y-2 mb-8">
+                <label class="text-[10px] uppercase tracking-widest text-gold font-bold ml-1">Tone / Tón</label>
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" class="tone-btn px-4 py-2 rounded-full text-xs font-semibold border border-neonPurple bg-neonPurple/10 text-neonPurple shadow-[0_0_10px_rgba(139,92,246,0.3)] transition-all">Professional</button>
+                    <button type="button" class="tone-btn px-4 py-2 rounded-full text-xs font-medium border border-gray-300 dark:border-gray-700 hover:border-gold hover:text-gold transition-all dark:text-gray-400 text-gray-600">Friendly</button>
+                    <button type="button" class="tone-btn px-4 py-2 rounded-full text-xs font-medium border border-gray-300 dark:border-gray-700 hover:border-gold hover:text-gold transition-all dark:text-gray-400 text-gray-600">Apologetic</button>
+                    <button type="button" class="tone-btn px-4 py-2 rounded-full text-xs font-medium border border-gray-300 dark:border-gray-700 hover:border-gold hover:text-gold transition-all dark:text-gray-400 text-gray-600">Assertive</button>
                 </div>
             </div>
 
-            <button id="generate-btn" class="w-full relative group overflow-hidden rounded-xl py-4 mt-2 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
+            <button id="generate-btn" class="w-full relative group overflow-hidden rounded-xl py-4 transition-all hover:scale-[1.01] active:scale-[0.99] shadow-lg">
                 <div class="absolute inset-0 bg-gradient-to-r from-[#6D28D9] via-neonPurple to-[#6D28D9] opacity-90 group-hover:opacity-100 transition-opacity"></div>
-                
                 <div class="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover:animate-shine"></div>
-                
                 <div class="relative flex items-center justify-center gap-2 text-white font-bold tracking-wide">
-                    <span id="btn-text">YES GENEROVAT</span>
+                    <span id="btn-text">GENERATE DRAFTS</span>
                     <i data-lucide="sparkles" class="w-4 h-4"></i>
                 </div>
             </button>
-
         </div>
-    </div>
 
-    <div id="result-card" class="w-full max-w-md mt-6 animate-fade-in">
-        <div class="relative bg-panelBg border border-gold/20 rounded-2xl p-6 shadow-2xl">
-            <div class="absolute -top-3 left-6 bg-darkBg border border-gold/20 px-3 py-1 rounded-full text-[10px] text-gold uppercase tracking-wider">
-                Vygenerovaná omluva
+        <div id="results-container" class="w-full mt-10 grid grid-cols-1 gap-4 hidden">
+            <div class="text-left mb-2 pl-2">
+                <h3 class="text-sm font-semibold text-gold uppercase tracking-widest">Instant Drafts</h3>
             </div>
-            
-            <p id="result-text" class="text-gray-300 leading-relaxed text-sm font-light italic">
+
+            <div class="bg-white/80 dark:bg-[#0a0a0a]/90 border border-gold/30 rounded-xl p-5 shadow-lg hover:border-gold transition-colors cursor-pointer group animate-slide-up" style="animation-delay: 0.1s;">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-[10px] bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-gray-500 font-bold uppercase">Option 1: Professional</span>
+                    <i data-lucide="copy" class="w-3 h-3 text-gray-400 group-hover:text-gold"></i>
+                </div>
+                <p class="text-sm text-gray-700 dark:text-gray-300 italic leading-relaxed result-text-1">
+                    Generating...
                 </p>
+            </div>
 
-            <div class="mt-4 flex justify-end gap-3 border-t border-gray-800 pt-3">
-                <button class="flex items-center gap-2 text-xs text-gray-400 hover:text-white transition-colors">
-                    <i data-lucide="copy" class="w-3 h-3"></i> Kopírovat
-                </button>
-                <button class="flex items-center gap-2 text-xs text-neonPurple hover:text-[#A78BFA] transition-colors">
-                    <i data-lucide="send" class="w-3 h-3"></i> Odeslat
-                </button>
+            <div class="bg-white/80 dark:bg-[#0a0a0a]/90 border border-gray-200 dark:border-gray-800 rounded-xl p-5 shadow-lg hover:border-gold transition-colors cursor-pointer group animate-slide-up" style="animation-delay: 0.2s;">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-[10px] bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-gray-500 font-bold uppercase">Option 2: Concise</span>
+                    <i data-lucide="copy" class="w-3 h-3 text-gray-400 group-hover:text-gold"></i>
+                </div>
+                <p class="text-sm text-gray-700 dark:text-gray-300 italic leading-relaxed result-text-2">
+                    Generating...
+                </p>
+            </div>
+
+             <div class="bg-white/80 dark:bg-[#0a0a0a]/90 border border-gray-200 dark:border-gray-800 rounded-xl p-5 shadow-lg hover:border-gold transition-colors cursor-pointer group animate-slide-up" style="animation-delay: 0.3s;">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-[10px] bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-gray-500 font-bold uppercase">Option 3: Human</span>
+                    <i data-lucide="copy" class="w-3 h-3 text-gray-400 group-hover:text-gold"></i>
+                </div>
+                <p class="text-sm text-gray-700 dark:text-gray-300 italic leading-relaxed result-text-3">
+                    Generating...
+                </p>
             </div>
         </div>
-    </div>
+
+    </main>
+
+    <section class="w-full bg-white dark:bg-[#080808] py-16 border-t border-gray-200 dark:border-gray-800 flex flex-col items-center text-center">
+        <div class="max-w-xl px-6">
+            <h2 class="text-3xl font-bold mb-2 text-gray-900 dark:text-white">The Only Upgrade You Need.</h2>
+            <p class="text-gold font-medium mb-8">One-Time Payment. Lifetime Access.</p>
+            
+            <div class="relative group cursor-pointer">
+                <div class="absolute -inset-1 bg-gradient-to-r from-gold via-yellow-300 to-gold rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                
+                <div class="relative bg-white dark:bg-[#111] border border-gold/40 rounded-2xl p-8 flex flex-col items-center">
+                    <div class="text-6xl font-bold text-gray-900 dark:text-white mb-2">$79</div>
+                    <span class="text-gray-500 text-sm mb-6 uppercase tracking-wide">USD / One-time</span>
+                    
+                    <ul class="text-left space-y-3 mb-8 text-sm text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Zero Monthly Fees</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Unlimited Generation</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> All Future Updates</li>
+                    </ul>
+
+                    <button class="w-full bg-gray-900 dark:bg-white text-white dark:text-black font-bold py-3 rounded-xl hover:scale-105 transition-transform">
+                        GET LIFETIME ACCESS
+                    </button>
+                    <p class="mt-4 text-[10px] text-gray-400">Secure processing via Stripe</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="w-full py-8 text-center text-gray-500 text-xs bg-gray-50 dark:bg-black border-t border-gray-200 dark:border-gray-900">
+        <p>© 2026 YES Genius. Powered by Gemini 2.5 Flash.</p>
+    </footer>
 
     <script>
-        // 1. Inicializace ikonek
+        // Init Icons
         lucide.createIcons();
 
-        // 2. Elementy
-        const generateBtn = document.getElementById('generate-btn');
-        const btnText = document.getElementById('btn-text');
-        const resultCard = document.getElementById('result-card');
-        const resultText = document.getElementById('result-text');
-        const recipientInput = document.getElementById('recipient');
-        const reasonInput = document.getElementById('reason');
+        // --- 1. DARK MODE TOGGLE ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
 
-        // 3. Logika generování
-        generateBtn.addEventListener('click', () => {
-            // Změna tlačítka na "Generuji..."
-            const originalText = btnText.innerText;
-            btnText.innerText = "GENERUJI...";
-            generateBtn.disabled = true;
-            generateBtn.classList.add('opacity-75', 'cursor-not-allowed');
-
-            // Simulace API volání (2 sekundy)
-            setTimeout(() => {
-                const recipient = recipientInput.value;
-                const reason = reasonInput.value || "neznámý důvod";
-
-                // Jednoduchá šablona odpovědi (později napojíme na AI)
-                const mockResponse = `Vážený pane/paní (pro ${recipient}),\n\nomlouvám se za vzniklou situaci. Důvodem je ${reason}. Udělám vše pro to, abych to co nejdříve napravil. Děkuji za pochopení.`;
-
-                // Zobrazení výsledku
-                resultText.innerText = mockResponse;
-                resultCard.style.display = 'block';
-                
-                // Restart animace pro efekt příletu
-                resultCard.classList.remove('animate-fade-in');
-                void resultCard.offsetWidth; // Trigger reflow
-                resultCard.classList.add('animate-fade-in');
-
-                // Reset tlačítka
-                btnText.innerText = originalText;
-                generateBtn.disabled = false;
-                generateBtn.classList.remove('opacity-75', 'cursor-not-allowed');
-
-                // Re-inicializace ikonek (pokud by se ztratily)
-                lucide.createIcons();
-            }, 1500);
+        themeToggleBtn.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            if (htmlElement.classList.contains('dark')) {
+                themeToggleBtn.innerText = "SWITCH TO LIGHT MODE";
+            } else {
+                themeToggleBtn.innerText = "SWITCH TO DARK MODE";
+            }
         });
 
-        // 4. Přepínání stylů tlačítek (jen vizuální efekt)
+        // --- 2. TONE SELECTION ---
         const toneBtns = document.querySelectorAll('.tone-btn');
         toneBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
-                // Reset všech
+                // Reset styling
                 toneBtns.forEach(b => {
-                    b.classList.remove('border-neonPurple', 'bg-neonPurple/10', 'text-neonPurple', 'shadow-[0_0_15px_-5px_rgba(139,92,246,0.4)]');
-                    b.classList.add('border-[#333]', 'bg-[#111]', 'text-gray-400');
+                    b.classList.remove('border-neonPurple', 'bg-neonPurple/10', 'text-neonPurple', 'shadow-[0_0_10px_rgba(139,92,246,0.3)]');
+                    b.classList.add('border-gray-300', 'dark:border-gray-700', 'text-gray-600', 'dark:text-gray-400');
                 });
-                // Aktivace kliknutého
-                e.target.classList.remove('border-[#333]', 'bg-[#111]', 'text-gray-400');
-                e.target.classList.add('border-neonPurple', 'bg-neonPurple/10', 'text-neonPurple', 'shadow-[0_0_15px_-5px_rgba(139,92,246,0.4)]');
+                // Activate clicked
+                e.target.classList.remove('border-gray-300', 'dark:border-gray-700', 'text-gray-600', 'dark:text-gray-400');
+                e.target.classList.add('border-neonPurple', 'bg-neonPurple/10', 'text-neonPurple', 'shadow-[0_0_10px_rgba(139,92,246,0.3)]');
             });
+        });
+
+        // --- 3. GENERATION LOGIC (Simulated) ---
+        const generateBtn = document.getElementById('generate-btn');
+        const resultsContainer = document.getElementById('results-container');
+        const btnText = document.getElementById('btn-text');
+
+        generateBtn.addEventListener('click', () => {
+            const topic = document.getElementById('topic').value;
+            if(!topic) return; // Don't generate empty
+
+            // Loading State
+            btnText.innerText = "CRAFTING DIPLOMACY...";
+            generateBtn.classList.add('opacity-80', 'cursor-wait');
+            resultsContainer.classList.add('hidden');
+
+            // Simulate AI Delay (1.5s)
+            setTimeout(() => {
+                // Mock Data based on Topic
+                document.querySelector('.result-text-1').innerText = `Vážený/á [Jméno],\n\nrád bych vás informoval o situaci týkající se ${topic}. Bohužel došlo k nepředvídatelným okolnostem. Velmi se omlouvám a navrhuji následující řešení...`;
+                document.querySelector('.result-text-2').innerText = `Dobrý den,\n\npíši ohledně ${topic}. Omlouvám se za komplikace, pracuji na nápravě. Díky za trpělivost.`;
+                document.querySelector('.result-text-3').innerText = `Ahoj,\n\nmoc mě to mrzí, ale ${topic}. Vím, že to není ideální, ale vynahradím ti to! Díky, že jsi skvělý/á.`;
+
+                // Show Results
+                resultsContainer.classList.remove('hidden');
+                
+                // Reset Button
+                btnText.innerText = "GENERATE DRAFTS";
+                generateBtn.classList.remove('opacity-80', 'cursor-wait');
+                
+                // Scroll to results
+                resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            }, 1500);
         });
     </script>
 </body>
