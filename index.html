@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v1.6 (Luxury Dark + Smart UI) --- */
+        /* --- CSS: YES GENIUS v1.7 (Production Build) --- */
         :root {
             --bg-black: #000000;
             --card-bg: rgba(18, 18, 18, 0.95);
@@ -353,11 +353,13 @@
 </div>
 
 <script>
-    /* --- YES GENIUS v1.6 (Smart Inputs + Server) --- */
+    /* --- YES GENIUS v1.7 (PRODUCTION ENGINE) --- */
 
-    const PAYMENT_LINK = "https://your-payment-link.com/79usd"; 
+    // !!! ZDE VLOŽ SVŮJ PŘESNÝ ODKAZ NA PLATBU $79 !!!
+    const PAYMENT_LINK = https://buy.stripe.com/bJefZi4T3blacNUfeaa7C03; 
 
-    // DATA PRO NAŠEPTÁVAČE (Vrátili jsme seznamy!)
+    // --- DATABÁZE PŘEKLADŮ PRO UI ---
+    // (Obsahuje i seznamy pro našeptávače)
     const translations = {
         en: { 
             sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", 
@@ -375,7 +377,7 @@
             rsnList: ["Jdu pozdě", "Jsem nemocný/á", "Nestíhám termín", "Ruším plány", "Rodinné důvody", "Porucha auta"],
             styList: ["Profesionální", "Kreativní / Vtipný", "Dramatický", "Formální", "Neformální", "Omluvný"]
         },
-        // Ostatní jazyky fallbackují na EN data, ale mají přeložené UI (zjednodušeno pro přehlednost)
+        // Ostatní jazyky - UI fallback na EN, ale můžeme doplnit
         default: {
             sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", 
             fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", 
@@ -390,7 +392,7 @@
         return translations[lang] || translations['en']; 
     }
 
-    // --- LOGIKA UI (Smart Features - obnoveno) ---
+    // --- LOGIKA UI (Chování formuláře) ---
 
     // 1. Zobrazení/Skrytí Reset tlačítka
     function toggleReset(input) {
@@ -398,15 +400,15 @@
         btn.style.display = input.value.length > 0 ? 'block' : 'none';
     }
 
-    // 2. Vymazání a focus
+    // 2. Vymazání a focus (Obnoví našeptávač)
     function clearInput(id) {
         const input = document.getElementById(id);
         input.value = '';
         toggleReset(input);
-        setTimeout(() => { input.focus(); }, 50); // Vrátí focus, aby vyskočil datalist
+        setTimeout(() => { input.focus(); }, 50); 
     }
 
-    // 3. Naplnění Datalistů (Tohle chybělo ve v1.5!)
+    // 3. Naplnění Datalistů (Našeptávače)
     function populateDatalist(id, items) {
         const list = document.getElementById(id);
         if(!list) return;
@@ -418,7 +420,7 @@
         });
     }
 
-    // 4. Změna jazyka (Volá naplnění datalistů)
+    // 4. Změna jazyka
     function changeLanguage() {
         const lang = document.getElementById('lang-select').value;
         const t = getTexts(lang);
@@ -436,7 +438,7 @@
         // Placeholdery
         document.querySelectorAll('.smart-input').forEach(inp => inp.placeholder = t.ph);
 
-        // Přegenerování seznamů (Klíčové!)
+        // Přegenerování seznamů (Důležité pro Smart Inputs!)
         populateDatalist('recipients-list', t.recList);
         populateDatalist('reasons-list', t.rsnList);
         populateDatalist('styles-list', t.styList);
@@ -449,7 +451,7 @@
         else smsOption.innerText = "SMS / WhatsApp";
     }
 
-    // --- LOGIKA SERVERU (Fetch) ---
+    // --- LOGIKA BACKENDU (Komunikace se server.js) ---
 
     async function generovat() {
         const btn = document.getElementById('btn-generate');
@@ -465,14 +467,17 @@
             jazyk: document.getElementById('lang-select').value
         };
 
-        if(!requestData.adresat) { alert("Please specify a Recipient!"); return; }
+        // Jednoduchá validace
+        if(!requestData.adresat) { alert("Please specify a Recipient / Zadejte adresáta!"); return; }
 
+        // UI Loading State
         results.style.display = 'none';
         btn.style.opacity = '0.5';
+        btn.style.pointerEvents = 'none'; // Zákaz klikání
         loader.style.display = 'block';
 
         try {
-            // VOLÁNÍ SERVERU
+            // VOLÁNÍ TVÉHO API (server.js)
             const response = await fetch('/api/generovat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -480,20 +485,25 @@
             });
 
             if (!response.ok) throw new Error(`Server Error: ${response.status}`);
+            
             const data = await response.json();
 
+            // Očekáváme pole variant: { variants: ["Text 1", "Text 2", ...] }
             if (data.variants && Array.isArray(data.variants)) {
                 zobrazitVysledky(data.variants);
             } else {
-                throw new Error("Invalid format from server");
+                throw new Error("Invalid data format from AI");
             }
 
         } catch (error) {
-            console.error(error);
-            alert("Connection Error. Is server.js running?");
+            console.error("GEN ERROR:", error);
+            // Zobrazit chybu uživateli, pokud server nejede
+            alert("Connection Error: " + error.message + "\n\n(Ujistěte se, že server.js běží a máte API klíč.)");
         } finally {
+            // Reset stavu tlačítka
             loader.style.display = 'none';
             btn.style.opacity = '1';
+            btn.style.pointerEvents = 'auto';
         }
     }
 
@@ -506,11 +516,14 @@
         data.forEach(text => {
             const div = document.createElement('div');
             div.className = 'result-card';
+            // Ošetření uvozovek pro JS funkci
+            const safeText = text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            
             div.innerHTML = `
                 <div class="result-text">${text}</div>
                 <div class="action-row">
-                    <button class="btn-action" onclick="kopirovat(this, '${text.replace(/'/g, "\\'")}')">📋 ${t.copy}</button>
-                    <button class="btn-action" onclick="sdilet('${text.replace(/'/g, "\\'")}')">🔗 ${t.share}</button>
+                    <button class="btn-action" onclick="kopirovat(this, '${safeText}')">📋 ${t.copy}</button>
+                    <button class="btn-action" onclick="sdilet('${safeText}')">🔗 ${t.share}</button>
                 </div>
             `;
             container.appendChild(div);
@@ -534,7 +547,7 @@
 
     function koupit() { window.location.href = PAYMENT_LINK; }
     
-    // Inicializace
+    // Inicializace aplikace
     window.onload = function() { changeLanguage(); }
 </script>
 
