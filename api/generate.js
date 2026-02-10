@@ -29,9 +29,9 @@ export default async function handler(req) {
 
         const { topic, recipient, tone, language } = await req.json();
 
-        // 2. Prompt (Instrukce pro PRO model)
-        const prompt = `You are YES Genius, an expert diplomat.
-        Task: Write 3 distinct messages for a user sending a message to their ${recipient}.
+        // 2. Prompt
+        const prompt = `You are YES Genius.
+        Task: Write 3 messages for a user sending a message to their ${recipient}.
         Topic: ${topic}.
         Language: ${language}.
         Tone: ${tone}.
@@ -44,9 +44,10 @@ export default async function handler(req) {
             "option3": "Text 3"
         }`;
 
-        // 3. PŘÍMÉ VOLÁNÍ GEMINI 1.5 PRO
-        // Toto je aktuální vlajková loď Googlu.
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`, {
+        // 3. PŘÍMÉ VOLÁNÍ STABILNÍ API (v1)
+        // Změna: v1beta -> v1
+        // Model: gemini-1.5-flash
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -58,8 +59,8 @@ export default async function handler(req) {
 
         // 4. Debugging
         if (data.error) {
-            console.error("Google Pro Error:", data.error);
-            return new Response(JSON.stringify({ error: `Google Error: ${data.error.message}` }), { status: 500 });
+            console.error("Google Stable API Error:", data.error);
+            return new Response(JSON.stringify({ error: `Google v1 Error: ${data.error.message}` }), { status: 500 });
         }
 
         // 5. Zpracování
@@ -73,7 +74,12 @@ export default async function handler(req) {
         const lastBrace = candidate.lastIndexOf('}');
         
         if (firstBrace === -1 || lastBrace === -1) {
-            return new Response(JSON.stringify({ error: 'Invalid JSON from AI' }), { status: 500 });
+             // Fallback
+             return new Response(JSON.stringify({ 
+                option1: candidate, 
+                option2: "...", 
+                option3: "..." 
+            }), { status: 200 });
         }
         
         const cleanJson = candidate.substring(firstBrace, lastBrace + 1);
