@@ -1,60 +1,93 @@
 // soubor: api/generate.js
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+export const config = {
+    runtime: 'edge', // Používáme Edge pro maximální rychlost a jednoduchost
+};
 
-export default async function handler(req, res) {
-  // CORS
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+export default async function handler(req) {
+    // 1. CORS (Aby to fungovalo z prohlížeče)
+    if (req.method === 'OPTIONS') {
+        return new Response(null, {
+            status: 200,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'POST, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type',
+            },
+        });
+    }
 
-  if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+    if (req.method !== 'POST') {
+        return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405 });
+    }
 
-  try {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) return res.status(500).json({ error: 'API Key missing' });
+    try {
+        const apiKey = process.env.GEMINI_API_KEY;
+        if (!apiKey) {
+            return new Response(JSON.stringify({ error: 'API Key is missing' }), { status: 500 });
+        }
 
-    // Inicializace
-    const genAI = new GoogleGenerativeAI(apiKey);
-    
-    // ZDE JE OPRAVA: Používáme základní název. 
-    // S knihovnou verze 0.21.0 (kterou máš v package.json) toto MUSÍ fungovat.
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const { topic, recipient, tone, language } = await req.json();
 
-    const { topic, recipient, tone, language } = req.body;
+        // 2. Prompt
+        const prompt = `You are YES Genius.
+        Task: Write 3 messages for a user sending a message to their ${recipient}.
+        Topic: ${topic}.
+        Language: ${language}.
+        Tone: ${tone}.
+        
+        CRITICAL: Return ONLY a raw JSON object. No markdown. No intro.
+        Structure:
+        {
+            "option1": "Text 1",
+            "option2": "Text 2",
+            "option3": "Text 3"
+        }`;
 
-    const prompt = `You are YES Genius.
-    Task: Write 3 messages for a user sending a message to their ${recipient}.
-    Topic: ${topic}.
-    Language: ${language}.
-    Tone: ${tone}.
-    
-    CRITICAL: Return ONLY a raw JSON object. No markdown. No intro.
-    Structure:
-    {
-        "option1": "Text 1",
-        "option2": "Text 2",
-        "option3": "Text 3"
-    }`;
+        // 3. PŘÍMÉ VOLÁNÍ (Model: gemini-pro)
+        // Toto je ten rozdíl. Voláme starší, ale 100% stabilní model.
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: prompt }] }]
+            })
+        });
 
-    // Generování
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+        const data = await response.json();
 
-    // Čištění JSONu
-    const firstBrace = text.indexOf('{');
-    const lastBrace = text.lastIndexOf('}');
-    
-    if (firstBrace === -1) throw new Error("Invalid JSON format from AI");
-    
-    const cleanJson = text.substring(firstBrace, lastBrace + 1);
-    const parsedDrafts = JSON.parse(cleanJson);
+        // 4. Debugging chyb
+        if (data.error) {
+            return new Response(JSON.stringify({ error: `Google Error: ${data.error.message}` }), { status: 500 });
+        }
 
-    return res.status(200).json(parsedDrafts);
+        // 5. Čištění odpovědi
+        // Gemini Pro občas vrací text trochu jinak, musíme být opatrní
+        const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        
+        if (!candidate) {
+            return new Response(JSON.stringify({ error: 'AI returned empty response' }), { status: 500 });
+        }
 
-  } catch (error) {
-    console.error("Backend Error:", error);
-    return res.status(500).json({ error: error.message || "Unknown error" });
-  }
+        const firstBrace = candidate.indexOf('{');
+        const lastBrace = candidate.lastIndexOf('}');
+        
+        if (firstBrace === -1 || lastBrace === -1) {
+             // Fallback kdyby nevrátil JSON
+            return new Response(JSON.stringify({ 
+                option1: candidate, 
+                option2: "Could not parse options", 
+                option3: "Could not parse options" 
+            }), { status: 200 });
+        }
+        
+        const cleanJson = candidate.substring(firstBrace, lastBrace + 1);
+        
+        return new Response(cleanJson, {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+    } catch (error) {
+        return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    }
 }
