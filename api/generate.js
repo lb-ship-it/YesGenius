@@ -1,10 +1,11 @@
 // soubor: api/generate.js
+
 export const config = {
-    runtime: 'edge', // Používáme Edge pro maximální rychlost a jednoduchost
+    runtime: 'edge', // Edge pro rychlost
 };
 
 export default async function handler(req) {
-    // 1. CORS (Aby to fungovalo z prohlížeče)
+    // 1. Nastavení CORS
     if (req.method === 'OPTIONS') {
         return new Response(null, {
             status: 200,
@@ -28,9 +29,9 @@ export default async function handler(req) {
 
         const { topic, recipient, tone, language } = await req.json();
 
-        // 2. Prompt
-        const prompt = `You are YES Genius.
-        Task: Write 3 messages for a user sending a message to their ${recipient}.
+        // 2. Prompt (Instrukce pro PRO model)
+        const prompt = `You are YES Genius, an expert diplomat.
+        Task: Write 3 distinct messages for a user sending a message to their ${recipient}.
         Topic: ${topic}.
         Language: ${language}.
         Tone: ${tone}.
@@ -43,9 +44,9 @@ export default async function handler(req) {
             "option3": "Text 3"
         }`;
 
-        // 3. PŘÍMÉ VOLÁNÍ (Model: gemini-pro)
-        // Toto je ten rozdíl. Voláme starší, ale 100% stabilní model.
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+        // 3. PŘÍMÉ VOLÁNÍ GEMINI 1.5 PRO
+        // Toto je aktuální vlajková loď Googlu.
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -55,13 +56,13 @@ export default async function handler(req) {
 
         const data = await response.json();
 
-        // 4. Debugging chyb
+        // 4. Debugging
         if (data.error) {
+            console.error("Google Pro Error:", data.error);
             return new Response(JSON.stringify({ error: `Google Error: ${data.error.message}` }), { status: 500 });
         }
 
-        // 5. Čištění odpovědi
-        // Gemini Pro občas vrací text trochu jinak, musíme být opatrní
+        // 5. Zpracování
         const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text;
         
         if (!candidate) {
@@ -72,12 +73,7 @@ export default async function handler(req) {
         const lastBrace = candidate.lastIndexOf('}');
         
         if (firstBrace === -1 || lastBrace === -1) {
-             // Fallback kdyby nevrátil JSON
-            return new Response(JSON.stringify({ 
-                option1: candidate, 
-                option2: "Could not parse options", 
-                option3: "Could not parse options" 
-            }), { status: 200 });
+            return new Response(JSON.stringify({ error: 'Invalid JSON from AI' }), { status: 500 });
         }
         
         const cleanJson = candidate.substring(firstBrace, lastBrace + 1);
