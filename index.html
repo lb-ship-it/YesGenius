@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v1.3.2 (Luxury Dark) --- */
+        /* --- CSS: YES GENIUS v1.5 (Production) --- */
         :root {
             --bg-black: #000000;
             --card-bg: rgba(18, 18, 18, 0.95);
@@ -313,18 +313,7 @@
             <div class="smart-input-wrapper">
                 <input list="recipients-list" type="text" id="adresat" class="smart-input" placeholder="Select or type..." oninput="toggleReset(this)">
                 <datalist id="recipients-list">
-                    <option value="Boss">
-                    <option value="Partner">
-                    <option value="Wife">
-                    <option value="Husband">
-                    <option value="Girlfriend">
-                    <option value="Boyfriend">
-                    <option value="Client">
-                    <option value="Colleague">
-                    <option value="Mom">
-                    <option value="Dad">
-                    <option value="Teacher">
-                </datalist>
+                    </datalist>
                 <button class="reset-btn" onclick="clearInput('adresat')">✕</button>
             </div>
         </div>
@@ -334,15 +323,7 @@
             <div class="smart-input-wrapper">
                 <input list="reasons-list" id="kategorie" class="smart-input" placeholder="Select or type..." oninput="toggleReset(this)">
                 <datalist id="reasons-list">
-                    <option value="Running Late">
-                    <option value="Feeling Sick">
-                    <option value="Missed Deadline">
-                    <option value="Canceling Plans">
-                    <option value="Family Emergency">
-                    <option value="Car Trouble">
-                    <option value="Doctor's Appointment">
-                    <option value="Burnout / Mental Health">
-                </datalist>
+                     </datalist>
                 <button class="reset-btn" onclick="clearInput('kategorie')">✕</button>
             </div>
         </div>
@@ -352,14 +333,7 @@
             <div class="smart-input-wrapper">
                 <input list="styles-list" id="styl" class="smart-input" placeholder="Select or type..." oninput="toggleReset(this)">
                 <datalist id="styles-list">
-                    <option value="Professional">
-                    <option value="Creative / Funny">
-                    <option value="Dramatic / Urgent">
-                    <option value="Strictly Formal">
-                    <option value="Casual / Chill">
-                    <option value="Apologetic">
-                    <option value="Brief / Direct">
-                </datalist>
+                     </datalist>
                 <button class="reset-btn" onclick="clearInput('styl')">✕</button>
             </div>
         </div>
@@ -382,83 +356,71 @@
 </div>
 
 <script>
-    /* --- YES GENIUS v1.3.2 JAVASCRIPT --- */
+    /* --- YES GENIUS v1.5 (PROPOJENO S BACKENDEM) --- */
 
-    // 1. LINK NA PLATBU
     const PAYMENT_LINK = "https://your-payment-link.com/79usd"; 
 
-    // 2. PŘEKLADY - OPRAVA 3: Přidána podpora pro UK (Ukrajinštinu) a další jazyky, aby se překládaly labely
+    // PŘEKLADY UI (Frontend)
     const translations = {
         en: { 
             sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", 
             fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Tone & Style", 
-            ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vip: "UNLOCK FULL ($79)" 
+            ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vip: "UNLOCK FULL ($79)",
+            recList: ["Boss", "Partner", "Wife", "Husband", "Client", "Colleague", "Mom", "Teacher"],
+            rsnList: ["Running Late", "Feeling Sick", "Missed Deadline", "Family Emergency", "Car Trouble"],
+            styList: ["Professional", "Creative / Funny", "Dramatic", "Strictly Formal", "Casual"]
         },
         cs: { 
             sub: "DIGITÁLNÍ DIPLOMAT", verb: "GENERUJ!", 
             fmt: "Formát", tgt: "Adresát", rsn: "Důvod", sty: "Tón a Styl", 
-            ph: "Vyber nebo napiš...", res: "Tvé návrhy:", copy: "Kopírovat", share: "Sdílet", vip: "ODEMKNOUT FULL ($79)" 
+            ph: "Vyber nebo napiš...", res: "Tvé návrhy:", copy: "Kopírovat", share: "Sdílet", vip: "ODEMKNOUT FULL ($79)",
+            recList: ["Šéf", "Partner", "Manželka", "Manžel", "Klient", "Kolega", "Máma", "Učitel"],
+            rsnList: ["Jdu pozdě", "Jsem nemocný/á", "Nestíhám termín", "Rodinné důvody", "Porucha auta"],
+            styList: ["Profesionální", "Kreativní / Vtipný", "Dramatický", "Formální", "Neformální"]
         },
-        uk: { sub: "ЦИФРОВИЙ ДИПЛОМАТ", verb: "СТВОРИТИ!", fmt: "Формат", tgt: "Отримувач", rsn: "Причина", sty: "Стиль", ph: "Виберіть або введіть...", res: "Чернетки:", copy: "Копіювати", share: "Поділитися", vip: "РОЗБЛОКУВАТИ ($79)" },
-        de: { sub: "DIGITALER DIPLOMAT", verb: "GENERIEREN!", fmt: "Format", tgt: "Empfänger", rsn: "Grund", sty: "Stil", ph: "Wählen oder tippen...", res: "Entwürfe:", copy: "Kopieren", share: "Teilen", vip: "VOLLVERSION ($79)" },
-        es: { sub: "DIPLOMÁTICO DIGITAL", verb: "¡GENERAR!", fmt: "Formato", tgt: "Destinatario", rsn: "Razón", sty: "Estilo", ph: "Selecciona o escribe...", res: "Borradores:", copy: "Copiar", share: "Compartir", vip: "DESBLOQUEAR ($79)" },
-        fr: { sub: "DIPLOMATE NUMÉRIQUE", verb: "GÉNÉRER!", fmt: "Format", tgt: "Destinataire", rsn: "Raison", sty: "Style", ph: "Sélectionner ou écrire...", res: "Brouillons:", copy: "Copier", share: "Partager", vip: "DÉBLOQUER ($79)" },
-        it: { sub: "DIPLOMATICO DIGITALE", verb: "GENERA!", fmt: "Formato", tgt: "Destinatario", rsn: "Motivo", sty: "Stile", ph: "Seleziona o scrivi...", res: "Bozze:", copy: "Copia", share: "Condividi", vip: "SBLOCCA ($79)" },
-        pl: { sub: "CYFROWY DYPLOMATA", verb: "GENERUJ!", fmt: "Format", tgt: "Odbiorca", rsn: "Powód", sty: "Styl", ph: "Wybierz lub wpisz...", res: "Projekty:", copy: "Kopiuj", share: "Udostępnij", vip: "ODBLOKUJ ($79)" },
-        pt: { sub: "DIPLOMATA DIGITAL", verb: "GERAR!", fmt: "Formato", tgt: "Destinatário", rsn: "Razão", sty: "Estilo", ph: "Selecione ou digite...", res: "Rascunhos:", copy: "Copiar", share: "Compartilhar", vip: "DESBLOQUEAR ($79)" },
-        nl: { sub: "DIGITALE DIPLOMAAT", verb: "GENEREREN!", fmt: "Formaat", tgt: "Ontvanger", rsn: "Reden", sty: "Stijl", ph: "Selecteer of typ...", res: "Concepten:", copy: "Kopiëren", share: "Delen", vip: "ONTGRENDELEN ($79)" },
-        ru: { sub: "ЦИФРОВОЙ ДИПЛОМАТ", verb: "СОЗДАТЬ!", fmt: "Формат", tgt: "Получатель", rsn: "Причина", sty: "Стиль", ph: "Выберите или введите...", res: "Черновики:", copy: "Копировать", share: "Поделиться", vip: "РАЗБЛОКИРОВАТЬ ($79)" },
-        tr: { sub: "DİJİTAL DİPLOMAT", verb: "OLUŞTUR!", fmt: "Biçim", tgt: "Alıcı", rsn: "Sebep", sty: "Tarz", ph: "Seç veya yaz...", res: "Taslaklar:", copy: "Kopyala", share: "Paylaş", vip: "KİLİDİ AÇ ($79)" },
-        ar: { sub: "دبلوماسي رقمي", verb: "توليد!", fmt: "صيغة", tgt: "المستلم", rsn: "السبب", sty: "النمط", ph: "اختر أو اكتب...", res: "المسودات:", copy: "نسخ", share: "مشاركة", vip: "فتح النسخة الكاملة ($79)" },
-        zh: { sub: "数字外交官", verb: "生成！", fmt: "格式", tgt: "收件人", rsn: "原因", sty: "风格", ph: "选择或输入...", res: "草稿：", copy: "复制", share: "分享", vip: "解锁完整版 ($79)" },
-        ja: { sub: "デジタル外交官", verb: "作成！", fmt: "形式", tgt: "受信者", rsn: "理由", sty: "スタイル", ph: "選択または入力...", res: "下書き：", copy: "コピー", share: "共有", vip: "フル解除 ($79)" },
-        ko: { sub: "디지털 외교관", verb: "생성!", fmt: "형식", tgt: "수신자", rsn: "이유", sty: "스타일", ph: "선택 또는 입력...", res: "초안:", copy: "복사", share: "공유", vip: "잠금 해제 ($79)" },
-        hi: { sub: "डिजिटल राजनयिक", verb: "उत्पन्न करें!", fmt: "प्रारूप", tgt: "प्राप्तकर्ता", rsn: "कारण", sty: "शैली", ph: "चुनें या टाइप करें...", res: "مسودह:", copy: "कॉपी", share: "साझा करें", vip: "अनलॉक ($79)" },
-        sv: { sub: "DIGITAL DIPLOMAT", verb: "SKAPA!", fmt: "Format", tgt: "Mottagare", rsn: "Orsak", sty: "Stil", ph: "Välj eller skriv...", res: "Utkast:", copy: "Kopiera", share: "Dela", vip: "LÅS UPP ($79)" },
-        no: { sub: "DIGITAL DIPLOMAT", verb: "GENERER!", fmt: "Format", tgt: "Mottaker", rsn: "Årsak", sty: "Stil", ph: "Velg eller skriv...", res: "Utkast:", copy: "Kopier", share: "Del", vip: "LÅS OPP ($79)" },
-        da: { sub: "DIGITAL DIPLOMAT", verb: "GENERER!", fmt: "Format", tgt: "Modtager", rsn: "Årsag", sty: "Stil", ph: "Vælg eller skriv...", res: "Kladder:", copy: "Kopier", share: "Del", vip: "LÅS OP ($79)" },
-        fi: { sub: "DIGITAALINEN DIPLOMAATTI", verb: "LUO!", fmt: "Muoto", tgt: "Vastaanottaja", rsn: "Syy", sty: "Tyyli", ph: "Valitse tai kirjoita...", res: "Luonnokset:", copy: "Kopioi", share: "Jaa", vip: "AVAA ($79)" },
-        el: { sub: "ΨΗΦΙΑΚΟΣ ΔΙΠΛΩΜΑΤΗΣ", verb: "ΔΗΜΙΟΥΡΓΙΑ!", fmt: "Μορφή", tgt: "Παραλήπτης", rsn: "Αιτία", sty: "Ύφος", ph: "Επιλέξτε ή γράψτε...", res: "Προσχέδια:", copy: "Αντιγραφή", share: "Κοινοποίηση", vip: "ΞΕΚΛΕΙΔΩΜΑ ($79)" },
-        ro: { sub: "DIPLOMAT DIGITAL", verb: "GENEREAZĂ!", fmt: "Format", tgt: "Destinatar", rsn: "Motiv", sty: "Stil", ph: "Alege sau scrie...", res: "Ciorne:", copy: "Copiază", share: "Distribuie", vip: "DEBLOCARE ($79)" }
+        // Ostatní jazyky - fallback na EN pro data, ale UI se přeloží pokud doplníš
+        default: {
+            sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", 
+            fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", 
+            ph: "Select...", res: "Drafts:", copy: "Copy", share: "Share", vip: "UNLOCK FULL ($79)",
+            recList: ["Boss", "Partner", "Client", "Friend"], rsnList: ["Late", "Sick", "Emergency"], styList: ["Professional", "Casual"]
+        }
     };
 
     function getTexts(lang) {
-        return translations[lang] || translations['en'];
+        return translations[lang] || translations['en']; 
     }
 
-    // 3. LOGIKA APLIKACE 
-    
-    // Zobrazení tlačítka Reset
+    // --- LOGIKA UI ---
+
     function toggleReset(input) {
         const btn = input.parentElement.querySelector('.reset-btn');
-        if (input.value.length > 0) {
-            btn.style.display = 'block';
-        } else {
-            btn.style.display = 'none';
-        }
+        btn.style.display = input.value.length > 0 ? 'block' : 'none';
     }
 
-    // Funkce vymazání + okamžitý Focus (otevře nabídku)
     function clearInput(id) {
         const input = document.getElementById(id);
         input.value = '';
         toggleReset(input);
-        
-        // Okamžitě vrátí focus do pole
-        setTimeout(() => {
-            input.focus();
-        }, 50);
+        setTimeout(() => { input.focus(); }, 50);
     }
 
-    // Změna jazyka
+    function populateDatalist(id, items) {
+        const list = document.getElementById(id);
+        list.innerHTML = '';
+        items.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item;
+            list.appendChild(option);
+        });
+    }
+
     function changeLanguage() {
         const lang = document.getElementById('lang-select').value;
         const t = getTexts(lang);
 
         document.getElementById('subtitle').innerText = t.sub;
         document.getElementById('btn-verb').innerText = t.verb;
-        
-        // OPRAVA 3b: Správné mapování ID labelů na překlady
         document.getElementById('lbl-format').innerText = t.fmt;
         document.getElementById('lbl-target').innerText = t.tgt;
         document.getElementById('lbl-reason').innerText = t.rsn;
@@ -466,44 +428,71 @@
         document.getElementById('lbl-results').innerText = t.res;
         document.getElementById('vip-text').innerText = "👑 " + t.vip;
 
-        const inputs = document.querySelectorAll('.smart-input');
-        inputs.forEach(inp => inp.placeholder = t.ph);
+        document.querySelectorAll('.smart-input').forEach(inp => inp.placeholder = t.ph);
 
-        // Asijské chaty
+        populateDatalist('recipients-list', t.recList);
+        populateDatalist('reasons-list', t.rsnList);
+        populateDatalist('styles-list', t.styList);
+
         const smsOption = document.getElementById('opt-sms');
         if (['zh'].includes(lang)) smsOption.innerText = "WeChat / SMS";
         else if (['ja', 'th'].includes(lang)) smsOption.innerText = "LINE / SMS";
         else if (['ko'].includes(lang)) smsOption.innerText = "KakaoTalk / SMS";
-        else if (['vn'].includes(lang)) smsOption.innerText = "Zalo / SMS";
         else smsOption.innerText = "SMS / WhatsApp";
     }
 
-    // Generování (Demo)
-    function generovat() {
+    // --- REÁLNÉ GENEROVÁNÍ PŘES SERVER ---
+    async function generovat() {
         const btn = document.getElementById('btn-generate');
         const loader = document.getElementById('loader');
         const results = document.getElementById('vysledek');
-        const lang = document.getElementById('lang-select').value;
+        
+        // 1. Získání dat z formuláře
+        const requestData = {
+            format: document.getElementById('format').value,
+            adresat: document.getElementById('adresat').value,
+            kategorie: document.getElementById('kategorie').value, // Důvod
+            styl: document.getElementById('styl').value,
+            jazyk: document.getElementById('lang-select').value
+        };
 
-        const tgt = document.getElementById('adresat').value;
-        if(!tgt) { alert("Please fill in the Recipient!"); return; }
+        // Validace
+        if(!requestData.adresat) { alert("Please specify a Recipient!"); return; }
 
+        // UI Loading
         results.style.display = 'none';
         btn.style.opacity = '0.5';
         loader.style.display = 'block';
 
-        setTimeout(() => {
-            let mocks = [];
-            if (lang === 'cs') {
-                mocks = ["Omlouvám se, vyskytla se neodkladná záležitost.", "Bohužel to nestihnu kvůli dopravě.", "Není mi dobře, zůstanu doma."];
-            } else {
-                mocks = ["So sorry, urgent matter came up.", "Running late due to traffic!", "Feeling sick, staying home."];
+        try {
+            // 2. VOLÁNÍ TVÉHO SERVERU (server.js)
+            // Cesta '/api/generovat' odpovídá tvému vercel.json routování
+            const response = await fetch('/api/generovat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(requestData)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Server Error: ${response.status}`);
             }
 
-            zobrazitVysledky(mocks);
+            const data = await response.json();
+
+            // 3. Zobrazení výsledků z AI
+            if (data.variants && Array.isArray(data.variants)) {
+                zobrazitVysledky(data.variants);
+            } else {
+                throw new Error("Invalid format from server");
+            }
+
+        } catch (error) {
+            console.error(error);
+            alert("Connection Error: " + error.message + "\n(Check if server.js is running and API Key is set)");
+        } finally {
             loader.style.display = 'none';
             btn.style.opacity = '1';
-        }, 1200);
+        }
     }
 
     function zobrazitVysledky(data) {
@@ -543,7 +532,6 @@
 
     function koupit() { window.location.href = PAYMENT_LINK; }
     
-    // Inicializace při načtení
     window.onload = function() { changeLanguage(); }
 </script>
 
