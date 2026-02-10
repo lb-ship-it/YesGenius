@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v1.5 (Production) --- */
+        /* --- CSS: YES GENIUS v1.6 (Luxury Dark + Smart UI) --- */
         :root {
             --bg-black: #000000;
             --card-bg: rgba(18, 18, 18, 0.95);
@@ -312,8 +312,7 @@
             <label id="lbl-target">Recipient</label>
             <div class="smart-input-wrapper">
                 <input list="recipients-list" type="text" id="adresat" class="smart-input" placeholder="Select or type..." oninput="toggleReset(this)">
-                <datalist id="recipients-list">
-                    </datalist>
+                <datalist id="recipients-list"></datalist>
                 <button class="reset-btn" onclick="clearInput('adresat')">✕</button>
             </div>
         </div>
@@ -322,8 +321,7 @@
             <label id="lbl-reason">Reason</label>
             <div class="smart-input-wrapper">
                 <input list="reasons-list" id="kategorie" class="smart-input" placeholder="Select or type..." oninput="toggleReset(this)">
-                <datalist id="reasons-list">
-                     </datalist>
+                <datalist id="reasons-list"></datalist>
                 <button class="reset-btn" onclick="clearInput('kategorie')">✕</button>
             </div>
         </div>
@@ -332,8 +330,7 @@
             <label id="lbl-style">Style</label>
             <div class="smart-input-wrapper">
                 <input list="styles-list" id="styl" class="smart-input" placeholder="Select or type..." oninput="toggleReset(this)">
-                <datalist id="styles-list">
-                     </datalist>
+                <datalist id="styles-list"></datalist>
                 <button class="reset-btn" onclick="clearInput('styl')">✕</button>
             </div>
         </div>
@@ -341,7 +338,7 @@
         <button id="btn-generate" class="btn-main" onclick="generovat()">
             YES <span id="btn-verb">GENERATE!</span>
         </button>
-        <div id="loader">✨ AI is working...</div>
+        <div id="loader">✨ AI is negotiating...</div>
     </main>
 
     <section id="vysledek">
@@ -356,34 +353,36 @@
 </div>
 
 <script>
-    /* --- YES GENIUS v1.5 (PROPOJENO S BACKENDEM) --- */
+    /* --- YES GENIUS v1.6 (Smart Inputs + Server) --- */
 
     const PAYMENT_LINK = "https://your-payment-link.com/79usd"; 
 
-    // PŘEKLADY UI (Frontend)
+    // DATA PRO NAŠEPTÁVAČE (Vrátili jsme seznamy!)
     const translations = {
         en: { 
             sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", 
             fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Tone & Style", 
             ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vip: "UNLOCK FULL ($79)",
-            recList: ["Boss", "Partner", "Wife", "Husband", "Client", "Colleague", "Mom", "Teacher"],
-            rsnList: ["Running Late", "Feeling Sick", "Missed Deadline", "Family Emergency", "Car Trouble"],
-            styList: ["Professional", "Creative / Funny", "Dramatic", "Strictly Formal", "Casual"]
+            recList: ["Boss", "Partner", "Wife", "Husband", "Client", "Colleague", "Mom", "Dad", "Teacher"],
+            rsnList: ["Running Late", "Feeling Sick", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"],
+            styList: ["Professional", "Creative / Funny", "Dramatic", "Strictly Formal", "Casual", "Apologetic"]
         },
         cs: { 
             sub: "DIGITÁLNÍ DIPLOMAT", verb: "GENERUJ!", 
             fmt: "Formát", tgt: "Adresát", rsn: "Důvod", sty: "Tón a Styl", 
             ph: "Vyber nebo napiš...", res: "Tvé návrhy:", copy: "Kopírovat", share: "Sdílet", vip: "ODEMKNOUT FULL ($79)",
-            recList: ["Šéf", "Partner", "Manželka", "Manžel", "Klient", "Kolega", "Máma", "Učitel"],
-            rsnList: ["Jdu pozdě", "Jsem nemocný/á", "Nestíhám termín", "Rodinné důvody", "Porucha auta"],
-            styList: ["Profesionální", "Kreativní / Vtipný", "Dramatický", "Formální", "Neformální"]
+            recList: ["Šéf", "Partner", "Manželka", "Manžel", "Klient", "Kolega", "Máma", "Táta", "Učitel"],
+            rsnList: ["Jdu pozdě", "Jsem nemocný/á", "Nestíhám termín", "Ruším plány", "Rodinné důvody", "Porucha auta"],
+            styList: ["Profesionální", "Kreativní / Vtipný", "Dramatický", "Formální", "Neformální", "Omluvný"]
         },
-        // Ostatní jazyky - fallback na EN pro data, ale UI se přeloží pokud doplníš
+        // Ostatní jazyky fallbackují na EN data, ale mají přeložené UI (zjednodušeno pro přehlednost)
         default: {
             sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", 
             fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", 
             ph: "Select...", res: "Drafts:", copy: "Copy", share: "Share", vip: "UNLOCK FULL ($79)",
-            recList: ["Boss", "Partner", "Client", "Friend"], rsnList: ["Late", "Sick", "Emergency"], styList: ["Professional", "Casual"]
+            recList: ["Boss", "Partner", "Client", "Friend"], 
+            rsnList: ["Late", "Sick", "Emergency"], 
+            styList: ["Professional", "Casual"]
         }
     };
 
@@ -391,22 +390,26 @@
         return translations[lang] || translations['en']; 
     }
 
-    // --- LOGIKA UI ---
+    // --- LOGIKA UI (Smart Features - obnoveno) ---
 
+    // 1. Zobrazení/Skrytí Reset tlačítka
     function toggleReset(input) {
         const btn = input.parentElement.querySelector('.reset-btn');
         btn.style.display = input.value.length > 0 ? 'block' : 'none';
     }
 
+    // 2. Vymazání a focus
     function clearInput(id) {
         const input = document.getElementById(id);
         input.value = '';
         toggleReset(input);
-        setTimeout(() => { input.focus(); }, 50);
+        setTimeout(() => { input.focus(); }, 50); // Vrátí focus, aby vyskočil datalist
     }
 
+    // 3. Naplnění Datalistů (Tohle chybělo ve v1.5!)
     function populateDatalist(id, items) {
         const list = document.getElementById(id);
+        if(!list) return;
         list.innerHTML = '';
         items.forEach(item => {
             const option = document.createElement('option');
@@ -415,10 +418,12 @@
         });
     }
 
+    // 4. Změna jazyka (Volá naplnění datalistů)
     function changeLanguage() {
         const lang = document.getElementById('lang-select').value;
         const t = getTexts(lang);
 
+        // UI Texty
         document.getElementById('subtitle').innerText = t.sub;
         document.getElementById('btn-verb').innerText = t.verb;
         document.getElementById('lbl-format').innerText = t.fmt;
@@ -428,12 +433,15 @@
         document.getElementById('lbl-results').innerText = t.res;
         document.getElementById('vip-text').innerText = "👑 " + t.vip;
 
+        // Placeholdery
         document.querySelectorAll('.smart-input').forEach(inp => inp.placeholder = t.ph);
 
+        // Přegenerování seznamů (Klíčové!)
         populateDatalist('recipients-list', t.recList);
         populateDatalist('reasons-list', t.rsnList);
         populateDatalist('styles-list', t.styList);
 
+        // Asijské chaty
         const smsOption = document.getElementById('opt-sms');
         if (['zh'].includes(lang)) smsOption.innerText = "WeChat / SMS";
         else if (['ja', 'th'].includes(lang)) smsOption.innerText = "LINE / SMS";
@@ -441,45 +449,39 @@
         else smsOption.innerText = "SMS / WhatsApp";
     }
 
-    // --- REÁLNÉ GENEROVÁNÍ PŘES SERVER ---
+    // --- LOGIKA SERVERU (Fetch) ---
+
     async function generovat() {
         const btn = document.getElementById('btn-generate');
         const loader = document.getElementById('loader');
         const results = document.getElementById('vysledek');
         
-        // 1. Získání dat z formuláře
+        // Data z formuláře
         const requestData = {
             format: document.getElementById('format').value,
             adresat: document.getElementById('adresat').value,
-            kategorie: document.getElementById('kategorie').value, // Důvod
+            kategorie: document.getElementById('kategorie').value, 
             styl: document.getElementById('styl').value,
             jazyk: document.getElementById('lang-select').value
         };
 
-        // Validace
         if(!requestData.adresat) { alert("Please specify a Recipient!"); return; }
 
-        // UI Loading
         results.style.display = 'none';
         btn.style.opacity = '0.5';
         loader.style.display = 'block';
 
         try {
-            // 2. VOLÁNÍ TVÉHO SERVERU (server.js)
-            // Cesta '/api/generovat' odpovídá tvému vercel.json routování
+            // VOLÁNÍ SERVERU
             const response = await fetch('/api/generovat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestData)
             });
 
-            if (!response.ok) {
-                throw new Error(`Server Error: ${response.status}`);
-            }
-
+            if (!response.ok) throw new Error(`Server Error: ${response.status}`);
             const data = await response.json();
 
-            // 3. Zobrazení výsledků z AI
             if (data.variants && Array.isArray(data.variants)) {
                 zobrazitVysledky(data.variants);
             } else {
@@ -488,7 +490,7 @@
 
         } catch (error) {
             console.error(error);
-            alert("Connection Error: " + error.message + "\n(Check if server.js is running and API Key is set)");
+            alert("Connection Error. Is server.js running?");
         } finally {
             loader.style.display = 'none';
             btn.style.opacity = '1';
@@ -530,11 +532,11 @@
         else kopirovat(this, text);
     }
 
-    function koupit() { window.location.href = https://buy.stripe.com/bJefZi4T3blacNUfeaa7C03; }
+    function koupit() { window.location.href = PAYMENT_LINK; }
     
+    // Inicializace
     window.onload = function() { changeLanguage(); }
 </script>
 
 </body>
 </html>
-
