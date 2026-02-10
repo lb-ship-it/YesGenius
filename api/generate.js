@@ -2,29 +2,24 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 export default async function handler(req, res) {
+  // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
     const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      return res.status(500).json({ error: 'Server Config Error: API Key missing' });
-    }
+    if (!apiKey) return res.status(500).json({ error: 'API Key missing' });
 
+    // Inicializace
     const genAI = new GoogleGenerativeAI(apiKey);
     
-    // ZDE JE KLÍČOVÁ ZMĚNA:
-    // Použijeme 'gemini-1.5-flash-latest', což s novou knihovnou (0.21.0) funguje perfektně.
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+    // ZDE JE OPRAVA: Používáme základní název. 
+    // S knihovnou verze 0.21.0 (kterou máš v package.json) toto MUSÍ fungovat.
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const { topic, recipient, tone, language } = req.body;
 
@@ -42,17 +37,17 @@ export default async function handler(req, res) {
         "option3": "Text 3"
     }`;
 
+    // Generování
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
 
+    // Čištění JSONu
     const firstBrace = text.indexOf('{');
     const lastBrace = text.lastIndexOf('}');
-
-    if (firstBrace === -1 || lastBrace === -1) {
-        return res.status(500).json({ error: 'AI Error: Invalid JSON format.' });
-    }
-
+    
+    if (firstBrace === -1) throw new Error("Invalid JSON format from AI");
+    
     const cleanJson = text.substring(firstBrace, lastBrace + 1);
     const parsedDrafts = JSON.parse(cleanJson);
 
@@ -60,6 +55,6 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error("Backend Error:", error);
-    return res.status(500).json({ error: `Backend Error: ${error.message}` });
+    return res.status(500).json({ error: error.message || "Unknown error" });
   }
 }
