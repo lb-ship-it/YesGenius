@@ -1,91 +1,58 @@
-// Poznámka: Žádný 'runtime: edge'. Používáme standardní Node.js pro maximální kompatibilitu.
-
 export default async function handler(req, res) {
-    // 1. CORS (Aby frontend mohl komunikovat s backendem)
+    // 1. Nastavení CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    // Rychlá odpověď pro prohlížeč
-    if (req.method === 'OPTIONS') {
-        return res.status(200).end();
-    }
-
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
-    }
+    if (req.method === 'OPTIONS') return res.status(200).end();
+    if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
     try {
-        // Čištění klíče od případných mezer
-        const apiKey = process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.trim() : "";
-        
-        if (!apiKey) {
-            console.error("Chybí API klíč");
-            return res.status(500).json({ error: 'Server Error: Chybí API klíč.' });
-        }
+        const apiKey = process.env.GEMINI_API_KEY;
+        if (!apiKey) throw new Error("Chybí GEMINI_API_KEY");
 
-        // Data z frontendu
-        const { jazyk, format, adresat, kategorie, styl } = req.body;
+        const { format, adresat, kategorie, styl, jazyk } = req.body;
 
-        // Prompt (přesně podle tvého server.js)
-        const prompt = `Jsi "Excuse Genius". Vymysli 3 RŮZNÉ varianty omluvy/zprávy.
+        // 2. Prompt (stejný jako v tvém server.js)
+        const prompt = `Jsi "Excuse Genius". Vymysli 3 RŮZNÉ varianty omluvy.
         Jazyk: ${jazyk}. Typ: ${format}. Komu: ${adresat}. Důvod: ${kategorie}. Styl: ${styl}.
-        
-        DŮLEŽITÉ: Odpověz POUZE čistým JSON polem stringů. Žádný markdown.
-        Příklad výstupu: ["Text 1", "Text 2", "Text 3"]`;
+        Odpověz POUZE jako JSON pole stringů.`;
 
-        // 2. VOLÁNÍ GOOGLE API
-        // Používáme 'gemini-1.5-flash' (v1beta). Toto je jediná správná kombinace.
-        // Tvůj server.js měl '2.5-flash', což neexistuje.
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+        // 3. VOLÁNÍ API - OPRAVENO NA gemini-1.5-flash (v1beta)
+        // Toto je verze, která funguje s většinou klíčů.
+        const apiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }]
-            })
+            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
         });
 
-        const data = await response.json();
+        const data = await apiResponse.json();
 
-        // Debugging chyb přímo od Googlu
         if (data.error) {
-            console.error("Google API Error:", JSON.stringify(data.error));
-            // Pokud Google vrátí 404, znamená to problém s klíčem/projektem, ne s kódem
-            return res.status(500).json({ error: `Google Error: ${data.error.message}` });
+            console.error("Google Error:", data.error);
+            return res.status(500).json({ error: data.error.message });
         }
 
-        // 3. Zpracování odpovědi (logika z tvého server.js)
-        let text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        
-        if (!text) {
-            return res.status(500).json({ error: 'AI nevrátila žádný text.' });
-        }
-
-        // Odstranění markdownu ```json ... ```
+        // 4. Zpracování (stejné jako v tvém server.js)
+        let text = data.candidates?.[0]?.content?.parts?.[0]?.text || "[]";
         text = text.replace(/```json/g, "").replace(/```/g, "").trim();
-
-        // Najdeme hranaté závorky []
-        const firstBracket = text.indexOf('[');
-        const lastBracket = text.lastIndexOf(']');
         
         let variants = [];
-        if (firstBracket !== -1 && lastBracket !== -1) {
-            try {
-                // Vyřízneme jen to pole
-                const jsonStr = text.substring(firstBracket, lastBracket + 1);
-                variants = JSON.parse(jsonStr);
-            } catch (e) {
-                // Fallback
-                variants = [text];
+        try { 
+            // Najdeme začátek a konec JSON pole pro jistotu
+            const start = text.indexOf('[');
+            const end = text.lastIndexOf(']');
+            if (start !== -1 && end !== -1) {
+                text = text.substring(start, end + 1);
             }
-        } else {
-            variants = [text];
+            variants = JSON.parse(text); 
+        } catch (e) { 
+            variants = [text]; 
         }
 
         return res.status(200).json({ variants });
 
-    } catch (error) {
-        console.error("Server Error:", error);
-        return res.status(500).json({ error: error.message });
+    } catch (e) {
+        return res.status(500).json({ error: e.message });
     }
 }
