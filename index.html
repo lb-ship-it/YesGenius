@@ -102,13 +102,13 @@
                         <option value="English (US)">🇺🇸 English (US)</option>
                         <option value="Czech">🇨🇿 Čeština</option>
                         <option value="Slovak">🇸🇰 Slovenčina</option>
+                        <option value="German">🇩🇪 Deutsch</option>
+                        <option value="Ukrainian">🇺🇦 Українська</option>
                         <option value="Polish">🇵🇱 Polski</option>
                         <option value="Russian">🇷🇺 Русский</option>
-                        <option value="German">🇩🇪 Deutsch</option>
                         <option value="French">🇫🇷 Français</option>
                         <option value="Spanish">🇪🇸 Español</option>
                         <option value="Italian">🇮🇹 Italiano</option>
-                        <option value="Ukrainian">🇺🇦 Українська</option>
                         <option value="Portuguese">🇵🇹 Português</option>
                         <option value="Chinese">🇨🇳 中文</option>
                         <option value="Japanese">🇯🇵 日本語</option>
@@ -274,8 +274,16 @@
                 });
 
                 const drafts = await response.json();
+                
+                // DEBUG: Výpis do konzole prohlížeče
+                console.log("Data received from backend:", drafts);
 
                 if (drafts.error) throw new Error(drafts.error);
+
+                // Kontrola dat
+                if (!drafts.option1) {
+                    throw new Error("Received empty data. Check backend logs.");
+                }
 
                 // Update UI
                 document.getElementById('result-text-1').innerText = drafts.option1;
@@ -306,7 +314,6 @@
         // STRIPE LOGIC
         const checkoutButton = document.getElementById('checkout-button');
         checkoutButton.addEventListener('click', () => {
-             // Zde později vložíš Stripe logiku
              alert("Stripe is integrated! Add your Payment Link in the code.");
         });
     </script>
