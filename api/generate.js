@@ -1,7 +1,8 @@
 // soubor: api/generate.js
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 export default async function handler(req, res) {
-  // 1. Nastavení CORS
+  // 1. CORS (Standardní hlavičky pro prohlížeč)
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -15,13 +16,22 @@ export default async function handler(req, res) {
   }
 
   try {
+    // 2. Kontrola klíče
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
+      console.error("API Key missing on server.");
       return res.status(500).json({ error: 'Server Config Error: API Key missing' });
     }
 
+    // 3. Inicializace Google AI (Oficiální cesta)
+    const genAI = new GoogleGenerativeAI(apiKey);
+    
+    // Zde definujeme model. 'gemini-1.5-flash' je standardní alias v SDK.
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
     const { topic, recipient, tone, language } = req.body;
 
+    // 4. Prompt
     const prompt = `You are YES Genius.
     Task: Write 3 messages for a user sending a message to their ${recipient}.
     Topic: ${topic}.
@@ -36,39 +46,27 @@ export default async function handler(req, res) {
         "option3": "Text 3"
     }`;
 
-    // ZMĚNA: Používáme přesnou verzi 'gemini-1.5-flash-001'
-    // Toto je "betonová" verze, která nikam nezmizí.
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-001:generateContent?key=${apiKey}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }]
-      })
-    });
+    // 5. Generování obsahu přes SDK
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
 
-    const data = await response.json();
-
-    if (data.error) {
-      console.error("Google API Error:", JSON.stringify(data.error));
-      // Pokud by i tohle selhalo, vypíšeme přesně proč
-      return res.status(500).json({ error: `Google Error: ${data.error.message}` });
-    }
-
-    const rawText = data.candidates[0].content.parts[0].text;
-    const firstBrace = rawText.indexOf('{');
-    const lastBrace = rawText.lastIndexOf('}');
+    // 6. Čištění JSONu (Pro jistotu)
+    const firstBrace = text.indexOf('{');
+    const lastBrace = text.lastIndexOf('}');
 
     if (firstBrace === -1 || lastBrace === -1) {
-      return res.status(500).json({ error: 'AI Error: Invalid JSON format.' });
+        console.error("AI Output:", text);
+        return res.status(500).json({ error: 'AI Error: Invalid JSON format.' });
     }
 
-    const cleanJson = rawText.substring(firstBrace, lastBrace + 1);
+    const cleanJson = text.substring(firstBrace, lastBrace + 1);
     const parsedDrafts = JSON.parse(cleanJson);
 
     return res.status(200).json(parsedDrafts);
 
   } catch (error) {
-    console.error("Server Internal Error:", error);
-    return res.status(500).json({ error: `Server Error: ${error.message}` });
+    console.error("Server Error:", error);
+    return res.status(500).json({ error: `Backend Error: ${error.message}` });
   }
 }
