@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-    // CORS (Povolení přístupu)
+    // 1. Nastavení CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -10,18 +10,17 @@ export default async function handler(req, res) {
     try {
         if (!process.env.GEMINI_API_KEY) throw new Error("Chybí GEMINI_API_KEY");
 
-        // Data z tvého index.html
         const { format, adresat, kategorie, styl, jazyk } = req.body;
 
-        // Prompt
         const prompt = `Jsi "Excuse Genius". Vymysli 3 RŮZNÉ varianty omluvy/zprávy.
         Jazyk: ${jazyk}. Typ: ${format}. Komu: ${adresat}. Důvod: ${kategorie}. Styl: ${styl}.
         
-        DŮLEŽITÉ: Odpověz POUZE čistým JSON polem stringů. Žádný markdown, žádné "json" na začátku.
-        Příklad výstupu: ["Text 1", "Text 2", "Text 3"]`;
+        DŮLEŽITÉ: Odpověz POUZE čistým JSON polem stringů. Žádný markdown.
+        Příklad: ["Text 1", "Text 2", "Text 3"]`;
 
-        // VOLÁNÍ API - OPRAVENO NA EXISTUJÍCÍ MODEL gemini-1.5-flash
-        const apiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+        // --- ZMĚNA ZDE ---
+        // Přešli jsme z "v1beta" na stabilní "v1", kde model Flash bezpečně bydlí.
+        const apiResponse = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
@@ -29,19 +28,16 @@ export default async function handler(req, res) {
 
         const data = await apiResponse.json();
 
-        // Kontrola chyb od Googlu
         if (data.error) {
             console.error("Google Error:", data.error);
-            return res.status(500).json({ error: data.error.message });
+            // Detailní výpis chyby, kdyby se náhodou něco pokazilo
+            return res.status(500).json({ error: `Google API Error: ${data.error.message}` });
         }
 
-        // Zpracování textu
         let text = data.candidates?.[0]?.content?.parts?.[0]?.text || "[]";
-        
-        // Čištění bordelu (markdownu)
         text = text.replace(/```json/g, "").replace(/```/g, "").trim();
         
-        // Extrakce JSONu (pokud tam je balast okolo)
+        // Pojistka pro extrakci JSONu
         const firstBracket = text.indexOf('[');
         const lastBracket = text.lastIndexOf(']');
         if (firstBracket !== -1 && lastBracket !== -1) {
@@ -52,8 +48,7 @@ export default async function handler(req, res) {
         try { 
             variants = JSON.parse(text); 
         } catch (e) { 
-            console.error("Chyba parsování:", text);
-            variants = [text]; // Fallback, vrátí aspoň surový text
+            variants = [text]; // Fallback: vrátí surový text, když selže JSON
         }
 
         return res.status(200).json({ variants });
