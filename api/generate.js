@@ -2,7 +2,6 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 export default async function handler(req, res) {
-  // 1. CORS (Standardní hlavičky pro prohlížeč)
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -16,22 +15,19 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 2. Kontrola klíče
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      console.error("API Key missing on server.");
       return res.status(500).json({ error: 'Server Config Error: API Key missing' });
     }
 
-    // 3. Inicializace Google AI (Oficiální cesta)
     const genAI = new GoogleGenerativeAI(apiKey);
     
-    // Zde definujeme model. 'gemini-1.5-flash' je standardní alias v SDK.
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    // ZDE JE KLÍČOVÁ ZMĚNA:
+    // Použijeme 'gemini-1.5-flash-latest', což s novou knihovnou (0.21.0) funguje perfektně.
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
     const { topic, recipient, tone, language } = req.body;
 
-    // 4. Prompt
     const prompt = `You are YES Genius.
     Task: Write 3 messages for a user sending a message to their ${recipient}.
     Topic: ${topic}.
@@ -46,17 +42,14 @@ export default async function handler(req, res) {
         "option3": "Text 3"
     }`;
 
-    // 5. Generování obsahu přes SDK
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
 
-    // 6. Čištění JSONu (Pro jistotu)
     const firstBrace = text.indexOf('{');
     const lastBrace = text.lastIndexOf('}');
 
     if (firstBrace === -1 || lastBrace === -1) {
-        console.error("AI Output:", text);
         return res.status(500).json({ error: 'AI Error: Invalid JSON format.' });
     }
 
@@ -66,7 +59,7 @@ export default async function handler(req, res) {
     return res.status(200).json(parsedDrafts);
 
   } catch (error) {
-    console.error("Server Error:", error);
+    console.error("Backend Error:", error);
     return res.status(500).json({ error: `Backend Error: ${error.message}` });
   }
 }
