@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v1.7 (Production Build) --- */
+        /* --- CSS: YES GENIUS v1.9 (FULL LUXURY) --- */
         :root {
             --bg-black: #000000;
             --card-bg: rgba(18, 18, 18, 0.95);
@@ -312,7 +312,8 @@
             <label id="lbl-target">Recipient</label>
             <div class="smart-input-wrapper">
                 <input list="recipients-list" type="text" id="adresat" class="smart-input" placeholder="Select or type..." oninput="toggleReset(this)">
-                <datalist id="recipients-list"></datalist>
+                <datalist id="recipients-list">
+                    </datalist>
                 <button class="reset-btn" onclick="clearInput('adresat')">✕</button>
             </div>
         </div>
@@ -321,7 +322,8 @@
             <label id="lbl-reason">Reason</label>
             <div class="smart-input-wrapper">
                 <input list="reasons-list" id="kategorie" class="smart-input" placeholder="Select or type..." oninput="toggleReset(this)">
-                <datalist id="reasons-list"></datalist>
+                <datalist id="reasons-list">
+                    </datalist>
                 <button class="reset-btn" onclick="clearInput('kategorie')">✕</button>
             </div>
         </div>
@@ -330,7 +332,8 @@
             <label id="lbl-style">Style</label>
             <div class="smart-input-wrapper">
                 <input list="styles-list" id="styl" class="smart-input" placeholder="Select or type..." oninput="toggleReset(this)">
-                <datalist id="styles-list"></datalist>
+                <datalist id="styles-list">
+                    </datalist>
                 <button class="reset-btn" onclick="clearInput('styl')">✕</button>
             </div>
         </div>
@@ -353,38 +356,39 @@
 </div>
 
 <script>
-    /* --- YES GENIUS v1.7 (PRODUCTION ENGINE) --- */
+    /* --- YES GENIUS v1.9 (COMPLETE EDITION) --- */
 
-    // !!! ZDE VLOŽ SVŮJ PŘESNÝ ODKAZ NA PLATBU $79 !!!
-    const PAYMENT_LINK = https://buy.stripe.com/bJefZi4T3blacNUfeaa7C03; 
+    // !!! TVŮJ FUNKČNÍ ODLAZ NA PLATBU !!!
+    const PAYMENT_LINK = "https://buy.stripe.com/bJefZi4T3blacNUfeaa7C03"; 
 
-    // --- DATABÁZE PŘEKLADŮ PRO UI ---
-    // (Obsahuje i seznamy pro našeptávače)
+    // --- DATABÁZE PŘEKLADŮ A SEZNAMŮ (VŠECHNY MOŽNOSTI ZPĚT) ---
     const translations = {
         en: { 
             sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", 
             fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Tone & Style", 
             ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vip: "UNLOCK FULL ($79)",
-            recList: ["Boss", "Partner", "Wife", "Husband", "Client", "Colleague", "Mom", "Dad", "Teacher"],
-            rsnList: ["Running Late", "Feeling Sick", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"],
-            styList: ["Professional", "Creative / Funny", "Dramatic", "Strictly Formal", "Casual", "Apologetic"]
+            // ZDE JSOU VRÁCENY VŠECHNY MOŽNOSTI V AJ
+            recList: ["Boss", "Partner", "Wife", "Husband", "Girlfriend", "Boyfriend", "Client", "Colleague", "Mom", "Dad", "Teacher", "Coach"],
+            rsnList: ["Running Late", "Feeling Sick", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble", "Doctor's Appointment", "Burnout / Mental Health"],
+            styList: ["Professional", "Creative / Funny", "Dramatic / Urgent", "Strictly Formal", "Casual / Chill", "Apologetic", "Brief / Direct"]
         },
         cs: { 
             sub: "DIGITÁLNÍ DIPLOMAT", verb: "GENERUJ!", 
             fmt: "Formát", tgt: "Adresát", rsn: "Důvod", sty: "Tón a Styl", 
             ph: "Vyber nebo napiš...", res: "Tvé návrhy:", copy: "Kopírovat", share: "Sdílet", vip: "ODEMKNOUT FULL ($79)",
-            recList: ["Šéf", "Partner", "Manželka", "Manžel", "Klient", "Kolega", "Máma", "Táta", "Učitel"],
-            rsnList: ["Jdu pozdě", "Jsem nemocný/á", "Nestíhám termín", "Ruším plány", "Rodinné důvody", "Porucha auta"],
-            styList: ["Profesionální", "Kreativní / Vtipný", "Dramatický", "Formální", "Neformální", "Omluvný"]
+            // ZDE JSOU VRÁCENY PŘEKLADY DO ČEŠTINY
+            recList: ["Šéf", "Partner", "Manželka", "Manžel", "Přítelkyně", "Přítel", "Klient", "Kolega", "Máma", "Táta", "Učitel", "Trenér"],
+            rsnList: ["Jdu pozdě", "Jsem nemocný/á", "Nestíhám termín", "Ruším plány", "Rodinné důvody", "Porucha auta", "Lékař", "Vyhoření / Volno"],
+            styList: ["Profesionální", "Kreativní / Vtipný", "Dramatický", "Formální", "Neformální", "Omluvný", "Stručný"]
         },
-        // Ostatní jazyky - UI fallback na EN, ale můžeme doplnit
+        // Ostatní jazyky - Fallback UI (data bereme z EN, aby byl seznam plný)
         default: {
             sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", 
             fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", 
             ph: "Select...", res: "Drafts:", copy: "Copy", share: "Share", vip: "UNLOCK FULL ($79)",
-            recList: ["Boss", "Partner", "Client", "Friend"], 
-            rsnList: ["Late", "Sick", "Emergency"], 
-            styList: ["Professional", "Casual"]
+            recList: ["Boss", "Partner", "Client", "Friend", "Family"], 
+            rsnList: ["Late", "Sick", "Emergency", "Work"], 
+            styList: ["Professional", "Casual", "Formal"]
         }
     };
 
@@ -392,15 +396,19 @@
         return translations[lang] || translations['en']; 
     }
 
-    // --- LOGIKA UI (Chování formuláře) ---
+    // --- LOGIKA UI (SMART FEATURES) ---
 
     // 1. Zobrazení/Skrytí Reset tlačítka
     function toggleReset(input) {
         const btn = input.parentElement.querySelector('.reset-btn');
-        btn.style.display = input.value.length > 0 ? 'block' : 'none';
+        if (input.value.length > 0) {
+            btn.style.display = 'block';
+        } else {
+            btn.style.display = 'none';
+        }
     }
 
-    // 2. Vymazání a focus (Obnoví našeptávač)
+    // 2. Vymazání a focus (Aby vyskočil našeptávač)
     function clearInput(id) {
         const input = document.getElementById(id);
         input.value = '';
@@ -408,11 +416,11 @@
         setTimeout(() => { input.focus(); }, 50); 
     }
 
-    // 3. Naplnění Datalistů (Našeptávače)
+    // 3. Naplnění Datalistů (Dynamické seznamy)
     function populateDatalist(id, items) {
         const list = document.getElementById(id);
         if(!list) return;
-        list.innerHTML = '';
+        list.innerHTML = ''; // Vyčistit staré
         items.forEach(item => {
             const option = document.createElement('option');
             option.value = item;
@@ -420,7 +428,7 @@
         });
     }
 
-    // 4. Změna jazyka
+    // 4. Změna jazyka (Volá se při přepnutí roletky)
     function changeLanguage() {
         const lang = document.getElementById('lang-select').value;
         const t = getTexts(lang);
@@ -438,20 +446,21 @@
         // Placeholdery
         document.querySelectorAll('.smart-input').forEach(inp => inp.placeholder = t.ph);
 
-        // Přegenerování seznamů (Důležité pro Smart Inputs!)
+        // Přegenerování seznamů (Klíčové pro Smart Inputs!)
         populateDatalist('recipients-list', t.recList);
         populateDatalist('reasons-list', t.rsnList);
         populateDatalist('styles-list', t.styList);
 
-        // Asijské chaty
+        // Asijské chaty - Logika
         const smsOption = document.getElementById('opt-sms');
         if (['zh'].includes(lang)) smsOption.innerText = "WeChat / SMS";
         else if (['ja', 'th'].includes(lang)) smsOption.innerText = "LINE / SMS";
         else if (['ko'].includes(lang)) smsOption.innerText = "KakaoTalk / SMS";
+        else if (['vn'].includes(lang)) smsOption.innerText = "Zalo / SMS";
         else smsOption.innerText = "SMS / WhatsApp";
     }
 
-    // --- LOGIKA BACKENDU (Komunikace se server.js) ---
+    // --- KOMUNIKACE SE SERVEREM (REAL AI) ---
 
     async function generovat() {
         const btn = document.getElementById('btn-generate');
@@ -497,7 +506,7 @@
 
         } catch (error) {
             console.error("GEN ERROR:", error);
-            // Zobrazit chybu uživateli, pokud server nejede
+            // Zobrazit chybu uživateli
             alert("Connection Error: " + error.message + "\n\n(Ujistěte se, že server.js běží a máte API klíč.)");
         } finally {
             // Reset stavu tlačítka
@@ -516,7 +525,7 @@
         data.forEach(text => {
             const div = document.createElement('div');
             div.className = 'result-card';
-            // Ošetření uvozovek pro JS funkci
+            // Bezpečné escapování pro HTML atribut
             const safeText = text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
             
             div.innerHTML = `
@@ -553,4 +562,3 @@
 
 </body>
 </html>
-
