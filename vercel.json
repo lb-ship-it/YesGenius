@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/generovat",
+      "destination": "/api/generovat.js"
+    },
+    {
+      "source": "/platba",
+      "destination": "/api/platba.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
