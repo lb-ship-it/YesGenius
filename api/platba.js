@@ -1,3 +1,4 @@
+// Načteme knihovnu Stripe (díky package.json to půjde)
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
@@ -9,9 +10,11 @@ export default async function handler(req, res) {
     if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
     try {
-        if (!process.env.STRIPE_SECRET_KEY) throw new Error("Chybí STRIPE_SECRET_KEY");
+        if (!process.env.STRIPE_SECRET_KEY) {
+            return res.status(500).json({ error: "Chybí STRIPE_SECRET_KEY" });
+        }
 
-        // Zjištění URL odkud uživatel přišel
+        // Zjistíme URL, odkud uživatel přišel
         const protocol = req.headers['x-forwarded-proto'] || 'https';
         const host = req.headers.host;
         const origin = `${protocol}://${host}`;
