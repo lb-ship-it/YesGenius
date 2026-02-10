@@ -1,37 +1,31 @@
 // soubor: api/generate.js
 
-export const config = {
-    runtime: 'edge', // Edge pro rychlost
-};
+export default async function handler(req, res) {
+    // 1. Nastavení CORS (stejné jako v tvém server.js)
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-export default async function handler(req) {
-    // 1. Nastavení CORS
     if (req.method === 'OPTIONS') {
-        return new Response(null, {
-            status: 200,
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'POST, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type',
-            },
-        });
+        return res.status(200).end();
     }
 
     if (req.method !== 'POST') {
-        return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405 });
+        return res.status(405).json({ error: 'Method not allowed' });
     }
 
     try {
         const apiKey = process.env.GEMINI_API_KEY;
         if (!apiKey) {
-            return new Response(JSON.stringify({ error: 'API Key is missing' }), { status: 500 });
+            return res.status(500).json({ error: 'Server Error: API Key missing' });
         }
 
-        const { topic, recipient, tone, language } = await req.json();
+        // Přijímáme data z nového frontendu (topic, recipient, atd.)
+        const { topic, recipient, tone, language } = req.body;
 
-        // 2. Prompt
+        // 2. Prompt (Strukturovaný pro nový design)
         const prompt = `You are YES Genius.
-        Task: Write 3 messages for a user sending a message to their ${recipient}.
+        Task: Write 3 distinct messages for a user sending a message to their ${recipient}.
         Topic: ${topic}.
         Language: ${language}.
         Tone: ${tone}.
@@ -39,15 +33,13 @@ export default async function handler(req) {
         CRITICAL: Return ONLY a raw JSON object. No markdown. No intro.
         Structure:
         {
-            "option1": "Text 1",
-            "option2": "Text 2",
-            "option3": "Text 3"
+            "option1": "Text of variant 1",
+            "option2": "Text of variant 2",
+            "option3": "Text of variant 3"
         }`;
 
-        // 3. PŘÍMÉ VOLÁNÍ STABILNÍ API (v1)
-        // Změna: v1beta -> v1
-        // Model: gemini-1.5-flash
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+        // 3. VOLÁNÍ GOOGLE API (Přesně podle tvého server.js)
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -57,39 +49,42 @@ export default async function handler(req) {
 
         const data = await response.json();
 
-        // 4. Debugging
         if (data.error) {
-            console.error("Google Stable API Error:", data.error);
-            return new Response(JSON.stringify({ error: `Google v1 Error: ${data.error.message}` }), { status: 500 });
+            console.error("Google Error:", data.error);
+            return res.status(500).json({ error: data.error.message });
         }
 
-        // 5. Zpracování
-        const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        
-        if (!candidate) {
-            return new Response(JSON.stringify({ error: 'AI returned empty response' }), { status: 500 });
+        // 4. ZPRACOVÁNÍ A ČIŠTĚNÍ (Logika z tvého server.js)
+        let text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (!text) {
+            return res.status(500).json({ error: 'AI returned empty response' });
         }
 
-        const firstBrace = candidate.indexOf('{');
-        const lastBrace = candidate.lastIndexOf('}');
-        
-        if (firstBrace === -1 || lastBrace === -1) {
-             // Fallback
-             return new Response(JSON.stringify({ 
-                option1: candidate, 
-                option2: "...", 
-                option3: "..." 
-            }), { status: 200 });
+        // Čistící logika z tvého souboru (odstranění ```json a ```)
+        text = text.replace(/```json/g, "").replace(/```/g, "").trim();
+
+        // Najdeme JSON uvnitř (pro jistotu, kdyby tam byl nějaký balast okolo)
+        const firstBrace = text.indexOf('{');
+        const lastBrace = text.lastIndexOf('}');
+
+        if (firstBrace !== -1 && lastBrace !== -1) {
+            text = text.substring(firstBrace, lastBrace + 1);
+        }
+
+        // Parsování
+        let parsedData;
+        try {
+            parsedData = JSON.parse(text);
+        } catch (e) {
+            console.error("JSON Parse Error:", e);
+            return res.status(500).json({ error: 'Failed to parse AI response' });
         }
         
-        const cleanJson = candidate.substring(firstBrace, lastBrace + 1);
-        
-        return new Response(cleanJson, {
-            status: 200,
-            headers: { 'Content-Type': 'application/json' }
-        });
+        return res.status(200).json(parsedData);
 
     } catch (error) {
-        return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+        console.error("Server Error:", error);
+        return res.status(500).json({ error: error.message });
     }
 }
