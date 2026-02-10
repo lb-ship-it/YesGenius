@@ -1,118 +1,91 @@
-export const config = {
-    runtime: 'edge',
-};
+// Poznámka: Žádný 'runtime: edge'. Používáme standardní Node.js pro maximální kompatibilitu.
 
-// SEZNAM VŠECH MOŽNÝCH MODELŮ A VERZÍ
-// Toto je "kobercový nálet". Zkusíme všechno.
-const ENDPOINTS = [
-    // 1. Stabilní Flash (v1) - Nejčastější pro nové klíče
-    "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent",
-    
-    // 2. Beta Flash (v1beta) - Pro starší klíče
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent",
-    
-    // 3. Stabilní Pro (v1) - Kdyby Flash nešel
-    "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent",
-    
-    // 4. Beta Pro (v1beta)
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent",
-    
-    // 5. Experimentální Flash 2.0 (často funguje, když ostatní ne)
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent"
-];
+export default async function handler(req, res) {
+    // 1. CORS (Aby frontend mohl komunikovat s backendem)
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-export default async function handler(req) {
-    // 1. CORS
+    // Rychlá odpověď pro prohlížeč
     if (req.method === 'OPTIONS') {
-        return new Response(null, {
-            status: 200,
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'POST, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type',
-            },
-        });
+        return res.status(200).end();
     }
 
     if (req.method !== 'POST') {
-        return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405 });
+        return res.status(405).json({ error: 'Method not allowed' });
     }
 
     try {
-        const apiKey = process.env.GEMINI_API_KEY;
-        if (!apiKey) return new Response(JSON.stringify({ error: 'Chybí API klíč na serveru' }), { status: 500 });
-
-        const { jazyk, format, adresat, kategorie, styl } = await req.json();
-
-        // Prompt
-        const prompt = `Jsi YES Genius.
-        Úkol: Napiš 3 varianty zprávy.
-        Jazyk: ${jazyk}. Formát: ${format}. Komu: ${adresat}. Situace: ${kategorie}. Styl: ${styl}.
+        // Čištění klíče od případných mezer
+        const apiKey = process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.trim() : "";
         
-        CRITICAL: Return ONLY a raw JSON array of strings. No markdown.
-        Example: ["Text 1", "Text 2", "Text 3"]`;
-
-        // 2. SMYČKA SMRTI (Zkoušíme modely jeden po druhém)
-        let lastError = "";
-        let successData = null;
-        let workingModel = "";
-
-        for (const url of ENDPOINTS) {
-            try {
-                // console.log("Zkouším:", url); 
-                const response = await fetch(`${url}?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-                });
-
-                const data = await response.json();
-
-                if (data.error) {
-                    lastError = `${url} -> ${data.error.message}`;
-                    continue; // Jdeme na další
-                }
-
-                if (data.candidates && data.candidates[0].content) {
-                    successData = data;
-                    workingModel = url;
-                    break; // MÁME TO!
-                }
-            } catch (e) {
-                lastError = e.message;
-            }
+        if (!apiKey) {
+            console.error("Chybí API klíč");
+            return res.status(500).json({ error: 'Server Error: Chybí API klíč.' });
         }
 
-        if (!successData) {
-            console.error("Vše selhalo. Poslední chyba:", lastError);
-            return new Response(JSON.stringify({ error: `Google API Error: Všechny modely odmítly přístup. Poslední chyba: ${lastError}` }), { status: 500 });
+        // Data z frontendu
+        const { jazyk, format, adresat, kategorie, styl } = req.body;
+
+        // Prompt (přesně podle tvého server.js)
+        const prompt = `Jsi "Excuse Genius". Vymysli 3 RŮZNÉ varianty omluvy/zprávy.
+        Jazyk: ${jazyk}. Typ: ${format}. Komu: ${adresat}. Důvod: ${kategorie}. Styl: ${styl}.
+        
+        DŮLEŽITÉ: Odpověz POUZE čistým JSON polem stringů. Žádný markdown.
+        Příklad výstupu: ["Text 1", "Text 2", "Text 3"]`;
+
+        // 2. VOLÁNÍ GOOGLE API
+        // Používáme 'gemini-1.5-flash' (v1beta). Toto je jediná správná kombinace.
+        // Tvůj server.js měl '2.5-flash', což neexistuje.
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: prompt }] }]
+            })
+        });
+
+        const data = await response.json();
+
+        // Debugging chyb přímo od Googlu
+        if (data.error) {
+            console.error("Google API Error:", JSON.stringify(data.error));
+            // Pokud Google vrátí 404, znamená to problém s klíčem/projektem, ne s kódem
+            return res.status(500).json({ error: `Google Error: ${data.error.message}` });
         }
 
-        // 3. Zpracování (když se jeden chytil)
-        let text = successData.candidates[0].content.parts[0].text;
+        // 3. Zpracování odpovědi (logika z tvého server.js)
+        let text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        
+        if (!text) {
+            return res.status(500).json({ error: 'AI nevrátila žádný text.' });
+        }
+
+        // Odstranění markdownu ```json ... ```
         text = text.replace(/```json/g, "").replace(/```/g, "").trim();
 
+        // Najdeme hranaté závorky []
         const firstBracket = text.indexOf('[');
         const lastBracket = text.lastIndexOf(']');
+        
         let variants = [];
-
         if (firstBracket !== -1 && lastBracket !== -1) {
             try {
-                variants = JSON.parse(text.substring(firstBracket, lastBracket + 1));
-            } catch (e) { variants = [text]; }
+                // Vyřízneme jen to pole
+                const jsonStr = text.substring(firstBracket, lastBracket + 1);
+                variants = JSON.parse(jsonStr);
+            } catch (e) {
+                // Fallback
+                variants = [text];
+            }
         } else {
             variants = [text];
         }
 
-        // Vrátíme i informaci o tom, který model zafungoval (pro debug, můžeš to pak smazat)
-        // console.log("Zafungoval model:", workingModel);
-
-        return new Response(JSON.stringify({ variants }), {
-            status: 200,
-            headers: { 'Content-Type': 'application/json' }
-        });
+        return res.status(200).json({ variants });
 
     } catch (error) {
-        return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+        console.error("Server Error:", error);
+        return res.status(500).json({ error: error.message });
     }
 }
