@@ -1,263 +1,272 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
+    <title>YES Genius</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YES Genius | Digital Diplomat</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://js.stripe.com/v3/"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: { gold: '#D4AF37', goldLight: '#FDE68A', neonPurple: '#8B5CF6', darkBg: '#050505', glassDark: 'rgba(20, 20, 20, 0.6)' },
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    animation: { 'shine': 'shine 1.5s infinite', 'fade-in': 'fadeIn 0.6s ease-out forwards', 'slide-up': 'slideUp 0.8s ease-out forwards' },
-                    keyframes: { shine: { '0%': { left: '-100%' }, '100%': { left: '100%' } }, fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } }, slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; }
-        .glass-panel { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(212, 175, 55, 0.2); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); }
-        .loader { border: 3px solid rgba(139, 92, 246, 0.3); border-left-color: #8B5CF6; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        :root { 
+            --primary: #009432; 
+            --primary-grad: linear-gradient(135deg, #009432 0%, #006266 100%); 
+            --accent: #6c5ce7; 
+            --bg: #f4f7f6; 
+            --card-bg: #ffffff; 
+            --text: #2d3436; 
+            --text-light: #636e72; 
+            --border: #dfe6e9; 
+            --radius: 16px; 
+            --gold: #f1c40f; /* Zlatá pro Premium */
+        }
+        [data-theme="dark"] { 
+            --bg: #121212; --card-bg: #1e1e1e; --text: #e0e0e0; --text-light: #a0a0a0; --border: #333333; 
+        }
+        
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; transition: background 0.3s; box-sizing: border-box; }
+        
+        .header-bar { width: 100%; max-width: 650px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; gap: 10px; }
+        
+        .theme-toggle { background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: 5px; transition: 0.2s; }
+        
+        .lang-select { padding: 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); font-family: inherit; font-size: 0.9rem; cursor: pointer; flex-grow: 1; max-width: 180px; }
+
+        /* NOVÉ: Premium tlačítko */
+        .premium-btn {
+            background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%);
+            color: #fff; border: none; padding: 10px 15px; border-radius: 12px;
+            font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;
+            box-shadow: 0 4px 10px rgba(241, 196, 15, 0.3); transition: 0.2s; font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        .premium-btn:hover { transform: scale(1.05); box-shadow: 0 6px 15px rgba(241, 196, 15, 0.5); }
+
+        .main-card { background: var(--card-bg); padding: 2.5rem; padding-top: 1rem; border-radius: 24px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); width: 100%; max-width: 650px; border-top: 6px solid var(--primary); transition: transform 0.3s; }
+        .logo-container { text-align: center; margin-bottom: 10px; }
+        .logo-img { max-width: 110px; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        
+        label { font-weight: 600; font-size: 0.8rem; color: var(--text-light); margin-bottom: 6px; display: block; margin-top: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+        input, select { width: 100%; padding: 14px; border-radius: var(--radius); border: 2px solid var(--border); font-size: 1rem; background: var(--card-bg); color: var(--text); transition: 0.2s; box-sizing: border-box; font-family: inherit; }
+        input:focus, select:focus { border-color: var(--accent); outline: none; }
+
+        .row { display: flex; gap: 15px; }
+        .col { flex: 1; }
+
+        button#genBtn { width: 100%; padding: 18px; margin-top: 30px; background: var(--primary-grad); color: white; border: none; border-radius: var(--radius); font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 10px 20px rgba(0, 148, 50, 0.2); }
+        button#genBtn:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(0, 148, 50, 0.3); }
+        button:disabled { opacity: 0.7; cursor: wait; }
+
+        .result-area { margin-top: 30px; display: flex; flex-direction: column; gap: 15px; }
+        .variant { background: var(--card-bg); padding: 20px; border-radius: var(--radius); border: 1px solid var(--border); border-left: 5px solid var(--accent); animation: slideUp 0.4s ease-out forwards; }
+        .variant-text { font-size: 1.05rem; line-height: 1.6; margin-bottom: 15px; white-space: pre-wrap; }
+        .actions { display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--border); padding-top: 10px; }
+        .action-btn { background: transparent; border: 1px solid var(--border); padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: var(--text-light); transition: 0.2s; display: flex; align-items: center; gap: 6px; }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .footer { text-align: center; margin-top: 40px; margin-bottom: 20px; color: var(--text-light); font-size: 0.75rem; max-width: 500px; line-height: 1.6; opacity: 0.8; }
+        .secure-icon { color: var(--primary); font-size: 1.2rem; vertical-align: middle; margin-right: 5px; }
+        @media (max-width: 500px) { .row { flex-direction: column; gap: 0; } }
     </style>
 </head>
-<body class="bg-gray-100 dark:bg-darkBg text-gray-900 dark:text-gray-100 min-h-screen flex flex-col items-center overflow-x-hidden">
+<body>
 
-    <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <div class="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px] dark:bg-purple-900/30"></div>
-        <div class="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] bg-yellow-600/10 rounded-full blur-[100px] dark:bg-yellow-600/20"></div>
+    <div class="header-bar">
+        <select id="jazyk" class="lang-select" onchange="changeLanguage()"></select>
+        <button class="premium-btn" onclick="buyPremium()" id="payBtn">👑 Premium</button>
+        <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
     </div>
 
-    <nav class="w-full max-w-5xl flex justify-between items-center p-6 z-10 relative animate-fade-in">
-        <div class="text-2xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-gold via-goldLight to-gold">YES Genius</div>
-        <button id="theme-toggle" class="text-xs uppercase tracking-widest font-semibold text-gray-500 hover:text-gold transition-colors">SWITCH TO LIGHT MODE</button>
-    </nav>
-
-    <main class="w-full max-w-2xl px-4 pb-20 z-10 flex flex-col items-center text-center">
-        <div class="mb-8 animate-slide-up">
-            <h1 class="text-4xl md:text-5xl font-bold mb-3 dark:text-white text-gray-800">Digital Diplomat</h1>
-            <p class="text-gray-600 dark:text-gray-400 max-w-md mx-auto leading-relaxed">We handle every awkward and unpleasant conversation together.</p>
+    <div class="main-card">
+        <div class="logo-container">
+            <img src="yg app.png" alt="YES Genius" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+            <h1 style="display:none; color:var(--primary);">YES Genius</h1>
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                <label id="lbl_format">Typ zprávy</label>
+                <select id="format"><option value="sms">SMS / Chat</option><option value="email">E-mail</option></select>
+            </div>
+            <div class="col">
+                <label id="lbl_style">Styl</label>
+                <select id="styl"></select>
+            </div>
         </div>
 
-        <div class="w-full bg-white/60 dark:bg-glassDark glass-panel rounded-3xl p-6 md:p-8 text-left transition-all duration-300 animate-slide-up" style="animation-delay: 0.2s;">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
-                <div class="space-y-2">
-                    <label class="text-[10px] uppercase tracking-widest text-gold font-bold ml-1">Whom</label>
-                    <select id="recipient" class="w-full bg-gray-50/50 dark:bg-[#111]/80 border border-gray-200 dark:border-[#333] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neonPurple focus:ring-1 focus:ring-neonPurple transition-all cursor-pointer text-gray-800 dark:text-gray-200">
-                        <option value="Boss">Boss / Manager</option>
-                        <option value="Client">Client</option>
-                        <option value="Partner">Partner (Romantic)</option>
-                        <option value="Landlord">Landlord</option>
-                        <option value="Teacher">Teacher / Professor</option>
-                        <option value="Colleague">Colleague</option>
-                        <option value="Mother-in-law">Mother-in-law</option>
-                    </select>
-                </div>
-                <div class="space-y-2">
-                    <label class="text-[10px] uppercase tracking-widest text-gold font-bold ml-1">Language</label>
-                    <select id="language" class="w-full bg-gray-50/50 dark:bg-[#111]/80 border border-gray-200 dark:border-[#333] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neonPurple focus:ring-1 focus:ring-neonPurple transition-all cursor-pointer text-gray-800 dark:text-gray-200">
-                        <option value="English (US)">🇺🇸 English (US)</option>
-                        <option value="Czech">🇨🇿 Čeština</option>
-                        <option value="Slovak">🇸🇰 Slovenčina</option>
-                        <option value="German">🇩🇪 Deutsch</option>
-                        <option value="Ukrainian">🇺🇦 Українська</option>
-                        <option value="Polish">🇵🇱 Polski</option>
-                        <option value="Russian">🇷🇺 Русский</option>
-                        <option value="French">🇫🇷 Français</option>
-                        <option value="Spanish">🇪🇸 Español</option>
-                        <option value="Italian">🇮🇹 Italiano</option>
-                        <option value="Portuguese">🇵🇹 Português</option>
-                        <option value="Chinese">🇨🇳 中文</option>
-                        <option value="Japanese">🇯🇵 日本語</option>
-                        <option value="Korean">🇰🇷 한국어</option>
-                        <option value="Vietnamese">🇻🇳 Tiếng Việt</option>
-                        <option value="Turkish">🇹🇷 Türkçe</option>
-                        <option value="Arabic">🇸🇦 العربية</option>
-                        <option value="Hindi">🇮🇳 हिन्दी</option>
-                    </select>
-                </div>
-            </div>
-            <div class="space-y-2 mb-6">
-                <label class="text-[10px] uppercase tracking-widest text-gold font-bold ml-1">Topic / Situation</label>
-                <textarea id="topic" rows="2" placeholder="e.g. I overslept, Late rent, Break up..." class="w-full bg-gray-50/50 dark:bg-[#111]/80 border border-gray-200 dark:border-[#333] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neonPurple focus:ring-1 focus:ring-neonPurple transition-all resize-none text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-600"></textarea>
-            </div>
-            <div class="space-y-2 mb-8">
-                <label class="text-[10px] uppercase tracking-widest text-gold font-bold ml-1">Tone</label>
-                <div class="flex flex-wrap gap-2" id="tone-container">
-                    <button type="button" data-tone="Professional" class="tone-btn px-4 py-2 rounded-full text-xs font-semibold border border-neonPurple bg-neonPurple/10 text-neonPurple shadow-[0_0_10px_rgba(139,92,246,0.3)] transition-all">Professional</button>
-                    <button type="button" data-tone="Friendly" class="tone-btn px-4 py-2 rounded-full text-xs font-medium border border-gray-300 dark:border-gray-700 hover:border-gold hover:text-gold transition-all dark:text-gray-400 text-gray-600">Friendly</button>
-                    <button type="button" data-tone="Apologetic" class="tone-btn px-4 py-2 rounded-full text-xs font-medium border border-gray-300 dark:border-gray-700 hover:border-gold hover:text-gold transition-all dark:text-gray-400 text-gray-600">Apologetic</button>
-                    <button type="button" data-tone="Direct" class="tone-btn px-4 py-2 rounded-full text-xs font-medium border border-gray-300 dark:border-gray-700 hover:border-gold hover:text-gold transition-all dark:text-gray-400 text-gray-600">Direct</button>
-                </div>
-            </div>
-            <button id="generate-btn" class="w-full relative group overflow-hidden rounded-xl py-4 transition-all hover:scale-[1.01] active:scale-[0.99] shadow-lg cursor-pointer">
-                <div class="absolute inset-0 bg-gradient-to-r from-[#6D28D9] via-neonPurple to-[#6D28D9] opacity-90 group-hover:opacity-100 transition-opacity"></div>
-                <div class="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover:animate-shine"></div>
-                <div class="relative flex items-center justify-center gap-2 text-white font-bold tracking-wide">
-                    <span id="btn-text">GENERATE DRAFTS</span>
-                    <i data-lucide="sparkles" class="w-4 h-4" id="btn-icon"></i>
-                    <div id="btn-loader" class="loader hidden"></div>
-                </div>
-            </button>
-            <p id="error-msg" class="text-red-500 text-xs mt-3 text-center hidden"></p>
-        </div>
+        <label id="lbl_who">Komu</label>
+        <input list="who_list" id="adresat" onchange="updateReasons()" placeholder="...">
+        <datalist id="who_list"></datalist>
 
-        <div id="results-container" class="w-full mt-10 grid grid-cols-1 gap-4 hidden">
-            <div class="text-left mb-2 pl-2">
-                <h3 class="text-sm font-semibold text-gold uppercase tracking-widest">Instant Drafts</h3>
-            </div>
-            <div id="card-1" class="bg-white/80 dark:bg-[#0a0a0a]/90 border border-gold/30 rounded-xl p-5 shadow-lg hover:border-gold transition-colors cursor-pointer group animate-slide-up mb-4" style="animation-delay: 0.1s;">
-                <div class="flex justify-between items-center mb-3">
-                    <span class="text-[10px] bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-gray-500 font-bold uppercase" id="label-1">Option 1</span>
-                    <i data-lucide="copy" class="w-3 h-3 text-gray-400 group-hover:text-gold"></i>
-                </div>
-                <p class="text-sm text-gray-700 dark:text-gray-300 italic leading-relaxed whitespace-pre-wrap" id="result-text-1"></p>
-            </div>
-            <div id="card-2" class="bg-white/80 dark:bg-[#0a0a0a]/90 border border-gray-200 dark:border-gray-800 rounded-xl p-5 shadow-lg hover:border-gold transition-colors cursor-pointer group animate-slide-up mb-4" style="animation-delay: 0.2s;">
-                <div class="flex justify-between items-center mb-3">
-                    <span class="text-[10px] bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-gray-500 font-bold uppercase" id="label-2">Concise</span>
-                    <i data-lucide="copy" class="w-3 h-3 text-gray-400 group-hover:text-gold"></i>
-                </div>
-                <p class="text-sm text-gray-700 dark:text-gray-300 italic leading-relaxed whitespace-pre-wrap" id="result-text-2"></p>
-            </div>
-            <div id="card-3" class="bg-white/80 dark:bg-[#0a0a0a]/90 border border-gray-200 dark:border-gray-800 rounded-xl p-5 shadow-lg hover:border-gold transition-colors cursor-pointer group animate-slide-up" style="animation-delay: 0.3s;">
-                <div class="flex justify-between items-center mb-3">
-                    <span class="text-[10px] bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-gray-500 font-bold uppercase" id="label-3">Human</span>
-                    <i data-lucide="copy" class="w-3 h-3 text-gray-400 group-hover:text-gold"></i>
-                </div>
-                <p class="text-sm text-gray-700 dark:text-gray-300 italic leading-relaxed whitespace-pre-wrap" id="result-text-3"></p>
-            </div>
-        </div>
-    </main>
+        <label id="lbl_reason">Důvod</label>
+        <input list="reason_list" id="kategorie" placeholder="...">
+        <datalist id="reason_list"></datalist>
 
-    <section class="w-full bg-white dark:bg-[#080808] py-16 border-t border-gray-200 dark:border-gray-800 flex flex-col items-center text-center">
-        <div class="max-w-xl px-6">
-            <h2 class="text-3xl font-bold mb-2 text-gray-900 dark:text-white">The Only Upgrade You Need.</h2>
-            <p class="text-gold font-medium mb-8">One-Time Payment. Lifetime Access.</p>
-            <div class="relative group cursor-pointer" id="payment-card">
-                <div class="absolute -inset-1 bg-gradient-to-r from-gold via-yellow-300 to-gold rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
-                <div class="relative bg-white dark:bg-[#111] border border-gold/40 rounded-2xl p-8 flex flex-col items-center">
-                    <div class="text-6xl font-bold text-gray-900 dark:text-white mb-2">$79</div>
-                    <span class="text-gray-500 text-sm mb-6 uppercase tracking-wide">USD / One-time</span>
-                    <ul class="text-left space-y-3 mb-8 text-sm text-gray-600 dark:text-gray-400">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Zero Monthly Fees</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Unlimited Generation</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> All Future Updates</li>
-                    </ul>
-                    <button id="checkout-button" class="w-full bg-gray-900 dark:bg-white text-white dark:text-black font-bold py-3 rounded-xl hover:scale-105 transition-transform">GET LIFETIME ACCESS</button>
-                    <p class="mt-4 text-[10px] text-gray-400">Secured by Stripe</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        <button id="genBtn" onclick="generovat()">✨ Generovat varianty</button>
 
-    <footer class="w-full py-8 text-center text-gray-500 text-xs bg-gray-50 dark:bg-black border-t border-gray-200 dark:border-gray-900"><p>© 2026 YES Genius. Powered by Gemini 1.5 Flash.</p></footer>
+        <div id="result-area" class="result-area"></div>
+    </div>
+
+    <div class="footer">
+        <div><span class="secure-icon">🔒</span> <strong>No Data Collection</strong></div>
+        <span id="privacy_text">This application does not collect, store, or share any personal data.</span>
+    </div>
 
     <script>
-        lucide.createIcons();
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const htmlElement = document.documentElement;
-        themeToggleBtn.addEventListener('click', () => {
-            htmlElement.classList.toggle('dark');
-            themeToggleBtn.innerText = htmlElement.classList.contains('dark') ? "SWITCH TO LIGHT MODE" : "SWITCH TO DARK MODE";
-        });
+        const LANGUAGES = [
+            { code: "cs", name: "🇨🇿 Čeština" }, { code: "en_us", name: "🇺🇸 English (US)" }, { code: "uk", name: "🇺🇦 Українська" },
+            { code: "de", name: "🇩🇪 Deutsch" }, { code: "sk", name: "🇸🇰 Slovenčina" }, { code: "pl", name: "🇵🇱 Polski" },
+            { code: "ru", name: "🇷🇺 Русский" }, { code: "fr", name: "🇫🇷 Français" }, { code: "es", name: "🇪🇸 Español" },
+            { code: "it", name: "🇮🇹 Italiano" }, { code: "pt", name: "🇵🇹 Português" }, { code: "zh", name: "🇨🇳 中文 (Chinese)" },
+            { code: "ja", name: "🇯🇵 日本語 (Japanese)" }, { code: "ko", name: "🇰🇷 한국어 (Korean)" }, { code: "vi", name: "🇻🇳 Tiếng Việt" },
+            { code: "tr", name: "🇹🇷 Türkçe" }, { code: "ar", name: "🇸🇦 العربية (Arabic)" }, { code: "hi", name: "🇮🇳 हिन्दी (Hindi)" },
+            { code: "th", name: "🇹🇭 ไทย (Thai)" }, { code: "id", name: "🇮🇩 Indonesia" }, { code: "bn", name: "🇧🇩 বাংলা (Bengali)" },
+            { code: "fil", name: "🇵🇭 Filipino" }, { code: "fa", name: "🇮🇷 فارسی (Persian)" }
+        ];
 
-        let selectedTone = "Professional";
-        const toneBtns = document.querySelectorAll('.tone-btn');
-        toneBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                toneBtns.forEach(b => {
-                    b.classList.remove('border-neonPurple', 'bg-neonPurple/10', 'text-neonPurple', 'shadow-[0_0_10px_rgba(139,92,246,0.3)]');
-                    b.classList.add('border-gray-300', 'dark:border-gray-700', 'text-gray-600', 'dark:text-gray-400');
-                });
-                const target = e.currentTarget;
-                target.classList.remove('border-gray-300', 'dark:border-gray-700', 'text-gray-600', 'dark:text-gray-400');
-                target.classList.add('border-neonPurple', 'bg-neonPurple/10', 'text-neonPurple', 'shadow-[0_0_10px_rgba(139,92,246,0.3)]');
-                selectedTone = target.getAttribute('data-tone');
+        const BASE_STYLES = ["Professional", "Funny", "Dramatic", "Brief", "Polite"];
+        const BASE_REC = ["Boss", "Wife", "Husband", "Girlfriend", "Boyfriend", "Parents", "Teacher", "Friend"];
+        const BASE_RES = ["Overslept", "Sick", "Traffic", "Family emergency", "Migraine", "Pipe burst", "Doctor", "Working from home"];
+
+        // Přidán překlad pro "Premium" a "Lifetime"
+        const UI_TEXTS = {
+            cs: { 
+                l: ["Typ zprávy", "Styl", "Komu", "Důvod"], b: "✨ Generovat", p: ["Vyber...", "Vyber..."], priv: "Aplikace nesbírá žádná osobní data.", 
+                prem: "👑 Premium", styles: ["Profesionální", "Vtipný", "Dramatický", "Stručný", "Uctivý"],
+                rec: ["Šéf", "Manželka", "Manžel", "Přítelkyně", "Přítel", "Rodiče", "Učitel", "Kamarád"],
+                res: ["Zaspal jsem", "Není mi dobře", "Zácpa", "Rodinné důvody", "Migréna", "Prasklé potrubí", "Doktor", "Práce z domova"]
+            },
+            uk: { 
+                l: ["Тип повідомлення", "Стиль", "Кому", "Причина"], b: "✨ Згенерувати", p: ["Оберіть...", "Оберіть..."], priv: "Додаток не збирає даних.", 
+                prem: "👑 Преміум", styles: ["Професійний", "Смішний", "Драматичний", "Короткий", "Ввічливий"],
+                rec: ["Шеф", "Дружина", "Чоловік", "Дівчина", "Хлопець", "Батьки", "Вчитель", "Друг"],
+                res: ["Проспав", "Захворів", "Затори", "Сімейні обставини", "Мігрень", "Труба", "Лікар", "З дому"]
+            },
+            sk: {
+                l: ["Typ správy", "Štýl", "Komu", "Dôvod"], b: "✨ Generovať", p: ["Vyber...", "Vyber..."], priv: "Aplikácia nezbiera dáta.", prem: "👑 Premium",
+                styles: ["Profesionálny", "Vtipný", "Dramatický", "Stručný", "Úctivý"], rec: ["Šéf", "Manželka", "Manžel", "Priateľka", "Priateľ", "Rodičia", "Učiteľ", "Kamarát"], res: ["Zaspal som", "Choroba", "Zápcha", "Rodina", "Migréna", "Potrubie", "Lekár", "Home office"]
+            },
+            en_us: { 
+                l: ["Message Type", "Style", "To Whom", "Reason"], b: "✨ Generate", p: ["Select...", "Select..."], priv: "App collects no personal data.", prem: "👑 Premium",
+                styles: BASE_STYLES, rec: BASE_REC, res: BASE_RES
+            }
+        };
+
+        function init() {
+            const langSelect = document.getElementById('jazyk');
+            LANGUAGES.forEach(lang => {
+                const opt = document.createElement('option'); opt.value = lang.code; opt.innerText = lang.name; langSelect.appendChild(opt);
             });
-        });
+            changeLanguage(); 
+            
+            // Kontrola po návratu z platby
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('status') === 'success') {
+                alert("🎉 Děkujeme za zakoupení Lifetime licence!");
+            }
+        }
 
-        const generateBtn = document.getElementById('generate-btn');
-        const btnText = document.getElementById('btn-text');
-        const btnIcon = document.getElementById('btn-icon');
-        const btnLoader = document.getElementById('btn-loader');
-        const errorMsg = document.getElementById('error-msg');
-        const resultsContainer = document.getElementById('results-container');
+        function changeLanguage() {
+            const langCode = document.getElementById('jazyk').value;
+            const t = UI_TEXTS[langCode] || UI_TEXTS['en_us']; 
 
-        generateBtn.addEventListener('click', async () => {
-            const topic = document.getElementById('topic').value;
-            const recipient = document.getElementById('recipient').value;
-            const language = document.getElementById('language').value;
+            document.getElementById('lbl_format').innerText = t.l[0];
+            document.getElementById('lbl_style').innerText = t.l[1];
+            document.getElementById('lbl_who').innerText = t.l[2];
+            document.getElementById('lbl_reason').innerText = t.l[3];
+            document.getElementById('genBtn').innerText = t.b;
+            document.getElementById('payBtn').innerText = t.prem || "👑 Premium";
+            document.getElementById('privacy_text').innerText = t.priv;
+            
+            const ph = Array.isArray(t.p) ? t.p : [t.p, t.p];
+            document.getElementById('adresat').placeholder = ph[0];
+            document.getElementById('kategorie').placeholder = ph[1];
 
-            if(!topic) {
-                errorMsg.innerText = "Please enter a topic.";
-                errorMsg.classList.remove('hidden');
+            fillSelect('styl', t.styles);
+            fillSelect('who_list', t.rec || BASE_REC);
+            
+            document.getElementById('adresat').value = ""; document.getElementById('kategorie').value = "";
+            fillSelect('reason_list', t.res || BASE_RES);
+
+            if (['ar', 'fa', 'he'].includes(langCode)) { document.body.dir = 'rtl'; } else { document.body.dir = 'ltr'; }
+        }
+
+        function fillSelect(id, items) {
+            const el = document.getElementById(id); el.innerHTML = "";
+            items.forEach(i => { const opt = document.createElement('option'); opt.value = i; opt.innerText = i; el.appendChild(opt); });
+        }
+
+        function updateReasons() {
+            const langCode = document.getElementById('jazyk').value;
+            const t = UI_TEXTS[langCode] || UI_TEXTS['en_us'];
+            const inputVal = document.getElementById('adresat').value.toLowerCase();
+            let reasons = t.res || BASE_RES;
+
+            // Zjednodušená logika pro CZ (lze rozšířit)
+            if (langCode === 'cs') {
+                if (inputVal.includes('manžel') || inputVal.includes('žena')) reasons = ["Zdržel jsem se", "Květinářství zavřené", "Pomoc kamarádovi", "Zácpa", "Vybitý mobil", "Bolest hlavy", "Zapomněl jsem", "Překvapení"];
+                else if (inputVal.includes('šéf')) reasons = ["Zaspal jsem", "Nemoc", "Zácpa", "Dítě nemocné", "Migréna", "Auto", "Lékař", "Home office"];
+            }
+            fillSelect('reason_list', reasons);
+        }
+
+        async function generovat() {
+            const btn = document.getElementById('genBtn');
+            const area = document.getElementById('result-area');
+            const langSelect = document.getElementById('jazyk');
+            
+            if(!document.getElementById('adresat').value || !document.getElementById('kategorie').value) {
+                area.innerHTML = `<div class=\"variant\" style=\"border-left-color:#ff7675; color:#d63031\">⚠️ ${langSelect.value === 'cs' ? 'Vyplň prosím údaje.' : 'Please fill in details.'}</div>`;
                 return;
             }
-            errorMsg.classList.add('hidden');
 
-            btnText.innerText = "THINKING...";
-            btnIcon.classList.add('hidden');
-            btnLoader.classList.remove('hidden');
-            generateBtn.disabled = true;
-            generateBtn.classList.add('opacity-75');
-            resultsContainer.classList.add('hidden');
+            btn.disabled = true; btn.innerText = "⏳ ..."; area.innerHTML = "";
 
             try {
-                // Voláme náš nový backend
-                const response = await fetch('/api/generate', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ topic, recipient, tone: selectedTone, language })
+                const res = await fetch('/generovat', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        jazyk: langSelect.options[langSelect.selectedIndex].text,
+                        format: document.getElementById('format').value,
+                        adresat: document.getElementById('adresat').value,
+                        kategorie: document.getElementById('kategorie').value,
+                        styl: document.getElementById('styl').value
+                    })
                 });
+                const data = await res.json();
+                if (data.error) throw new Error(data.error);
 
-                const drafts = await response.json();
-                
-                if (drafts.error) throw new Error(drafts.error);
+                data.variants.forEach((text, i) => {
+                    const div = document.createElement('div'); div.className = 'variant'; div.style.animationDelay = (i * 0.1) + 's';
+                    let shareBtn = navigator.share ? `<button class=\"action-btn\" onclick=\"shareText('${text.replace(/'/g, "\\'")}')\">📤</button>` : '';
+                    div.innerHTML = `<div class=\"variant-text\">${text}</div><div class=\"actions\">${shareBtn}<button class=\"action-btn\" onclick=\"copyText(this, '${text.replace(/'/g, "\\'")}')\">📋</button></div>`;
+                    area.appendChild(div);
+                });
+            } catch (e) { area.innerHTML = `<div class=\"variant\" style=\"color:red\">Error: ${e.message}</div>`; } 
+            finally { btn.disabled = false; btn.innerText = (UI_TEXTS[langSelect.value] || UI_TEXTS['en_us']).b; }
+        }
 
-                document.getElementById('result-text-1').innerText = drafts.option1;
-                document.getElementById('label-1').innerText = selectedTone;
-                document.getElementById('result-text-2').innerText = drafts.option2;
-                document.getElementById('label-2').innerText = "Concise";
-                document.getElementById('result-text-3').innerText = drafts.option3;
-                document.getElementById('label-3').innerText = "Human";
+        async function buyPremium() {
+            const btn = document.getElementById('payBtn');
+            const originalText = btn.innerText;
+            btn.innerText = "⏳...";
+            try {
+                // Volání na backend pro vytvoření platby
+                const res = await fetch('/platba', { method: 'POST' });
+                const data = await res.json();
+                if (data.error) alert("Chyba: " + data.error);
+                else if (data.url) window.location.href = data.url; // Přesměrování na Stripe
+            } catch (e) { alert("Chyba: " + e.message); }
+            finally { btn.innerText = originalText; }
+        }
 
-                resultsContainer.classList.remove('hidden');
-                resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        function copyText(btn, text) { navigator.clipboard.writeText(text).then(() => { btn.innerText = "✅"; setTimeout(() => { btn.innerText = "📋"; }, 2000); }); }
+        async function shareText(text) { try { await navigator.share({ title: 'YES Genius', text: text }); } catch(e){} }
+        function toggleTheme() {
+            const b = document.body; const btn = document.getElementById('themeBtn');
+            if (b.getAttribute('data-theme') === 'dark') { b.removeAttribute('data-theme'); btn.innerText = "🌙"; } 
+            else { b.setAttribute('data-theme', 'dark'); btn.innerText = "☀️"; }
+        }
 
-            } catch (err) {
-                console.error(err);
-                errorMsg.innerText = "Error: " + (err.message || "Something went wrong.");
-                errorMsg.classList.remove('hidden');
-            } finally {
-                btnText.innerText = "GENERATE DRAFTS";
-                btnIcon.classList.remove('hidden');
-                btnLoader.classList.add('hidden');
-                generateBtn.disabled = false;
-                generateBtn.classList.remove('opacity-75');
-            }
-        });
-
-        // Copy Funkce
-        document.querySelectorAll('.group').forEach(card => {
-            card.addEventListener('click', () => {
-                const text = card.querySelector('p').innerText;
-                navigator.clipboard.writeText(text);
-                alert("Copied to clipboard!");
-            });
-        });
-
-        // Stripe Logic (Placeholder)
-        document.getElementById('checkout-button').addEventListener('click', () => {
-             alert("Stripe Integration Ready. Insert Payment Link in code.");
-        });
+        init();
     </script>
 </body>
 </html>
