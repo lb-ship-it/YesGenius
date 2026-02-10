@@ -1,0 +1,8 @@
+{
+  "name": "yes-genius",
+  "version": "1.0.0",
+  "dependencies": {
+    "stripe": "^14.14.0",
+    "dotenv": "^16.3.1"
+  }
+}
