@@ -2,14 +2,6 @@ export const config = {
     runtime: 'edge',
 };
 
-// SEZNAM VŠECH MOŽNÝCH MODELŮ (Seřazeno od nejlepšího)
-const ENDPOINTS = [
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent",
-    "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent",
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent",
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
-];
-
 export default async function handler(req) {
     // 1. CORS
     if (req.method === 'OPTIONS') {
@@ -29,58 +21,45 @@ export default async function handler(req) {
 
     try {
         const apiKey = process.env.GEMINI_API_KEY;
-        if (!apiKey) return new Response(JSON.stringify({ error: 'Chybí API klíč' }), { status: 500 });
+        if (!apiKey) return new Response(JSON.stringify({ error: 'Chybí API klíč na serveru' }), { status: 500 });
 
         const { jazyk, format, adresat, kategorie, styl } = await req.json();
 
         // Prompt
-        const prompt = `Jsi YES Genius. Úkol: Napiš 3 varianty zprávy.
+        const prompt = `Jsi YES Genius.
+        Úkol: Napiš 3 varianty zprávy.
         Jazyk: ${jazyk}. Formát: ${format}. Komu: ${adresat}. Situace: ${kategorie}. Styl: ${styl}.
         
         CRITICAL: Return ONLY a raw JSON array of strings. No markdown.
         Example: ["Text 1", "Text 2", "Text 3"]`;
 
-        // 2. SMYČKA PŘES MODELY
-        let lastError = "";
-        let successData = null;
+        // 2. VOLÁNÍ MODELU PRO AI STUDIO KLÍČE
+        // Používáme v1beta a gemini-1.5-flash. Toto je defaultní model pro nové klíče.
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+        });
 
-        for (const url of ENDPOINTS) {
-            try {
-                // console.log("Zkouším:", url); // Debug
-                const response = await fetch(`${url}?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-                });
+        const data = await response.json();
 
-                const data = await response.json();
-
-                if (data.error) {
-                    lastError = data.error.message;
-                    continue; // Jdeme na další model v seznamu
-                }
-
-                if (data.candidates && data.candidates[0].content) {
-                    successData = data;
-                    break; // MÁME TO! Vyskočíme ze smyčky
-                }
-            } catch (e) {
-                lastError = e.message;
-            }
+        if (data.error) {
+            // Pokud to selže, vrátíme přesnou chybu, ať víme, co se děje
+            console.error("Google Error:", data.error);
+            return new Response(JSON.stringify({ error: `Google Error: ${data.error.message}` }), { status: 500 });
         }
 
-        if (!successData) {
-            return new Response(JSON.stringify({ error: `Všechny modely selhaly. Poslední chyba: ${lastError}` }), { status: 500 });
-        }
+        // 3. Zpracování
+        let text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!text) return new Response(JSON.stringify({ error: 'AI nic nevygenerovala' }), { status: 500 });
 
-        // 3. Zpracování (když se jeden chytil)
-        let text = successData.candidates[0].content.parts[0].text;
         text = text.replace(/```json/g, "").replace(/```/g, "").trim();
-
+        
+        // Extrakce JSONu
         const firstBracket = text.indexOf('[');
         const lastBracket = text.lastIndexOf(']');
-        
         let variants = [];
+
         if (firstBracket !== -1 && lastBracket !== -1) {
             try {
                 variants = JSON.parse(text.substring(firstBracket, lastBracket + 1));
