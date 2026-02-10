@@ -36,9 +36,9 @@ export default async function handler(req, res) {
         "option3": "Text 3"
     }`;
 
-    // ZMĚNA: Použijeme 'gemini-1.5-flash-latest', což je bezpečnější odkaz
-    // Pokud by ani to nešlo, v budoucnu zkusíme 'gemini-pro'
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`, {
+    // ZMĚNA: Používáme přesnou verzi 'gemini-1.5-flash-001'
+    // Toto je "betonová" verze, která nikam nezmizí.
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-001:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -50,7 +50,7 @@ export default async function handler(req, res) {
 
     if (data.error) {
       console.error("Google API Error:", JSON.stringify(data.error));
-      // Detailní výpis chyby pro tebe:
+      // Pokud by i tohle selhalo, vypíšeme přesně proč
       return res.status(500).json({ error: `Google Error: ${data.error.message}` });
     }
 
