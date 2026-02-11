@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v2.2 (British & Compact Design) --- */
+        /* --- CSS: YES GENIUS v2.3 (Ultimate Layout) --- */
         :root {
             --bg-black: #000000;
             --card-bg: rgba(18, 18, 18, 0.95);
@@ -20,7 +20,6 @@
             --accent-purple: #8b5cf6;
             --text-white: #ffffff;
             --text-gray: #a0a0a0;
-            /* Ztenčený a sjednocený border pro všechna pole i logo */
             --glass-border: rgba(212, 175, 55, 0.35); 
             --radius: 16px;
         }
@@ -46,45 +45,49 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
             position: relative;
         }
 
-        /* --- HEADER v2.2 (Compact Layout) --- */
+        /* --- HEADER v2.3 (25% Logo + Fixed Title) --- */
         header {
             display: flex;
-            justify-content: space-between; /* Rozhodí logo doleva a jazyk doprava */
-            align-items: center; /* Zarovná na střed vertikálně */
+            align-items: center; /* Zarovnání na střed vertikálně */
+            justify-content: space-between;
             padding: 10px 0 20px 0;
             width: 100%;
+            gap: 10px;
         }
 
-        .brand-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        /* 1. LOGO: Přesně 25% šířky kontejneru */
+        .logo-wrapper {
+            flex: 0 0 25%; /* Fixní šířka 25% */
+            max-width: 25%;
         }
 
-        /* Logo v2.2: Tenčí rámeček, kompaktní vzhled */
         .logo-img {
-            width: 60px;
-            height: 60px;
+            width: 100%; /* Vyplní wrapper */
+            aspect-ratio: 1/1; /* Čtverec */
             border-radius: 14px;
-            border: 1px solid var(--glass-border); /* Stejný border jako inputy */
+            border: 1px solid var(--glass-border);
             object-fit: cover; 
             background: #000;
-            /* Jemný stín, ne příliš zářivý */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            display: block;
         }
 
+        /* 2. TITULEK: Musí se vejít a nezalomit */
         .title-wrapper {
+            flex: 1; /* Zabere zbylé místo */
             display: flex;
             flex-direction: column;
             justify-content: center;
+            overflow: hidden; /* Ochrana proti přetečení */
+            padding-left: 5px;
         }
 
         h1 {
-            font-size: 1.6rem;
+            font-size: 1.5rem; /* Mírně zmenšeno pro bezpečnost */
             font-weight: 900;
             margin: 0;
             line-height: 1;
@@ -92,50 +95,58 @@
             background: linear-gradient(to right, #fff 20%, var(--gold) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            white-space: nowrap; /* KLÍČOVÉ: Nikdy nezalomit řádek */
         }
 
         .subtitle {
             color: var(--gold);
-            font-size: 0.65rem;
-            margin-top: 3px;
-            font-weight: 700;
-            letter-spacing: 2px;
+            font-size: 0.6rem;
+            margin-top: 4px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
+            white-space: nowrap;
         }
 
-        /* Lang Select v2.2: Kompaktní a zarovnaný */
+        .tagline-text {
+            font-size: 0.55rem;
+            color: #888;
+            margin-top: 3px;
+            line-height: 1.2;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        /* 3. JAZYKY: Minimalizované vpravo */
+        .lang-wrapper {
+            flex: 0 0 auto; /* Zabere jen nutné místo */
+            display: flex;
+            justify-content: flex-end;
+        }
+
         .lang-select {
             background: #050505;
             color: var(--gold);
             border: 1px solid var(--glass-border);
-            padding: 8px 10px;
-            border-radius: 10px;
-            font-size: 0.8rem;
+            padding: 8px 6px;
+            border-radius: 8px;
+            font-size: 0.75rem;
             outline: none;
             cursor: pointer;
             font-weight: 600;
-            text-align: left;
-            min-width: 120px; /* Aby se texty vešly */
-            appearance: none; /* Vlastní šipka nebo čistý vzhled */
-            -webkit-appearance: none;
+            text-align: right; /* Text zarovnaný doprava */
+            width: auto;
+            min-width: 60px;
+            max-width: 100px;
+            
+            /* Custom šipka */
+            appearance: none; -webkit-appearance: none;
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23d4af37%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
             background-repeat: no-repeat;
-            background-position: right 10px top 50%;
-            background-size: 10px auto;
+            background-position: right 5px top 50%;
+            background-size: 8px auto;
+            padding-right: 18px;
         }
-
-        /* Mobilní úprava jazykového pole - menší */
-        @media (max-width: 400px) {
-            .lang-select {
-                font-size: 0.7rem;
-                padding: 6px 8px;
-                min-width: 90px;
-                background-position: right 5px top 50%;
-            }
-            .logo-img { width: 50px; height: 50px; }
-            h1 { font-size: 1.4rem; }
-        }
-
 
         /* FORMULÁŘ */
         .glass-card {
@@ -160,26 +171,21 @@
             font-weight: 600;
         }
 
-        .smart-input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
+        .smart-input-wrapper { position: relative; display: flex; align-items: center; }
 
         input, select {
             width: 100%;
             padding: 16px;
             padding-right: 45px; 
             background: #050505;
-            border: 1px solid var(--glass-border); /* Sjednocený border */
+            border: 1px solid var(--glass-border);
             border-radius: 12px;
             color: white;
             font-size: 1rem;
             font-family: inherit;
             outline: none;
             transition: 0.3s;
-            appearance: none;
-            -webkit-appearance: none;
+            appearance: none; -webkit-appearance: none;
         }
 
         input:focus, select:focus {
@@ -188,7 +194,7 @@
             background: #0a0a0a;
         }
 
-        /* Šipka pro Selecty (FORMAT) */
+        /* Šipka pro Select (Format) */
         #format {
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23d4af37%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
             background-repeat: no-repeat;
@@ -197,155 +203,87 @@
         }
 
         .dropdown-arrow {
-            position: absolute;
-            right: 15px;
-            color: var(--gold);
-            font-size: 0.8rem;
-            pointer-events: none;
-            opacity: 0.7;
+            position: absolute; right: 15px;
+            color: var(--gold); font-size: 0.8rem;
+            pointer-events: none; opacity: 0.7;
         }
 
         .reset-btn {
-            position: absolute;
-            right: 10px;
-            background: #050505;
-            border: none;
-            color: #666;
-            font-size: 1.1rem;
-            cursor: pointer;
-            padding: 5px 8px;
-            display: none; 
-            border-radius: 4px;
-            z-index: 10;
+            position: absolute; right: 10px;
+            background: #050505; border: none; color: #666;
+            font-size: 1.1rem; cursor: pointer; padding: 5px 8px;
+            display: none; border-radius: 4px; z-index: 10;
         }
         .reset-btn:hover { color: var(--gold); }
 
         /* Tlačítko YES */
         .btn-main {
-            width: 100%;
-            padding: 20px;
-            margin-top: 10px;
+            width: 100%; padding: 20px; margin-top: 10px;
             background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%);
-            border: none;
-            border-radius: 12px;
-            color: #000;
-            font-weight: 900;
-            font-size: 1.3rem;
-            text-transform: uppercase;
-            cursor: pointer;
+            border: none; border-radius: 12px;
+            color: #000; font-weight: 900; font-size: 1.3rem;
+            text-transform: uppercase; cursor: pointer;
             box-shadow: 0 5px 20px rgba(212, 175, 55, 0.2);
             transition: transform 0.2s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
         }
-
         .btn-main:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.35); }
         .btn-main:active { transform: scale(0.98); }
 
         /* VÝSLEDKY */
-        #vysledek {
-            display: none;
-            margin-top: 20px;
-            animation: fadeIn 0.6s ease;
-        }
-
+        #vysledek { display: none; margin-top: 20px; animation: fadeIn 0.6s ease; }
         .result-card {
-            background: rgba(255,255,255,0.03);
-            border-left: 3px solid var(--gold);
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 10px;
+            background: rgba(255,255,255,0.03); border-left: 3px solid var(--gold);
+            padding: 20px; margin-bottom: 15px; border-radius: 10px;
         }
-
-        .result-text {
-            font-size: 1.05rem;
-            line-height: 1.5;
-            margin-bottom: 15px;
-            color: #f0f0f0;
-        }
-
+        .result-text { font-size: 1.05rem; line-height: 1.5; margin-bottom: 15px; color: #f0f0f0; }
         .action-row { display: flex; gap: 10px; }
         .btn-action {
             flex: 1; padding: 12px;
-            background: rgba(255,255,255,0.08);
-            border: none; border-radius: 8px;
-            color: var(--gold); font-weight: 700;
-            cursor: pointer; display: flex;
-            align-items: center; justify-content: center; gap: 8px;
-            font-size: 0.9rem;
+            background: rgba(255,255,255,0.08); border: none; border-radius: 8px;
+            color: var(--gold); font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem;
         }
         .btn-action:hover { background: rgba(255,255,255,0.15); }
 
         /* MARKETING FOOTER */
         .vip-footer {
-            margin-top: 30px;
-            padding: 30px 20px;
+            margin-top: 30px; padding: 30px 20px;
             background: linear-gradient(180deg, rgba(20,20,20,0.95) 0%, rgba(5,5,5,1) 100%);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            text-align: center;
-            box-shadow: 0 0 40px rgba(0,0,0,0.5);
-            position: relative;
-            overflow: hidden;
+            border: 1px solid var(--glass-border); border-radius: 24px;
+            text-align: center; box-shadow: 0 0 40px rgba(0,0,0,0.5);
+            position: relative; overflow: hidden;
         }
-
         .vip-title {
-            color: var(--gold);
-            font-size: 0.85rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 15px;
+            color: var(--gold); font-size: 0.85rem; font-weight: 800;
+            letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px;
         }
-
         .benefits-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 25px;
-            font-size: 0.75rem;
-            color: #ccc;
-            line-height: 1.6;
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+            margin-bottom: 25px; font-size: 0.75rem; color: #ccc; line-height: 1.6;
         }
-
         .benefit-item { white-space: nowrap; }
         .bullet { color: var(--gold); margin-right: 4px; }
-
         .btn-vip-large {
-            width: 100%;
-            padding: 18px;
+            width: 100%; padding: 18px;
             background: linear-gradient(135deg, var(--gold) 0%, #d6ae36 40%, #aa8a2e 100%);
-            border: none;
-            border-radius: 50px;
-            color: #000;
-            cursor: pointer;
-            position: relative;
-            z-index: 2;
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
-            transition: transform 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            border: none; border-radius: 50px; color: #000; cursor: pointer;
+            position: relative; z-index: 2; box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+            transition: transform 0.2s; display: flex; flex-direction: column; align-items: center;
         }
-
         .btn-vip-large:hover { transform: scale(1.02); box-shadow: 0 0 40px rgba(212, 175, 55, 0.5); }
-
         .vip-btn-main-text { font-size: 1.1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
         .vip-btn-sub-text { font-size: 0.75rem; font-weight: 600; opacity: 0.85; margin-top: 2px; }
-
-        .privacy-note {
-            margin-top: 20px;
-            font-size: 0.65rem;
-            color: #444;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .privacy-note { margin-top: 20px; font-size: 0.65rem; color: #444; text-transform: uppercase; letter-spacing: 1px; }
 
         #loader { display: none; text-align: center; margin-top: 15px; color: var(--gold); font-weight: 600; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Mobilní optimalizace pro H1 */
+        @media (max-width: 360px) {
+            h1 { font-size: 1.3rem; }
+            .lang-select { max-width: 70px; }
+        }
     </style>
 </head>
 <body>
@@ -353,40 +291,44 @@
 <div class="app-container">
     
     <header>
-        <div class="brand-section">
+        <div class="logo-wrapper">
             <img src="logo.png" alt="YES Genius Logo" class="logo-img">
-            <div class="title-wrapper">
-                <h1>YES Genius</h1>
-                <div id="subtitle" class="subtitle">DIGITAL DIPLOMAT</div>
-            </div>
         </div>
 
-        <select id="lang-select" class="lang-select" onchange="changeLanguage()">
-            <option value="en-US" selected>🇺🇸 English (US)</option>
-            <option value="en-GB">🇬🇧 English (UK)</option>
-            <option value="cs">🇨🇿 Čeština</option>
-            <option value="de">🇩🇪 Deutsch</option>
-            <option value="uk">🇺🇦 Українська</option>
-            <option value="es">🇪🇸 Español</option>
-            <option value="fr">🇫🇷 Français</option>
-            <option value="it">🇮🇹 Italiano</option>
-            <option value="pt">🇵🇹 Português</option>
-            <option value="pl">🇵🇱 Polski</option>
-            <option value="nl">🇳🇱 Nederlands</option>
-            <option value="ru">🇷🇺 Русский</option>
-            <option value="tr">🇹🇷 Türkçe</option>
-            <option value="ar">🇸🇦 العربية</option>
-            <option value="zh">🇨🇳 中文</option>
-            <option value="ja">🇯🇵 日本語</option>
-            <option value="ko">🇰🇷 한국어</option>
-            <option value="hi">🇮🇳 हिन्दी</option>
-            <option value="sv">🇸🇪 Svenska</option>
-            <option value="no">🇳🇴 Norsk</option>
-            <option value="da">🇩🇰 Dansk</option>
-            <option value="fi">🇫🇮 Suomi</option>
-            <option value="el">🇬🇷 Ελληνικά</option>
-            <option value="ro">🇷🇴 Română</option>
-        </select>
+        <div class="title-wrapper">
+            <h1>YES Genius</h1>
+            <div id="subtitle" class="subtitle">DIGITAL DIPLOMAT</div>
+            <div id="tagline" class="tagline-text">Even diplomats have bad days. We make sure you don't.</div>
+        </div>
+
+        <div class="lang-wrapper">
+            <select id="lang-select" class="lang-select" onchange="changeLanguage()">
+                <option value="en-US" selected>🇺🇸 English (US)</option>
+                <option value="en-GB">🇬🇧 English (UK)</option>
+                <option value="cs">🇨🇿 Čeština</option>
+                <option value="de">🇩🇪 Deutsch</option>
+                <option value="uk">🇺🇦 Українська</option>
+                <option value="es">🇪🇸 Español</option>
+                <option value="fr">🇫🇷 Français</option>
+                <option value="it">🇮🇹 Italiano</option>
+                <option value="pt">🇵🇹 Português</option>
+                <option value="pl">🇵🇱 Polski</option>
+                <option value="nl">🇳🇱 Nederlands</option>
+                <option value="ru">🇷🇺 Русский</option>
+                <option value="tr">🇹🇷 Türkçe</option>
+                <option value="ar">🇸🇦 العربية</option>
+                <option value="zh">🇨🇳 中文</option>
+                <option value="ja">🇯🇵 日本語</option>
+                <option value="ko">🇰🇷 한국어</option>
+                <option value="hi">🇮🇳 हिन्दी</option>
+                <option value="sv">🇸🇪 Svenska</option>
+                <option value="no">🇳🇴 Norsk</option>
+                <option value="da">🇩🇰 Dansk</option>
+                <option value="fi">🇫🇮 Suomi</option>
+                <option value="el">🇬🇷 Ελληνικά</option>
+                <option value="ro">🇷🇴 Română</option>
+            </select>
+        </div>
     </header>
 
     <main class="glass-card">
@@ -464,16 +406,16 @@
 </div>
 
 <script>
-    /* --- YES GENIUS v2.2 (BRITISH EDITION) --- */
+    /* --- YES GENIUS v2.3 (ULTIMATE LOGIC) --- */
 
     const PAYMENT_LINK = "https://buy.stripe.com/bJefZi4T3blacNUfeaa7C03"; 
 
-    // --- PŘEKLADY v2.2 ---
-    // Rozděleno na en-US a en-GB
+    // --- PŘEKLADY v2.3 ---
+    // Přidán Tagline, Slang a zpřesněné US/UK rozdíly
     const translations = {
         'en-US': { 
-            sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", 
-            fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Tone & Style", 
+            sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days. We make sure you don't.", 
+            verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Tone & Style", 
             ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share",
             vipTitle: "👑 UNLOCK FULL POTENTIAL",
             b1: "No Monthly Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment",
@@ -481,24 +423,23 @@
             privacy: "We do not collect any personal data.",
             recList: ["Boss", "Partner", "Wife", "Husband", "Mother-in-law", "Father-in-law", "Client", "Colleague", "Mom", "Dad", "Teacher"],
             rsnList: ["Running Late", "Feeling Sick", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"],
-            styList: ["Professional", "Creative / Funny", "Dramatic", "Strictly Formal", "Casual", "Apologetic"]
+            styList: ["Professional", "Creative / Funny", "Slang / Street", "Dramatic", "Strictly Formal", "Casual", "Apologetic"]
         },
         'en-GB': { 
-            sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", 
-            fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Tone & Style", 
+            sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days. We make sure you don't.",
+            verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Tone & Style", 
             ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share",
             vipTitle: "👑 UNLOCK FULL POTENTIAL",
             b1: "No Monthly Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment",
             vMain: "GET LIFETIME ACCESS", vSub: "One-time payment $79",
             privacy: "We do not collect any personal data.",
-            // British changes: Mum instead of Mom, maybe "Mate" for casual contexts, spelling if needed
             recList: ["Boss", "Partner", "Wife", "Husband", "Mother-in-law", "Father-in-law", "Client", "Colleague", "Mum", "Dad", "Tutor"],
             rsnList: ["Running Late", "Feeling Unwell", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"],
-            styList: ["Professional", "Creative / Witty", "Dramatic", "Strictly Formal", "Casual", "Apologetic"]
+            styList: ["Professional", "Creative / Witty", "Slang / Roadman", "Dramatic", "Strictly Formal", "Casual", "Apologetic"]
         },
         cs: { 
-            sub: "DIGITÁLNÍ DIPLOMAT", verb: "GENERUJ!", 
-            fmt: "Formát", tgt: "Adresát", rsn: "Důvod", sty: "Tón a Styl", 
+            sub: "DIGITÁLNÍ DIPLOMAT", tagline: "I diplomaté mají špatné dny. My jistíme ty vaše.",
+            verb: "GENERUJ!", fmt: "Formát", tgt: "Adresát", rsn: "Důvod", sty: "Tón a Styl", 
             ph: "Vyber nebo napiš...", res: "Tvé návrhy:", copy: "Kopírovat", share: "Sdílet",
             vipTitle: "👑 ODEMKNI PLNÝ POTENCIÁL",
             b1: "Žádné poplatky", b2: "Doživotní přístup", b3: "Aktualizace zdarma", b4: "Bezpečná platba",
@@ -506,12 +447,11 @@
             privacy: "Nesbíráme žádné osobní údaje.",
             recList: ["Šéf", "Partner", "Manželka", "Manžel", "Tchyně", "Tchán", "Klient", "Kolega", "Máma", "Táta", "Učitel"],
             rsnList: ["Jdu pozdě", "Jsem nemocný/á", "Nestíhám termín", "Ruším plány", "Rodinné důvody", "Porucha auta"],
-            styList: ["Profesionální", "Kreativní / Vtipný", "Dramatický", "Formální", "Neformální", "Omluvný"]
+            styList: ["Profesionální", "Kreativní / Vtipný", "Slang / Hovorový", "Dramatický", "Formální", "Neformální", "Omluvný"]
         },
-        // Ostatní jazyky - zjednodušený fallback pro data, plné UI překlady lze doplnit dle potřeby
         default: {
-            sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", 
-            fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", 
+            sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days. We make sure you don't.",
+            verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", 
             ph: "Select...", res: "Drafts:", copy: "Copy", share: "Share",
             vipTitle: "👑 UNLOCK FULL POTENTIAL",
             b1: "No Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment",
@@ -519,12 +459,11 @@
             privacy: "We do not collect any personal data.",
             recList: ["Boss", "Partner", "Client", "Friend", "In-laws"], 
             rsnList: ["Late", "Sick", "Emergency"], 
-            styList: ["Professional", "Casual"]
+            styList: ["Professional", "Casual", "Slang"]
         }
     };
 
     function getTexts(lang) {
-        // Zkusíme přesnou shodu (en-US), jinak defaultní EN data
         return translations[lang] || translations['en-US'] || translations['default']; 
     }
 
@@ -565,8 +504,11 @@
         const lang = document.getElementById('lang-select').value;
         const t = getTexts(lang);
 
-        // Header & UI
+        // Header
         document.getElementById('subtitle').innerText = t.sub;
+        document.getElementById('tagline').innerText = t.tagline;
+        
+        // Main UI
         document.getElementById('btn-verb').innerText = t.verb;
         document.getElementById('lbl-format').innerText = t.fmt;
         document.getElementById('lbl-target').innerText = t.tgt;
@@ -574,7 +516,7 @@
         document.getElementById('lbl-style').innerText = t.sty;
         document.getElementById('lbl-results').innerText = t.res;
 
-        // Marketing Footer
+        // Footer
         document.getElementById('vip-title').innerText = t.vipTitle;
         document.getElementById('b1').innerText = t.b1;
         document.getElementById('b2').innerText = t.b2;
@@ -587,7 +529,7 @@
         // Placeholdery
         document.querySelectorAll('.smart-input').forEach(inp => inp.placeholder = t.ph);
 
-        // Seznamy (Překlad)
+        // Seznamy
         populateDatalist('recipients-list', t.recList);
         populateDatalist('reasons-list', t.rsnList);
         populateDatalist('styles-list', t.styList);
