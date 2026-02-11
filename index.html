@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v2.8 (Custom Dropdowns) --- */
+        /* --- CSS: YES GENIUS v2.9 (Fixed Z-Index & Custom Dropdowns) --- */
         :root {
             --bg-black: #000000;
             --card-bg: rgba(18, 18, 18, 0.95);
@@ -57,6 +57,8 @@
             padding: 15px 0 25px 0;
             width: 100%;
             gap: 15px;
+            position: relative;
+            z-index: 20; /* Header nad obsahem */
         }
 
         .logo-wrapper { flex: 0 0 25%; max-width: 25%; padding-top: 0; }
@@ -117,17 +119,24 @@
             }
         }
 
-        /* FORMULÁŘ */
+        /* FORMULÁŘ - HLAVNÍ KARTA */
         .glass-card {
             background: var(--card-bg); border: 1px solid var(--glass-border);
             border-radius: var(--radius); padding: 20px 25px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.8); backdrop-filter: blur(12px); margin-top: 5px;
+            
+            /* Z-INDEX FIX: Aby rolovátka byla nad patičkou */
+            position: relative;
+            z-index: 50; 
         }
+
         .input-group { margin-bottom: 20px; position: relative; }
+        
         label {
             display: block; font-size: 0.7rem; text-transform: uppercase;
             letter-spacing: 1.5px; color: var(--text-gray); margin-bottom: 8px; font-weight: 600;
         }
+        
         .smart-input-wrapper { position: relative; display: flex; align-items: center; width: 100%; }
         
         input, select {
@@ -137,39 +146,50 @@
             font-family: inherit; outline: none; transition: 0.3s;
             appearance: none; -webkit-appearance: none;
         }
-        
-        /* CUSTOM DROPDOWN STYLES (NEW) */
+
+        /* --- NOVÁ LUXUSNÍ ROLOVÁTKA (Custom Dropdowns) --- */
         .custom-dropdown-list {
-            position: absolute; top: 100%; left: 0; width: 100%;
+            position: absolute; 
+            top: 100%; left: 0; width: 100%;
             max-height: 250px; overflow-y: auto;
-            background: #080808; 
+            background: #050505; /* Černé pozadí */
             border: 1px solid var(--gold); border-top: none;
             border-radius: 0 0 12px 12px;
-            z-index: 1000; display: none;
+            z-index: 1000; /* Vysoký index v rámci karty */
+            display: none;
             box-shadow: 0 15px 40px rgba(0,0,0,1);
         }
+
         .dropdown-item {
             padding: 14px 16px; cursor: pointer; color: #ccc; font-size: 0.95rem;
             transition: all 0.2s; border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         .dropdown-item:last-child { border-bottom: none; }
+        
+        /* Zlatý hover efekt místo modré */
         .dropdown-item:hover {
             background: linear-gradient(90deg, #1a1a1a, #2a2a2a);
             color: var(--gold); padding-left: 20px; border-left: 3px solid var(--gold);
         }
+
+        /* Hranaté spodní rohy inputu při otevření */
         .input-open {
             border-bottom-left-radius: 0 !important;
             border-bottom-right-radius: 0 !important;
             border-color: var(--gold) !important;
         }
 
+        /* Šipka pro standardní select */
         #format {
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23d4af37%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
             background-repeat: no-repeat; background-position: right 15px top 50%; background-size: 12px auto;
         }
+
+        /* Šipka pro custom inputy */
         .dropdown-arrow {
             position: absolute; right: 15px; color: var(--gold); font-size: 0.8rem; pointer-events: none; opacity: 0.7; cursor: pointer;
         }
+
         .reset-btn {
             position: absolute; right: 10px; background: #050505; border: none; color: #666;
             font-size: 1.1rem; cursor: pointer; padding: 5px 8px;
@@ -213,6 +233,9 @@
             border: 1px solid var(--glass-border); border-radius: 24px;
             text-align: center; box-shadow: 0 0 40px rgba(0,0,0,0.5);
             position: relative; overflow: hidden;
+            
+            /* Z-INDEX FIX: Footer musí být pod kartou */
+            z-index: 10;
         }
         .vip-title { color: var(--gold); font-size: 0.85rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; }
         .benefits-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 25px; font-size: 0.75rem; color: #ccc; line-height: 1.6; }
@@ -344,7 +367,7 @@
 </div>
 
 <script>
-    /* --- YES GENIUS v2.8 (Custom Dropdowns) --- */
+    /* --- YES GENIUS v2.9 (Z-Index Fixed + Custom Dropdowns) --- */
 
     const PAYMENT_LINK = "https://buy.stripe.com/bJefZi4T3blacNUfeaa7C03"; 
 
@@ -522,6 +545,60 @@
             rsnList: ["देर हो रही है", "बीमार", "समय सीमा चूकी", "योजना रद्द", "पारिवारिक आपातकाल", "कार खराब"],
             styList: ["पेशेवर", "रचनात्मक", "स्लैंग", "नाटकीय", "औपचारिक", "अनौपचारिक", "क्षमाप्रार्थी"]
         },
+        'th': {
+            sub: "เครื่องมือสร้างข้อแก้ตัว", tagline: "แม้แต่นักการทูตก็มีวันที่แย่.<br>เราช่วยคุณได้.",
+            verb: "สร้าง!", fmt: "รูปแบบ", tgt: "ถึงใคร", rsn: "เหตุผล", sty: "สไตล์", 
+            ph: "เลือกหรือพิมพ์...", res: "ร่างข้อความ:", copy: "คัดลอก", share: "แชร์",
+            vipTitle: "👑 ปลดล็อกเต็มรูปแบบ", b1: "ไม่มีรายเดือน", b2: "ตลอดชีพ", b3: "อัปเดตฟรี", b4: "ปลอดภัย", vMain: "รับสิทธิ์เข้าถึง", vSub: "จ่ายครั้งเดียว $79", privacy: "เราไม่เก็บข้อมูลส่วนตัว.",
+            recList: ["เจ้านาย", "แฟน", "ภรรยา", "สามี", "แม่ยาย", "พ่อตา", "ลูกค้า", "เพื่อนร่วมงาน", "แม่", "พ่อ"],
+            rsnList: ["สาย", "ป่วย", "ส่งไม่ทัน", "ยกเลิกนัด", "ฉุกเฉิน", "รถเสีย"],
+            styList: ["ทางการ", "สร้างสรรค์", "วัยรุ่น", "ดราม่า", "สุภาพ", "ชิลๆ", "ขอโทษ"]
+        },
+        'id': {
+            sub: "DIPLOMAT DIGITAL", tagline: "Bahkan diplomat punya hari buruk.<br>Kami bantu Anda.",
+            verb: "BUAT!", fmt: "Format", tgt: "Penerima", rsn: "Alasan", sty: "Gaya", 
+            ph: "Pilih atau ketik...", res: "Konsep:", copy: "Salin", share: "Bagikan",
+            vipTitle: "👑 BUKA POTENSI PENUH", b1: "Tanpa Biaya Bulanan", b2: "Akses Seumur Hidup", b3: "Update Gratis", b4: "Pembayaran Aman", vMain: "DAPATKAN AKSES", vSub: "Sekali bayar $79", privacy: "Kami tidak mengumpulkan data pribadi.",
+            recList: ["Bos", "Pasangan", "Istri", "Suami", "Ibu mertua", "Ayah mertua", "Klien", "Rekan", "Ibu", "Ayah"],
+            rsnList: ["Terlambat", "Sakit", "Lewat Tenggat", "Batal", "Darurat", "Masalah Mobil"],
+            styList: ["Profesional", "Kreatif", "Gaul", "Dramatis", "Formal", "Santai", "Menyesal"]
+        },
+        'bn': {
+            sub: "ডিজিটাল কূটনীতিক", tagline: "কূটনীতিকদেরও খারাপ দিন যায়।<br>আমরা আপনাকে সাহায্য করব।",
+            verb: "তৈরি করুন!", fmt: "বিন্যাস", tgt: "প্রাপক", rsn: "কারণ", sty: "শৈলী", 
+            ph: "বাছুন বা লিখুন...", res: "খসড়া:", copy: "কপি", share: "শেয়ার",
+            vipTitle: "👑 সম্পূর্ণ আনলক করুন", b1: "মাসিক ফি নেই", b2: "আজীবন অ্যাক্সেস", b3: "ফ্রি আপডেট", b4: "নিরাপদ পেমেন্ট", vMain: "অ্যাক্সেস নিন", vSub: "একবার পেমেন্ট $79", privacy: "আমরা ব্যক্তিগত তথ্য সংগ্রহ করি না।",
+            recList: ["বস", "সঙ্গী", "স্ত্রী", "স্বামী", "শাশুড়ি", "শ্বশুর", "ক্লায়েন্ট", "সহকর্মী", "মা", "বাবা"],
+            rsnList: ["দেরি হয়েছে", "অসুস্থ", "সময়সীমা শেষ", "বাতিল", "জরুরী", "গাড়ির সমস্যা"],
+            styList: ["পেশাদার", "সৃজনশীল", "স্ল্যাং", "নাটকীয়", "আনুষ্ঠানিক", "ক্যাজুয়াল", "ক্ষমাপ্রার্থী"]
+        },
+        'fil': {
+            sub: "DIGITAL DIPLOMAT", tagline: "Kahit diplomat ay may bad days.<br>Sagot ka namin.",
+            verb: "GUMAWA!", fmt: "Format", tgt: "Tumatanggap", rsn: "Dahilan", sty: "Istilo", 
+            ph: "Pumili o mag-type...", res: "Mga Draft:", copy: "Kopyahin", share: "Ibahagi",
+            vipTitle: "👑 I-UNLOCK LAHAT", b1: "Walang Monthly", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment", vMain: "KUNIN ANG ACCESS", vSub: "Isang bayad $79", privacy: "Hindi kami kumukuha ng personal na data.",
+            recList: ["Boss", "Partner", "Asawa (F)", "Asawa (M)", "Biyenan", "Kliyente", "Katrabaho", "Nanay", "Tatay"],
+            rsnList: ["Late", "May Sakit", "Lagpas Deadline", "Cancel", "Emergency", "Sira Kotse"],
+            styList: ["Propesyonal", "Malikhain", "Balbal", "Madrama", "Pormal", "Kaswal", "Paumanhin"]
+        },
+        'fa': {
+            sub: "دیپلمات دیجیتال", tagline: "حتی دیپلمات‌ها هم روز بد دارند.<br>ما هوایتان را داریم.",
+            verb: "تولید کن!", fmt: "فرمت", tgt: "گیرنده", rsn: "دلیل", sty: "سبک", 
+            ph: "انتخاب یا تایپ کنید...", res: "پیش‌نویس‌ها:", copy: "کپی", share: "اشتراک",
+            vipTitle: "👑 دسترسی کامل", b1: "بدون اشتراک", b2: "دسترسی مادام‌العمر", b3: "آپدیت رایگان", b4: "پرداخت امن", vMain: "دریافت دسترسی", vSub: "یک بار پرداخت $79", privacy: "ما داده‌های شخصی را جمع‌آوری نمی‌کنیم.",
+            recList: ["رئیس", "شریک", "همسر", "شوهر", "مادر زن/شوهر", "پدر زن/شوهر", "مشتری", "همکار", "مادر", "پدر"],
+            rsnList: ["تأخیر", "بیماری", "ددلاین", "لغو", "اورژانسی", "خرابی ماشین"],
+            styList: ["رسمی", "خلاقانه", "عامیانه", "دراماتیک", "خیلی رسمی", "دوستانه", "عذرخواهانه"]
+        },
+        'vi': {
+            sub: "NHÀ NGOẠI GIAO SỐ", tagline: "Ngay cả nhà ngoại giao cũng có ngày tồi tệ.<br>Chúng tôi giúp bạn.",
+            verb: "TẠO!", fmt: "Định dạng", tgt: "Người nhận", rsn: "Lý do", sty: "Phong cách", 
+            ph: "Chọn hoặc nhập...", res: "Bản nháp:", copy: "Sao chép", share: "Chia sẻ",
+            vipTitle: "👑 MỞ KHÓA TOÀN BỘ", b1: "Không phí tháng", b2: "Truy cập trọn đời", b3: "Cập nhật miễn phí", b4: "Thanh toán an toàn", vMain: "NHẬN QUYỀN TRUY CẬP", vSub: "Thanh toán 1 lần $79", privacy: "Chúng tôi không thu thập dữ liệu cá nhân.",
+            recList: ["Sếp", "Người yêu", "Vợ", "Chồng", "Mẹ vợ/chồng", "Bố vợ/chồng", "Khách hàng", "Đồng nghiệp", "Mẹ", "Bố"],
+            rsnList: ["Đi muộn", "Ốm", "Trễ hạn", "Hủy hẹn", "Khẩn cấp", "Hỏng xe"],
+            styList: ["Chuyên nghiệp", "Sáng tạo", "Tiếng lóng", "Kịch tính", "Trang trọng", "Thoải mái", "Hối lỗi"]
+        },
         'sv': {
             sub: "DIGITAL DIPLOMAT", tagline: "Även diplomater har dåliga dagar.<br>Vi täcker dig.",
             verb: "SKAPA!", fmt: "Format", tgt: "Mottagare", rsn: "Orsak", sty: "Stil", 
@@ -582,9 +659,7 @@
             verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", 
             ph: "Select...", res: "Drafts:", copy: "Copy", share: "Share",
             vipTitle: "👑 UNLOCK FULL POTENTIAL", b1: "No Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment", vMain: "GET LIFETIME ACCESS", vSub: "One-time payment $79", privacy: "We do not collect any personal data.",
-            recList: ["Boss", "Partner", "Client", "Friend", "In-laws"], 
-            rsnList: ["Late", "Sick", "Emergency"], 
-            styList: ["Professional", "Casual", "Slang"]
+            recList: ["Boss", "Partner", "Client", "Friend", "In-laws"], rsnList: ["Late", "Sick", "Emergency"], styList: ["Professional", "Casual", "Slang"]
         }
     };
 
