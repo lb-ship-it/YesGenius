@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v2.4 (Perfect Alignment & Mobile Flags) --- */
+        /* --- CSS: YES GENIUS v2.5 (Polished Diamond) --- */
         :root {
             --bg-black: #000000;
             --card-bg: rgba(18, 18, 18, 0.95);
@@ -49,10 +49,9 @@
             position: relative;
         }
 
-        /* --- HEADER v2.4 (Top Align + Bigger Fonts) --- */
+        /* --- HEADER v2.5 --- */
         header {
             display: flex;
-            /* ZAROVNÁNÍ NAHORU (Top Alignment) */
             align-items: flex-start; 
             justify-content: space-between;
             padding: 15px 0 25px 0;
@@ -64,14 +63,13 @@
         .logo-wrapper {
             flex: 0 0 25%;
             max-width: 25%;
-            padding-top: 0; /* Reset */
+            padding-top: 0;
         }
 
         .logo-img {
             width: 100%;
             aspect-ratio: 1/1;
             border-radius: 14px;
-            /* Ztenčený border, stejný jako inputy */
             border: 1px solid var(--glass-border);
             object-fit: cover; 
             background: #000;
@@ -79,19 +77,17 @@
             display: block;
         }
 
-        /* 2. TITULEK: Zvětšený a kompaktní */
+        /* 2. TITULEK */
         .title-wrapper {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             overflow: hidden;
-            /* Jemná korekce, aby text opticky seděl k logu */
             padding-top: 2px; 
         }
 
         h1 {
-            /* ZVĚTŠENO pro kompaktnost */
             font-size: 1.9rem; 
             font-weight: 900;
             margin: 0;
@@ -105,7 +101,6 @@
 
         .subtitle {
             color: var(--gold);
-            /* ZVĚTŠENO */
             font-size: 0.75rem; 
             margin-top: 5px;
             font-weight: 800;
@@ -115,35 +110,35 @@
         }
 
         .tagline-text {
-            /* ZVĚTŠENO */
-            font-size: 0.65rem; 
-            color: #999;
-            margin-top: 4px;
-            line-height: 1.2;
+            /* ZVĚTŠENO + LINE-HEIGHT */
+            font-size: 0.75rem; 
+            color: #ccc; /* Světlejší pro čitelnost */
+            margin-top: 6px;
+            line-height: 1.3;
             font-weight: 400;
         }
 
-        /* 3. JAZYKY: Desktop vs Mobil */
+        /* 3. JAZYKY */
         .lang-wrapper {
             flex: 0 0 auto;
             display: flex;
             justify-content: flex-end;
-            padding-top: 0; /* Zarovnání s horní hranou loga */
+            padding-top: 0; 
         }
 
         .lang-select {
             background: #050505;
             color: var(--gold);
             border: 1px solid var(--glass-border);
-            padding: 10px 8px; /* Větší padding pro zarovnání s logem */
+            padding: 10px 8px;
             border-radius: 10px;
             font-size: 0.85rem;
-            outline: none;
+            outline: none; /* Odstraní modrý rámeček */
             cursor: pointer;
             font-weight: 600;
             text-align: right;
             width: auto;
-            min-width: 130px; /* Dost místa na desktopu */
+            min-width: 130px;
             
             appearance: none; -webkit-appearance: none;
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23d4af37%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
@@ -151,32 +146,39 @@
             background-position: right 8px top 50%;
             background-size: 10px auto;
             padding-right: 25px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        /* FOCUS STATE - Zlatá záře místo modré */
+        .lang-select:focus, input:focus, select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
         }
 
         /* --- MOBILNÍ SPECIALITY (do 480px) --- */
         @media (max-width: 480px) {
-            h1 { font-size: 1.5rem; } /* Trochu menší pro mobily */
+            h1 { font-size: 1.5rem; } 
             .subtitle { font-size: 0.65rem; }
-            .tagline-text { font-size: 0.55rem; max-width: 150px; } /* Zalamování taglinu na mobilu */
+            .tagline-text { font-size: 0.65rem; line-height: 1.2; } /* Menší na mobilu, ale stále čitelné */
 
-            /* Minimalizace jazyků na vlajku */
+            /* Minimalizace jazyků - Ještě menší vlajka */
             .lang-select {
                 min-width: 0;
-                width: 42px; /* Fixní malá šířka */
-                height: 42px;
-                padding: 5px; /* Malý padding */
-                padding-right: 0; /* Skrýt šipku paddingem */
-                font-size: 1.4rem; /* Velká vlajka */
+                width: 32px; /* Zmenšeno z 42px */
+                height: 32px;
+                padding: 0; 
+                padding-right: 0;
+                font-size: 1.0rem; /* Zmenšeno z 1.4rem */
                 text-align: center;
-                background-image: none; /* Skrýt šipku */
-                overflow: hidden; /* Oříznout text */
+                background-image: none;
+                overflow: hidden;
                 white-space: nowrap;
-                text-indent: 2px; /* Vycentrovat první znak (vlajku) */
+                text-indent: 0;
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
-            /* Pozn: Na mobilu se po kliknutí otevře nativní menu s plným textem */
         }
 
         /* FORMULÁŘ */
@@ -217,12 +219,6 @@
             outline: none;
             transition: 0.3s;
             appearance: none; -webkit-appearance: none;
-        }
-
-        input:focus, select:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
-            background: #0a0a0a;
         }
 
         /* Šipka pro Select (Format) */
@@ -323,7 +319,7 @@
         <div class="title-wrapper">
             <h1>YES Genius</h1>
             <div id="subtitle" class="subtitle">DIGITAL DIPLOMAT</div>
-            <div id="tagline" class="tagline-text">Even diplomats have bad days. We make sure you don't.</div>
+            <div id="tagline" class="tagline-text"></div>
         </div>
 
         <div class="lang-wrapper">
@@ -431,14 +427,15 @@
 </div>
 
 <script>
-    /* --- YES GENIUS v2.4 (Ultimate Polish) --- */
+    /* --- YES GENIUS v2.5 (Polish Diamond) --- */
 
     const PAYMENT_LINK = "https://buy.stripe.com/bJefZi4T3blacNUfeaa7C03"; 
 
-    // --- PŘEKLADY ---
+    // --- PŘEKLADY v2.5 (S <br> v tagline) ---
     const translations = {
         'en-US': { 
-            sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days. We make sure you don't.", 
+            sub: "DIGITAL DIPLOMAT", 
+            tagline: "Even diplomats have bad days.<br>We make sure you don't.", 
             verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Tone & Style", 
             ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share",
             vipTitle: "👑 UNLOCK FULL POTENTIAL",
@@ -450,7 +447,8 @@
             styList: ["Professional", "Creative / Funny", "Slang / Street", "Dramatic", "Strictly Formal", "Casual", "Apologetic"]
         },
         'en-GB': { 
-            sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days. We make sure you don't.",
+            sub: "DIGITAL DIPLOMAT", 
+            tagline: "Even diplomats have bad days.<br>We make sure you don't.",
             verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Tone & Style", 
             ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share",
             vipTitle: "👑 UNLOCK FULL POTENTIAL",
@@ -462,7 +460,8 @@
             styList: ["Professional", "Creative / Witty", "Slang / Roadman", "Dramatic", "Strictly Formal", "Casual", "Apologetic"]
         },
         cs: { 
-            sub: "DIGITÁLNÍ DIPLOMAT", tagline: "I diplomaté mají špatné dny. My jistíme ty vaše.",
+            sub: "DIGITÁLNÍ DIPLOMAT", 
+            tagline: "I diplomaté mají špatné dny.<br>My jistíme ty vaše.",
             verb: "GENERUJ!", fmt: "Formát", tgt: "Adresát", rsn: "Důvod", sty: "Tón a Styl", 
             ph: "Vyber nebo napiš...", res: "Tvé návrhy:", copy: "Kopírovat", share: "Sdílet",
             vipTitle: "👑 ODEMKNI PLNÝ POTENCIÁL",
@@ -474,7 +473,7 @@
             styList: ["Profesionální", "Kreativní / Vtipný", "Slang / Hovorový", "Dramatický", "Formální", "Neformální", "Omluvný"]
         },
         default: {
-            sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days. We make sure you don't.",
+            sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days.<br>We make sure you don't.",
             verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", 
             ph: "Select...", res: "Drafts:", copy: "Copy", share: "Share",
             vipTitle: "👑 UNLOCK FULL POTENTIAL",
@@ -496,6 +495,7 @@
     function toggleReset(input) {
         const btn = input.parentElement.querySelector('.reset-btn');
         const arrow = input.parentElement.querySelector('.dropdown-arrow');
+        
         if (input.value.length > 0) {
             btn.style.display = 'block';
             arrow.style.display = 'none'; 
@@ -528,7 +528,8 @@
         const t = getTexts(lang);
 
         document.getElementById('subtitle').innerText = t.sub;
-        document.getElementById('tagline').innerText = t.tagline;
+        // POUŽITO innerHTML pro <br>
+        document.getElementById('tagline').innerHTML = t.tagline;
         document.getElementById('btn-verb').innerText = t.verb;
         document.getElementById('lbl-format').innerText = t.fmt;
         document.getElementById('lbl-target').innerText = t.tgt;
@@ -646,6 +647,7 @@
 
     function koupit() { window.location.href = PAYMENT_LINK; }
     
+    // Start
     window.onload = function() { changeLanguage(); }
 </script>
 
