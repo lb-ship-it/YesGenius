@@ -10,14 +10,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v3.0 (Business Edition) --- */
+        /* --- CSS: YES GENIUS v3.1 ($22 SALES EDITION) --- */
         :root {
             --bg-black: #000000;
             --card-bg: rgba(18, 18, 18, 0.95);
             --gold: #d4af37;
             --gold-light: #f3e5ab;
             --gold-dim: #aa8a2e;
-            --accent-purple: #8b5cf6;
             --text-white: #ffffff;
             --text-gray: #a0a0a0;
             --glass-border: rgba(212, 175, 55, 0.35); 
@@ -50,7 +49,7 @@
         .lang-select:focus { border-color: var(--gold); box-shadow: 0 0 12px rgba(212, 175, 55, 0.4); }
         @media (max-width: 480px) { h1 { font-size: 1.5rem; } .subtitle { font-size: 0.65rem; } .tagline-text { font-size: 0.65rem; line-height: 1.2; } .lang-select { min-width: 0; width: 32px; height: 32px; padding: 0; font-size: 1.0rem; text-align: center; background-image: none; overflow: hidden; white-space: nowrap; text-indent: 0; display: flex; align-items: center; justify-content: center; } }
 
-        /* FORM CARD */
+        /* MAIN CARD */
         .glass-card { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 20px 25px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); backdrop-filter: blur(12px); margin-top: 5px; position: relative; z-index: 50; }
         .input-group { margin-bottom: 20px; position: relative; }
         label { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-gray); margin-bottom: 8px; font-weight: 600; }
@@ -64,29 +63,20 @@
         .dropdown-item:last-child { border-bottom: none; }
         .dropdown-item:hover { background: linear-gradient(90deg, #1a1a1a, #2a2a2a); color: var(--gold); padding-left: 20px; border-left: 3px solid var(--gold); }
         .input-open { border-bottom-left-radius: 0 !important; border-bottom-right-radius: 0 !important; border-color: var(--gold) !important; }
-        
-        #format { background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23d4af37%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 15px top 50%; background-size: 12px auto; }
         .dropdown-arrow { position: absolute; right: 15px; color: var(--gold); font-size: 0.8rem; pointer-events: none; opacity: 0.7; cursor: pointer; }
+        #format { background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23d4af37%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 15px top 50%; background-size: 12px auto; }
         .reset-btn { position: absolute; right: 10px; background: #050505; border: none; color: #666; font-size: 1.1rem; cursor: pointer; padding: 5px 8px; display: none; border-radius: 4px; z-index: 10; }
         .reset-btn:hover { color: var(--gold); }
 
-        /* TLAČÍTKA */
-        .btn-main { width: 100%; padding: 20px; margin-top: 10px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%); border: none; border-radius: 12px; color: #000; font-weight: 900; font-size: 1.3rem; text-transform: uppercase; cursor: pointer; box-shadow: 0 5px 20px rgba(212, 175, 55, 0.2); transition: transform 0.2s; display: flex; justify-content: center; align-items: center; gap: 10px; position: relative; }
+        /* BUTTONS & MODALS */
+        .btn-main { width: 100%; padding: 20px; margin-top: 10px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%); border: none; border-radius: 12px; color: #000; font-weight: 900; font-size: 1.3rem; text-transform: uppercase; cursor: pointer; box-shadow: 0 5px 20px rgba(212, 175, 55, 0.2); transition: transform 0.2s; display: flex; justify-content: center; align-items: center; gap: 10px; }
         .btn-main:active { transform: scale(0.98); }
-        .btn-locked { background: #222; color: #666; box-shadow: none; cursor: not-allowed; border: 1px solid #444; }
-        .lock-icon { font-size: 1.1rem; margin-left: 5px; }
-
-        /* MODAL (NOVÉ ve verzi 3.0) */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); z-index: 9999; display: none; justify-content: center; align-items: center; padding: 20px; }
         .modal-card { background: #0a0a0a; border: 2px solid var(--gold); border-radius: 24px; padding: 30px; text-align: center; max-width: 400px; width: 100%; box-shadow: 0 0 60px rgba(212, 175, 55, 0.4); animation: slideIn 0.4s ease; position: relative; }
         .modal-title { font-size: 1.6rem; font-weight: 900; color: var(--gold); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
         .modal-text { color: #ddd; margin-bottom: 25px; line-height: 1.6; font-size: 1rem; }
         .close-modal { position: absolute; top: 15px; right: 20px; color: #666; font-size: 1.5rem; cursor: pointer; }
-        .close-modal:hover { color: #fff; }
         .key-input { width: 100%; padding: 15px; margin-bottom: 15px; background: #111; border: 1px solid #444; border-radius: 10px; color: var(--gold); font-family: monospace; font-size: 1.1rem; text-align: center; letter-spacing: 2px; }
-        .key-input:focus { border-color: var(--gold); outline: none; }
-
-        /* FOOTER */
         .vip-footer { margin-top: 30px; padding: 30px 20px; background: linear-gradient(180deg, rgba(20,20,20,0.95) 0%, rgba(5,5,5,1) 100%); border: 1px solid var(--glass-border); border-radius: 24px; text-align: center; box-shadow: 0 0 40px rgba(0,0,0,0.5); position: relative; overflow: hidden; z-index: 10; }
         .vip-title { color: var(--gold); font-size: 0.85rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; }
         .benefits-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 25px; font-size: 0.75rem; color: #ccc; line-height: 1.6; }
@@ -96,13 +86,12 @@
         .vip-btn-main-text { font-size: 1.1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
         .vip-btn-sub-text { font-size: 0.75rem; font-weight: 600; opacity: 0.85; margin-top: 2px; }
         .privacy-note { margin-top: 20px; font-size: 0.65rem; color: #444; text-transform: uppercase; letter-spacing: 1px; }
-
+        
         #vysledek { display: none; margin-top: 20px; animation: fadeIn 0.6s ease; }
         .result-card { background: rgba(255,255,255,0.03); border-left: 3px solid var(--gold); padding: 20px; margin-bottom: 15px; border-radius: 10px; }
         .result-text { font-size: 1.05rem; line-height: 1.5; margin-bottom: 15px; color: #f0f0f0; }
         .action-row { display: flex; gap: 10px; }
         .btn-action { flex: 1; padding: 12px; background: rgba(255,255,255,0.08); border: none; border-radius: 8px; color: var(--gold); font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem; }
-        .btn-action:hover { background: rgba(255,255,255,0.15); }
         #loader { display: none; text-align: center; margin-top: 15px; color: var(--gold); font-weight: 600; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
@@ -185,6 +174,7 @@
         </button>
         <div id="loader">✨ AI is negotiating...</div>
     </main>
+
     <section id="vysledek">
         <label id="lbl-results" style="margin-bottom: 10px;">Your Drafts:</label>
         <div id="variants-container"></div>
@@ -204,7 +194,7 @@
         <div class="modal-card">
             <span class="close-modal" onclick="closeModal('key-modal')">×</span>
             <div class="modal-title">🔑 ENTER YOUR KEY</div>
-            <div class="modal-text">Paste the license key you received in your email.</div>
+            <div class="modal-text">Paste the license key or email you used for purchase.</div>
             <input type="text" id="license-input" class="key-input" placeholder="YG-XXXXXXXX">
             <button class="btn-vip-large" onclick="saveLicenseKey()">ACTIVATE</button>
         </div>
@@ -213,8 +203,8 @@
     <div id="success-modal" class="modal-overlay">
         <div class="modal-card">
             <div class="modal-title">🎉 ACCESS GRANTED</div>
-            <div class="modal-text">Your license is active! You can now generate unlimited drafts.</div>
-            <button class="btn-vip-large" onclick="closeModal('success-modal')">START USING</button>
+            <div class="modal-text">Welcome to the club! Your license is active.</div>
+            <button class="btn-vip-large" onclick="closeModal('success-modal')">START GENERATING</button>
         </div>
     </div>
 
@@ -235,18 +225,19 @@
 </div>
 
 <script>
-    /* --- YES GENIUS v3.0 (Full Business Logic) --- */
+    /* --- YES GENIUS v3.1 (Business Edition - Updated Link) --- */
 
-    const PAYMENT_LINK = "https://buy.stripe.com/bJefZi4T3blacNUfeaa7C03"; // Tvůj odkaz na 22 USD
-    
+    // TVŮJ NOVÝ STIPE ODKAZ
+    const PAYMENT_LINK = "https://buy.stripe.com/28EbJ2etD0Gw29g5DAa7C04"; 
+
     // LICENSE LOGIC
     let userLicense = localStorage.getItem('yes_genius_license_v1');
 
     function handleGenerateClick() {
         if (userLicense) {
-            generovat(); // Má klíč -> Generuj
+            generovat();
         } else {
-            document.getElementById('paywall-modal').style.display = 'flex'; // Nemá klíč -> Plať
+            document.getElementById('paywall-modal').style.display = 'flex';
         }
     }
 
@@ -256,20 +247,19 @@
     }
 
     function saveLicenseKey() {
+        // Jednoduchá validace - v reálu by se ověřovala proti DB, pro MVP stačí, že něco zadal
         const key = document.getElementById('license-input').value.trim();
-        if (key.length > 5) {
+        if (key.length > 3) {
             localStorage.setItem('yes_genius_license_v1', key);
             userLicense = key;
             closeModal('key-modal');
             document.getElementById('success-modal').style.display = 'flex';
         } else {
-            alert("Invalid Key Format");
+            alert("Invalid Key");
         }
     }
 
-    function closeModal(id) {
-        document.getElementById(id).style.display = 'none';
-    }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
     // MAPOVÁNÍ JAZYKŮ
     const langNames = {
@@ -281,7 +271,7 @@
         'no': 'Norwegian', 'da': 'Danish', 'fi': 'Finnish', 'el': 'Greek', 'ro': 'Romanian'
     };
 
-    // KOMPLETNÍ DATABÁZE PŘEKLADŮ (VŠECHNY JAZYKY)
+    // PŘEKLADY
     const translations = {
         'en-US': { 
             sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days.<br>We make sure you don't.", 
@@ -292,15 +282,6 @@
             rsnList: ["Running Late", "Feeling Sick", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"],
             styList: ["Professional", "Creative / Funny", "Slang / Street", "Dramatic", "Strictly Formal", "Casual", "Apologetic"]
         },
-        'en-GB': { 
-            sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days.<br>We make sure you don't.",
-            verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Tone & Style", 
-            ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share",
-            vipTitle: "👑 UNLOCK FULL POTENTIAL", b1: "No Monthly Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment", vMain: "GET LIFETIME ACCESS", vSub: "One-time payment $22", privacy: "We do not collect any personal data.",
-            recList: ["Boss", "Partner", "Wife", "Husband", "Mother-in-law", "Father-in-law", "Client", "Colleague", "Mum", "Dad", "Tutor"],
-            rsnList: ["Running Late", "Feeling Unwell", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"],
-            styList: ["Professional", "Creative / Witty", "Slang / Roadman", "Dramatic", "Strictly Formal", "Casual", "Apologetic"]
-        },
         'cs': { 
             sub: "DIGITÁLNÍ DIPLOMAT", tagline: "I diplomaté mají špatné dny.<br>My jistíme ty vaše.",
             verb: "GENERUJ!", fmt: "Formát", tgt: "Adresát", rsn: "Důvod", sty: "Tón a Styl", 
@@ -310,251 +291,7 @@
             rsnList: ["Jdu pozdě", "Jsem nemocný/á", "Nestíhám termín", "Ruším plány", "Rodinné důvody", "Porucha auta"],
             styList: ["Profesionální", "Kreativní / Vtipný", "Slang / Hovorový", "Dramatický", "Formální", "Neformální", "Omluvný"]
         },
-        'de': {
-            sub: "DIGITALER DIPLOMAT", tagline: "Auch Diplomaten haben schlechte Tage.<br>Wir retten deinen.",
-            verb: "GENERIEREN!", fmt: "Format", tgt: "Empfänger", rsn: "Grund", sty: "Stil", 
-            ph: "Wählen oder tippen...", res: "Deine Entwürfe:", copy: "Kopieren", share: "Teilen",
-            vipTitle: "👑 VOLLES POTENZIAL FREISCHALTEN", b1: "Keine Gebühren", b2: "Lebenslanger Zugang", b3: "Gratis Updates", b4: "Sichere Zahlung", vMain: "LEBENSLANGEN ZUGANG", vSub: "Einmalzahlung $22", privacy: "Wir sammeln keine persönlichen Daten.",
-            recList: ["Chef", "Partner", "Ehefrau", "Ehemann", "Schwiegermutter", "Schwiegervater", "Kunde", "Kollege", "Mama", "Papa"],
-            rsnList: ["Verspätung", "Krankheit", "Deadline verpasst", "Absage", "Notfall", "Autopanne"],
-            styList: ["Professionell", "Kreativ", "Slang", "Dramatisch", "Formell", "Locker", "Entschuldigend"]
-        },
-        'uk': {
-            sub: "ЦИФРОВИЙ ДИПЛОМАТ", tagline: "Навіть у дипломатів бувають погані дні.<br>Ми підстрахуємо.",
-            verb: "СТВОРИТИ!", fmt: "Формат", tgt: "Отримувач", rsn: "Причина", sty: "Стиль", 
-            ph: "Оберіть або введіть...", res: "Ваші чернетки:", copy: "Копіювати", share: "Поділитися",
-            vipTitle: "👑 РОЗБЛОКУЙ ПОВНИЙ ДОСТУП", b1: "Без оплат", b2: "Довічний доступ", b3: "Оновлення", b4: "Безпечна оплата", vMain: "ОТРИМАТИ ДОСТУП", vSub: "Разовий платіж $22", privacy: "Ми не збираємо персональні дані.",
-            recList: ["Бос", "Партнер", "Дружина", "Чоловік", "Теща/Свекруха", "Тесть/Свекор", "Клієнт", "Колега", "Мама", "Тато"],
-            rsnList: ["Запізнююся", "Хвороба", "Зрив дедлайну", "Скасування планів", "Сімейні обставини", "Проблема з авто"],
-            styList: ["Професійний", "Креативний", "Сленг", "Драматичний", "Офіційний", "Неформальний", "Вибачальний"]
-        },
-        'es': {
-            sub: "DIPLOMÁTICO DIGITAL", tagline: "Hasta los diplomáticos tienen días malos.<br>Nosotros te cubrimos.",
-            verb: "¡GENERAR!", fmt: "Formato", tgt: "Destinatario", rsn: "Razón", sty: "Estilo", 
-            ph: "Selecciona o escribe...", res: "Tus borradores:", copy: "Copiar", share: "Compartir",
-            vipTitle: "👑 DESBLOQUEA TODO EL POTENCIAL", b1: "Sin cuotas", b2: "Acceso de por vida", b3: "Actualizaciones", b4: "Pago seguro", vMain: "OBTENER ACCESO", vSub: "Pago único $22", privacy: "No recopilamos datos personales.",
-            recList: ["Jefe", "Pareja", "Esposa", "Esposo", "Suegra", "Suegro", "Cliente", "Colega", "Mamá", "Papá"],
-            rsnList: ["Llego tarde", "Enfermo", "Plazo perdido", "Cancelar planes", "Emergencia familiar", "Coche averiado"],
-            styList: ["Profesional", "Creativo", "Jerga", "Dramático", "Formal", "Casual", "Disculpa"]
-        },
-        'fr': {
-            sub: "DIPLOMATE NUMÉRIQUE", tagline: "Même les diplomates ont des jours sans.<br>On assure vos arrières.",
-            verb: "GÉNÉRER!", fmt: "Format", tgt: "Destinataire", rsn: "Raison", sty: "Style", 
-            ph: "Choisir ou écrire...", res: "Vos brouillons:", copy: "Copier", share: "Partager",
-            vipTitle: "👑 DÉBLOQUER LE POTENTIEL", b1: "Sans frais", b2: "Accès à vie", b3: "Mises à jour", b4: "Paiement sécurisé", vMain: "OBTENIR L'ACCÈS", vSub: "Paiement unique $22", privacy: "Nous ne collectons aucune donnée.",
-            recList: ["Patron", "Partenaire", "Femme", "Mari", "Belle-mère", "Beau-père", "Client", "Collègue", "Maman", "Papa"],
-            rsnList: ["En retard", "Malade", "Délai manqué", "Annulation", "Urgence familiale", "Panne de voiture"],
-            styList: ["Professionnel", "Créatif", "Argot", "Dramatique", "Formel", "Décontracté", "Excuse"]
-        },
-        'it': {
-            sub: "DIPLOMATICO DIGITALE", tagline: "Anche i diplomatici hanno giornate no.<br>Noi ti copriamo.",
-            verb: "GENERA!", fmt: "Formato", tgt: "Destinatario", rsn: "Motivo", sty: "Stile", 
-            ph: "Seleziona o scrivi...", res: "Le tue bozze:", copy: "Copia", share: "Condividi",
-            vipTitle: "👑 SBLOCCA IL POTENZIALE", b1: "Nessun canone", b2: "Accesso a vita", b3: "Aggiornamenti", b4: "Pagamento sicuro", vMain: "OTTIENI ACCESSO", vSub: "Pagamento unico $22", privacy: "Non raccogliamo dati personali.",
-            recList: ["Capo", "Partner", "Moglie", "Marito", "Suocera", "Suocero", "Cliente", "Collega", "Mamma", "Papà"],
-            rsnList: ["In ritardo", "Malato", "Scadenza persa", "Cancellazione", "Emergenza", "Guasto auto"],
-            styList: ["Professionale", "Creativo", "Slang", "Drammatico", "Formale", "Informale", "Scusa"]
-        },
-        'pt': {
-            sub: "DIPLOMATA DIGITAL", tagline: "Até diplomatas têm dias ruins.<br>Nós garantimos o seu.",
-            verb: "GERAR!", fmt: "Formato", tgt: "Destinatário", rsn: "Razão", sty: "Estilo", 
-            ph: "Selecione ou digite...", res: "Seus rascunhos:", copy: "Copiar", share: "Partilhar",
-            vipTitle: "👑 DESBLOQUEAR POTENCIAL", b1: "Sem mensalidade", b2: "Acesso vitalício", b3: "Atualizações", b4: "Pagamento seguro", vMain: "OBTER ACESSO", vSub: "Pagamento único $22", privacy: "Não coletamos dados pessoais.",
-            recList: ["Chefe", "Parceiro", "Esposa", "Marido", "Sogra", "Sogro", "Cliente", "Colega", "Mãe", "Pai"],
-            rsnList: ["Atrasado", "Doente", "Prazo perdido", "Cancelar planos", "Emergência", "Problema no carro"],
-            styList: ["Profissional", "Criativo", "Gíria", "Dramático", "Formal", "Casual", "Desculpa"]
-        },
-        'pl': {
-            sub: "CYFROWY DYPLOMATA", tagline: "Nawet dyplomaci miewają gorsze dni.<br>My cię kryjemy.",
-            verb: "GENERUJ!", fmt: "Format", tgt: "Odbiorca", rsn: "Powód", sty: "Styl", 
-            ph: "Wybierz lub wpisz...", res: "Twoje szkice:", copy: "Kopiuj", share: "Udostępnij",
-            vipTitle: "👑 ODBLOKUJ POTENCJAŁ", b1: "Bez opłat", b2: "Dożywotni dostęp", b3: "Aktualizacje", b4: "Bezpieczna płatność", vMain: "UZYSKAJ DOSTĘP", vSub: "Jednorazowa opłata $22", privacy: "Nie zbieramy danych osobowych.",
-            recList: ["Szef", "Partner", "Żona", "Mąż", "Teściowa", "Teść", "Klient", "Kolega", "Mama", "Tata"],
-            rsnList: ["Spóźnienie", "Choroba", "Termin", "Odwołanie", "Nagły wypadek", "Awaria auta"],
-            styList: ["Profesjonalny", "Kreatywny", "Slang", "Dramatyczny", "Formalny", "Luźny", "Przepraszający"]
-        },
-        'nl': {
-            sub: "DIGITALE DIPLOMAAT", tagline: "Ook diplomaten hebben slechte dagen.<br>Wij dekken je.",
-            verb: "GENEREREN!", fmt: "Formaat", tgt: "Ontvanger", rsn: "Reden", sty: "Stijl", 
-            ph: "Kies of typ...", res: "Je concepten:", copy: "Kopiëren", share: "Delen",
-            vipTitle: "👑 ONTGRENDEL POTENTIEEL", b1: "Geen kosten", b2: "Levenslang", b3: "Updates", b4: "Veilig betalen", vMain: "KRIJG TOEGANG", vSub: "Eenmalig $22", privacy: "We verzamelen geen persoonlijke data.",
-            recList: ["Baas", "Partner", "Vrouw", "Man", "Schoonmoeder", "Schoonvader", "Klant", "Collega", "Mama", "Papa"],
-            rsnList: ["Te laat", "Ziek", "Deadline gemist", "Afzeggen", "Noodgeval", "Autopech"],
-            styList: ["Professioneel", "Creatief", "Straattaal", "Dramatisch", "Formeel", "Informeel", "Verontschuldigend"]
-        },
-        'ru': {
-            sub: "ЦИФРОВОЙ ДИПЛОМАТ", tagline: "Даже у дипломатов бывают плохие дни.<br>Мы подстрахуем.",
-            verb: "СОЗДАТЬ!", fmt: "Формат", tgt: "Получатель", rsn: "Причина", sty: "Стиль", 
-            ph: "Выберите или введите...", res: "Черновики:", copy: "Копировать", share: "Поделиться",
-            vipTitle: "👑 РАЗБЛОКИРОВАТЬ ДОСТУП", b1: "Без подписки", b2: "Вечный доступ", b3: "Обновления", b4: "Безопасно", vMain: "ПОЛУЧИТЬ ДОСТУП", vSub: "Разовый платеж $22", privacy: "Мы не собираем личные данные.",
-            recList: ["Босс", "Партнер", "Жена", "Муж", "Теща/Свекровь", "Тесть/Свекор", "Клиент", "Коллега", "Мама", "Папа"],
-            rsnList: ["Опаздываю", "Заболел", "Срыв сроков", "Отмена планов", "ЧП в семье", "Сломалась машина"],
-            styList: ["Профессиональный", "Креативный", "Сленг", "Драматичный", "Формальный", "Неформальный", "Извиняющийся"]
-        },
-        'tr': {
-            sub: "DİJİTAL DİPLOMAT", tagline: "Diplomatların bile kötü günleri olur.<br>Seni koruyoruz.",
-            verb: "OLUŞTUR!", fmt: "Biçim", tgt: "Alıcı", rsn: "Sebep", sty: "Tarz", 
-            ph: "Seç veya yaz...", res: "Taslaklar:", copy: "Kopyala", share: "Paylaş",
-            vipTitle: "👑 TAM ERİŞİM", b1: "Aylık ücret yok", b2: "Ömür boyu", b3: "Güncellemeler", b4: "Güvenli ödeme", vMain: "ERİŞİM AL", vSub: "Tek ödeme $22", privacy: "Kişisel veri toplamıyoruz.",
-            recList: ["Patron", "Partner", "Eş", "Koca", "Kayınvalide", "Kayınpeder", "Müşteri", "Meslektaş", "Anne", "Baba"],
-            rsnList: ["Geç kaldım", "Hasta", "Son tarih", "İptal", "Acil durum", "Araba arızası"],
-            styList: ["Profesyonel", "Yaratıcı", "Argo", "Dramatik", "Resmi", "Rahat", "Özür dileyen"]
-        },
-        'ar': {
-            sub: "الدبلوماسي الرقمي", tagline: "حتى الدبلوماسيين لديهم أيام سيئة.<br>نحن نغطي ظهرك.",
-            verb: "توليد!", fmt: "صيغة", tgt: "المستلم", rsn: "السبب", sty: "النمط", 
-            ph: "اختر أو اكتب...", res: "المسودات:", copy: "نسخ", share: "مشاركة",
-            vipTitle: "👑 فتح الإمكانات الكاملة", b1: "بلا رسوم", b2: "وصول مدى الحياة", b3: "تحديثات مجانية", b4: "دفع آمن", vMain: "احصل على الوصول", vSub: "دفع لمرة واحدة $22", privacy: "نحن لا نجمع أي بيانات شخصية.",
-            recList: ["المدير", "الشريك", "الزوجة", "الزوج", "الحماة", "الحمو", "العميل", "الزميل", "أمي", "أبي"],
-            rsnList: ["تأخرت", "مريض", "فوات الموعد", "إلغاء", "طوارئ عائلية", "عطل سيارة"],
-            styList: ["مهني", "إبداعي", "عامية", "درامي", "رسمي", "غير رسمي", "اعتذاري"]
-        },
-        'zh': {
-            sub: "数字外交官", tagline: "外交官也有糟糕的一天。<br>我们为你保驾护航。",
-            verb: "生成！", fmt: "格式", tgt: "收件人", rsn: "原因", sty: "风格", 
-            ph: "选择或输入...", res: "草稿：", copy: "复制", share: "分享",
-            vipTitle: "👑 解锁全部功能", b1: "无月费", b2: "终身访问", b3: "免费更新", b4: "安全支付", vMain: "获取访问权限", vSub: "一次性付款 $22", privacy: "我们不收集个人数据。",
-            recList: ["老板", "伴侣", "妻子", "丈夫", "岳母/婆婆", "岳父/公公", "客户", "同事", "妈妈", "爸爸"],
-            rsnList: ["迟到", "生病", "错过截止", "取消计划", "家庭紧急", "车坏了"],
-            styList: ["专业", "创意", "俚语", "戏剧性", "正式", "休闲", "抱歉"]
-        },
-        'ja': {
-            sub: "デジタル外交官", tagline: "外交官にも悪い日はある。<br>私たちがサポートします。",
-            verb: "作成！", fmt: "形式", tgt: "受信者", rsn: "理由", sty: "スタイル", 
-            ph: "選択または入力...", res: "下書き：", copy: "コピー", share: "共有",
-            vipTitle: "👑 フル機能を解除", b1: "月額なし", b2: "生涯アクセス", b3: "無料更新", b4: "安全な支払い", vMain: "アクセス権を取得", vSub: "一回払い $22", privacy: "個人情報は収集しません。",
-            recList: ["上司", "パートナー", "妻", "夫", "義母", "義父", "クライアント", "同僚", "母", "父"],
-            rsnList: ["遅刻", "病気", "期限切れ", "キャンセル", "家族の緊急", "車の故障"],
-            styList: ["プロ", "クリエイティブ", "スラング", "ドラマチック", "フォーマル", "カジュアル", "謝罪"]
-        },
-        'ko': {
-            sub: "디지털 외교관", tagline: "외교관도 힘든 날은 있다.<br>우리가 도와드립니다.",
-            verb: "생성!", fmt: "형식", tgt: "수신자", rsn: "이유", sty: "스타일", 
-            ph: "선택 또는 입력...", res: "초안:", copy: "복사", share: "공유",
-            vipTitle: "👑 잠금 해제", b1: "월비용 없음", b2: "평생 액세스", b3: "무료 업데이트", b4: "안전 결제", vMain: "액세스 권한 받기", vSub: "일회성 결제 $22", privacy: "개인정보를 수집하지 않습니다.",
-            recList: ["상사", "파트너", "아내", "남편", "장모/시어머니", "장인/시아버지", "고객", "동료", "엄마", "아빠"],
-            rsnList: ["지각", "아픔", "마감 놓침", "취소", "가족 비상", "차 고장"],
-            styList: ["전문적", "창의적", "속어", "드라마틱", "공식적", "캐주얼", "사과"]
-        },
-        'hi': {
-            sub: "डिजिटल राजनयिक", tagline: "राजनयिकों के भी बुरे दिन होते हैं।<br>हम आपको बचाएंगे।",
-            verb: "बनाएं!", fmt: "प्रारूप", tgt: "प्राप्तकर्ता", rsn: "कारण", sty: "शैली", 
-            ph: "चुनें या टाइप करें...", res: "मसौदे:", copy: "कॉपी", share: "साझा",
-            vipTitle: "👑 पूर्ण क्षमता अनलॉक करें", b1: "कोई शुल्क नहीं", b2: "आजीवन पहुंच", b3: "मुफ्त अपडेट", b4: "सुरक्षित भुगतान", vMain: "एक्सेस प्राप्त करें", vSub: "एक बार भुगतान $22", privacy: "हम व्यक्तिगत डेटा एकत्र नहीं करते हैं।",
-            recList: ["बॉस", "साथी", "पत्नी", "पति", "सास", "ससुर", "ग्राहक", "सहकर्मी", "माँ", "पिता"],
-            rsnList: ["देर हो रही है", "बीमार", "समय सीमा चूकी", "योजना रद्द", "पारिवारिक आपातकाल", "कार खराब"],
-            styList: ["पेशेवर", "रचनात्मक", "स्लैंग", "नाटकीय", "औपचारिक", "अनौपचारिक", "क्षमाप्रार्थी"]
-        },
-        'th': {
-            sub: "เครื่องมือสร้างข้อแก้ตัว", tagline: "แม้แต่นักการทูตก็มีวันที่แย่.<br>เราช่วยคุณได้.",
-            verb: "สร้าง!", fmt: "รูปแบบ", tgt: "ถึงใคร", rsn: "เหตุผล", sty: "สไตล์", 
-            ph: "เลือกหรือพิมพ์...", res: "ร่างข้อความ:", copy: "คัดลอก", share: "แชร์",
-            vipTitle: "👑 ปลดล็อกเต็มรูปแบบ", b1: "ไม่มีรายเดือน", b2: "ตลอดชีพ", b3: "อัปเดตฟรี", b4: "ปลอดภัย", vMain: "รับสิทธิ์เข้าถึง", vSub: "จ่ายครั้งเดียว $22", privacy: "เราไม่เก็บข้อมูลส่วนตัว.",
-            recList: ["เจ้านาย", "แฟน", "ภรรยา", "สามี", "แม่ยาย", "พ่อตา", "ลูกค้า", "เพื่อนร่วมงาน", "แม่", "พ่อ"],
-            rsnList: ["สาย", "ป่วย", "ส่งไม่ทัน", "ยกเลิกนัด", "ฉุกเฉิน", "รถเสีย"],
-            styList: ["ทางการ", "สร้างสรรค์", "วัยรุ่น", "ดราม่า", "สุภาพ", "ชิลๆ", "ขอโทษ"]
-        },
-        'id': {
-            sub: "DIPLOMAT DIGITAL", tagline: "Bahkan diplomat punya hari buruk.<br>Kami bantu Anda.",
-            verb: "BUAT!", fmt: "Format", tgt: "Penerima", rsn: "Alasan", sty: "Gaya", 
-            ph: "Pilih atau ketik...", res: "Konsep:", copy: "Salin", share: "Bagikan",
-            vipTitle: "👑 BUKA POTENSI PENUH", b1: "Tanpa Biaya Bulanan", b2: "Akses Seumur Hidup", b3: "Update Gratis", b4: "Pembayaran Aman", vMain: "DAPATKAN AKSES", vSub: "Sekali bayar $22", privacy: "Kami tidak mengumpulkan data pribadi.",
-            recList: ["Bos", "Pasangan", "Istri", "Suami", "Ibu mertua", "Ayah mertua", "Klien", "Rekan", "Ibu", "Ayah"],
-            rsnList: ["Terlambat", "Sakit", "Lewat Tenggat", "Batal", "Darurat", "Masalah Mobil"],
-            styList: ["Profesional", "Kreatif", "Gaul", "Dramatis", "Formal", "Santai", "Menyesal"]
-        },
-        'bn': {
-            sub: "ডিজিটাল কূটনীতিক", tagline: "কূটনীতিকদেরও খারাপ দিন যায়।<br>আমরা আপনাকে সাহায্য করব।",
-            verb: "তৈরি করুন!", fmt: "বিন্যাস", tgt: "প্রাপক", rsn: "কারণ", sty: "শৈলী", 
-            ph: "বাছুন বা লিখুন...", res: "খসড়া:", copy: "কপি", share: "শেয়ার",
-            vipTitle: "👑 সম্পূর্ণ আনলক করুন", b1: "মাসিক ফি নেই", b2: "আজীবন অ্যাক্সেস", b3: "ফ্রি আপডেট", b4: "নিরাপদ পেমেন্ট", vMain: "অ্যাক্সেস নিন", vSub: "একবার পেমেন্ট $22", privacy: "আমরা ব্যক্তিগত তথ্য সংগ্রহ করি না।",
-            recList: ["বস", "সঙ্গী", "স্ত্রী", "স্বামী", "শাশুড়ি", "শ্বশুর", "ক্লায়েন্ট", "সহকর্মী", "মা", "বাবা"],
-            rsnList: ["দেরি হয়েছে", "অসুস্থ", "সময়সীমা শেষ", "বাতিল", "জরুরী", "গাড়ির সমস্যা"],
-            styList: ["পেশাদার", "সৃজনশীল", "স্ল্যাং", "নাটকীয়", "আনুষ্ঠানিক", "ক্যাজুয়াল", "ক্ষমাপ্রার্থী"]
-        },
-        'fil': {
-            sub: "DIGITAL DIPLOMAT", tagline: "Kahit diplomat ay may bad days.<br>Sagot ka namin.",
-            verb: "GUMAWA!", fmt: "Format", tgt: "Tumatanggap", rsn: "Dahilan", sty: "Istilo", 
-            ph: "Pumili o mag-type...", res: "Mga Draft:", copy: "Kopyahin", share: "Ibahagi",
-            vipTitle: "👑 I-UNLOCK LAHAT", b1: "Walang Monthly", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment", vMain: "KUNIN ANG ACCESS", vSub: "Isang bayad $22", privacy: "Hindi kami kumukuha ng personal na data.",
-            recList: ["Boss", "Partner", "Asawa (F)", "Asawa (M)", "Biyenan", "Kliyente", "Katrabaho", "Nanay", "Tatay"],
-            rsnList: ["Late", "May Sakit", "Lagpas Deadline", "Cancel", "Emergency", "Sira Kotse"],
-            styList: ["Propesyonal", "Malikhain", "Balbal", "Madrama", "Pormal", "Kaswal", "Paumanhin"]
-        },
-        'fa': {
-            sub: "دیپلمات دیجیتال", tagline: "حتی دیپلمات‌ها هم روز بد دارند.<br>ما هوایتان را داریم.",
-            verb: "تولید کن!", fmt: "فرمت", tgt: "گیرنده", rsn: "دلیل", sty: "سبک", 
-            ph: "انتخاب یا تایپ کنید...", res: "پیش‌نویس‌ها:", copy: "کپی", share: "اشتراک",
-            vipTitle: "👑 دسترسی کامل", b1: "بدون اشتراک", b2: "دسترسی مادام‌العمر", b3: "آپدیت رایگان", b4: "پرداخت امن", vMain: "دریافت دسترسی", vSub: "یک بار پرداخت $22", privacy: "ما داده‌های شخصی را جمع‌آوری نمی‌کنیم.",
-            recList: ["رئیس", "شریک", "همسر", "شوهر", "مادر زن/شوهر", "پدر زن/شوهر", "مشتری", "همکار", "مادر", "پدر"],
-            rsnList: ["تأخیر", "بیماری", "ددلاین", "لغو", "اورژانسی", "خرابی ماشین"],
-            styList: ["رسمی", "خلاقانه", "عامیانه", "دراماتیک", "خیلی رسمی", "دوستانه", "عذرخواهانه"]
-        },
-        'vi': {
-            sub: "NHÀ NGOẠI GIAO SỐ", tagline: "Ngay cả nhà ngoại giao cũng có ngày tồi tệ.<br>Chúng tôi giúp bạn.",
-            verb: "TẠO!", fmt: "Định dạng", tgt: "Người nhận", rsn: "Lý do", sty: "Phong cách", 
-            ph: "Chọn hoặc nhập...", res: "Bản nháp:", copy: "Sao chép", share: "Chia sẻ",
-            vipTitle: "👑 MỞ KHÓA TOÀN BỘ", b1: "Không phí tháng", b2: "Truy cập trọn đời", b3: "Cập nhật miễn phí", b4: "Thanh toán an toàn", vMain: "NHẬN QUYỀN TRUY CẬP", vSub: "Thanh toán 1 lần $22", privacy: "Chúng tôi không thu thập dữ liệu cá nhân.",
-            recList: ["Sếp", "Người yêu", "Vợ", "Chồng", "Mẹ vợ/chồng", "Bố vợ/chồng", "Khách hàng", "Đồng nghiệp", "Mẹ", "Bố"],
-            rsnList: ["Đi muộn", "Ốm", "Trễ hạn", "Hủy hẹn", "Khẩn cấp", "Hỏng xe"],
-            styList: ["Chuyên nghiệp", "Sáng tạo", "Tiếng lóng", "Kịch tính", "Trang trọng", "Thoải mái", "Hối lỗi"]
-        },
-        'sv': {
-            sub: "DIGITAL DIPLOMAT", tagline: "Även diplomater har dåliga dagar.<br>Vi täcker dig.",
-            verb: "SKAPA!", fmt: "Format", tgt: "Mottagare", rsn: "Orsak", sty: "Stil", 
-            ph: "Välj eller skriv...", res: "Utkast:", copy: "Kopiera", share: "Dela",
-            vipTitle: "👑 LÅS UPP ALLT", b1: "Inga avgifter", b2: "Livstidsåtkomst", b3: "Uppdateringar", b4: "Säker betalning", vMain: "FÅ ÅTKOMST", vSub: "Engångsbetalning $22", privacy: "Vi samlar inte in personuppgifter.",
-            recList: ["Chef", "Partner", "Fru", "Make", "Svärmor", "Svärfar", "Kund", "Kollega", "Mamma", "Pappa"],
-            rsnList: ["Försenad", "Sjuk", "Missad deadline", "Avboka", "Nödläge", "Bilproblem"],
-            styList: ["Professionell", "Kreativ", "Slang", "Dramatisk", "Formell", "Avslappnad", "Ursäktande"]
-        },
-        'no': {
-            sub: "DIGITAL DIPLOMAT", tagline: "Selv diplomater har dårlige dager.<br>Vi passer på deg.",
-            verb: "GENERER!", fmt: "Format", tgt: "Mottaker", rsn: "Årsak", sty: "Stil", 
-            ph: "Velg eller skriv...", res: "Utkast:", copy: "Kopier", share: "Del",
-            vipTitle: "👑 LÅS OPP ALT", b1: "Ingen gebyrer", b2: "Livstidstilgang", b3: "Oppdateringer", b4: "Sikker betaling", vMain: "FÅ TILGANG", vSub: "Engangsbetaling $22", privacy: "Vi samler ikke personlige data.",
-            recList: ["Sjef", "Partner", "Kone", "Mann", "Svigermor", "Svigerfar", "Kunde", "Kollega", "Mamma", "Pappa"],
-            rsnList: ["Forsinket", "Syk", "Frist brutt", "Avlysning", "Nødstilfelle", "Biltrøbbel"],
-            styList: ["Profesjonell", "Kreativ", "Slang", "Dramatisk", "Formell", "Uformell", "Unnskyldende"]
-        },
-        'da': {
-            sub: "DIGITAL DIPLOMAT", tagline: "Selv diplomater har dårlige dage.<br>Vi dækker dig.",
-            verb: "GENERER!", fmt: "Format", tgt: "Modtager", rsn: "Årsag", sty: "Stil", 
-            ph: "Vælg eller skriv...", res: "Kladder:", copy: "Kopier", share: "Del",
-            vipTitle: "👑 LÅS OP FOR ALT", b1: "Ingen gebyrer", b2: "Livstidsadgang", b3: "Opdateringer", b4: "Sikker betaling", vMain: "FÅ ADGANG", vSub: "Engangsbetaling $22", privacy: "Vi indsamler ikke personlige data.",
-            recList: ["Chef", "Partner", "Kone", "Mand", "Sviggermor", "Svigerfar", "Kunde", "Kollega", "Mor", "Far"],
-            rsnList: ["Forsinket", "Syg", "Deadline overskredet", "Aflysning", "Nødsituation", "Bilproblemer"],
-            styList: ["Professionel", "Kreativ", "Slang", "Dramatisk", "Formel", "Afslappet", "Undskyldende"]
-        },
-        'fi': {
-            sub: "DIGITAALINEN DIPLOMAATTI", tagline: "Diplomaateillakin on huonoja päiviä.<br>Me autamme.",
-            verb: "LUO!", fmt: "Muoto", tgt: "Vastaanottaja", rsn: "Syy", sty: "Tyyli", 
-            ph: "Valitse tai kirjoita...", res: "Luonnokset:", copy: "Kopioi", share: "Jaa",
-            vipTitle: "👑 AVAA KAIKKI", b1: "Ei maksuja", b2: "Elinikäinen", b3: "Päivitykset", b4: "Turvallinen", vMain: "HANKI KÄYTTÖOIKEUS", vSub: "Kertamaksu $22", privacy: "Emme kerää henkilötietoja.",
-            recList: ["Pomo", "Kumppani", "Vaimo", "Mies", "Anoppi", "Appi", "Asiakas", "Kollega", "Äiti", "Isä"],
-            rsnList: ["Myöhässä", "Sairas", "Määräaika", "Peruutus", "Hätätilanne", "Auto-ongelma"],
-            styList: ["Ammattimainen", "Luova", "Slangi", "Dramaattinen", "Virallinen", "Rento", "Anteeksipyytelevä"]
-        },
-        'el': {
-            sub: "ΨΗΦΙΑΚΟΣ ΔΙΠΛΩΜΑΤΗΣ", tagline: "Ακόμα και οι διπλωμάτες έχουν κακές μέρες.<br>Σε καλύπτουμε.",
-            verb: "ΔΗΜΙΟΥΡΓΙΑ!", fmt: "Μορφή", tgt: "Παραλήπτης", rsn: "Αιτία", sty: "Ύφος", 
-            ph: "Επιλέξτε ή γράψτε...", res: "Προσχέδια:", copy: "Αντιγραφή", share: "Κοινοποίηση",
-            vipTitle: "👑 ΞΕΚΛΕΙΔΩΜΑ", b1: "Χωρίς χρεώσεις", b2: "Εφ' όρου ζωής", b3: "Ενημερώσεις", b4: "Ασφαλής πληρωμή", vMain: "ΑΠΟΚΤΗΣΤΕ ΠΡΟΣΒΑΣΗ", vSub: "Εφάπαξ πληρωμή $22", privacy: "Δεν συλλέγουμε προσωπικά δεδομένα.",
-            recList: ["Αφεντικό", "Σύντροφος", "Σύζυγος", "Πεθερά", "Πεθερός", "Πελάτης", "Συνάδελφος", "Μαμά", "Μπαμπάς"],
-            rsnList: ["Αργοπορημένος", "Άρρωστος", "Προθεσμία", "Ακύρωση", "Επείγον", "Πρόβλημα αυτοκινήτου"],
-            styList: ["Επαγγελματικό", "Δημιουργικό", "Αργκό", "Δραματικό", "Επίσημο", "Χαλαρό", "Απολογητικό"]
-        },
-        'ro': {
-            sub: "DIPLOMAT DIGITAL", tagline: "Și diplomații au zile proaste.<br>Noi te acoperim.",
-            verb: "GENEREAZĂ!", fmt: "Format", tgt: "Destinatar", rsn: "Motiv", sty: "Stil", 
-            ph: "Alege sau scrie...", res: "Ciorne:", copy: "Copiază", share: "Distribuie",
-            vipTitle: "👑 DEBLOCARE TOTALĂ", b1: "Fără taxe", b2: "Acces pe viață", b3: "Actualizări", b4: "Plată sigură", vMain: "OBȚINE ACCES", vSub: "Plată unică $22", privacy: "Nu colectăm date personale.",
-            recList: ["Șef", "Partener", "Soție", "Soț", "Soacră", "Socru", "Client", "Coleg", "Mama", "Tata"],
-            rsnList: ["Întârziere", "Bolnav", "Termen limită", "Anulare", "Urgență", "Problemă auto"],
-            styList: ["Profesional", "Creativ", "Argou", "Dramatic", "Formal", "Lejer", "Scuze"]
-        },
         'default': {
-            name: "English",
             sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days.<br>We make sure you don't.",
             verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", 
             ph: "Select...", res: "Drafts:", copy: "Copy", share: "Share",
@@ -565,110 +302,29 @@
 
     function getTexts(lang) { return translations[lang] || translations['en-US'] || translations['default']; }
 
-    // --- FUNKCE PRO DROPDOWNY ---
+    // UI & DROPDOWN LOGIC
     function toggleReset(input) {
         const btn = input.parentElement.querySelector('.reset-btn');
         const arrow = input.parentElement.querySelector('.dropdown-arrow');
-        if (input.value.length > 0) {
-            btn.style.display = 'block'; arrow.style.display = 'none'; 
-        } else {
-            btn.style.display = 'none'; arrow.style.display = 'block';
-        }
+        if (input.value.length > 0) { btn.style.display = 'block'; arrow.style.display = 'none'; } else { btn.style.display = 'none'; arrow.style.display = 'block'; }
     }
-
-    function clearInput(id) {
-        const input = document.getElementById(id);
-        input.value = ''; toggleReset(input); setTimeout(() => { input.focus(); }, 50); 
-    }
-
+    function clearInput(id) { const input = document.getElementById(id); input.value = ''; toggleReset(input); setTimeout(() => { input.focus(); }, 50); }
     function populateDatalist(listId, items) {
-        const list = document.getElementById(listId);
-        if(!list) return; list.innerHTML = '';
-        items.forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'dropdown-item';
-            div.innerText = item;
-            div.onclick = function() {
-                const inputId = listId === 'list-recipient' ? 'adresat' : (listId === 'list-reason' ? 'kategorie' : 'styl');
-                selectItem(inputId, item, listId);
-            };
-            list.appendChild(div);
-        });
+        const list = document.getElementById(listId); if(!list) return; list.innerHTML = '';
+        items.forEach(item => { const div = document.createElement('div'); div.className = 'dropdown-item'; div.innerText = item; div.onclick = function() { const inputId = listId === 'list-recipient' ? 'adresat' : (listId === 'list-reason' ? 'kategorie' : 'styl'); selectItem(inputId, item, listId); }; list.appendChild(div); });
     }
-
-    function selectItem(inputId, value, listId) {
-        const input = document.getElementById(inputId);
-        input.value = value;
-        toggleReset(input);
-        hideDropdown(listId, inputId);
-    }
-
-    function showDropdown(inputId, listId) {
-        closeAllDropdowns();
-        const list = document.getElementById(listId);
-        const input = document.getElementById(inputId);
-        list.style.display = 'block';
-        input.classList.add('input-open');
-        const items = list.getElementsByClassName('dropdown-item');
-        for (let item of items) { item.style.display = 'block'; }
-    }
-
-    function hideDropdown(listId, inputId) {
-        const list = document.getElementById(listId);
-        const input = document.getElementById(inputId);
-        setTimeout(() => {
-            list.style.display = 'none';
-            input.classList.remove('input-open');
-        }, 150);
-    }
-
-    function toggleDropdown(inputId, listId) {
-        const list = document.getElementById(listId);
-        if (list.style.display === 'block') {
-            hideDropdown(listId, inputId);
-        } else {
-            showDropdown(inputId, listId);
-            document.getElementById(inputId).focus();
-        }
-    }
-
-    function filterDropdown(inputId, listId) {
-        const input = document.getElementById(inputId);
-        toggleReset(input);
-        const filter = input.value.toLowerCase();
-        const list = document.getElementById(listId);
-        const items = list.getElementsByClassName('dropdown-item');
-        list.style.display = 'block';
-        input.classList.add('input-open');
-        let hasVisible = false;
-        for (let item of items) {
-            if (item.innerText.toLowerCase().indexOf(filter) > -1) {
-                item.style.display = "block";
-                hasVisible = true;
-            } else {
-                item.style.display = "none";
-            }
-        }
-    }
-
-    function closeAllDropdowns() {
-        const lists = document.querySelectorAll('.custom-dropdown-list');
-        const inputs = document.querySelectorAll('.smart-input');
-        lists.forEach(l => l.style.display = 'none');
-        inputs.forEach(i => i.classList.remove('input-open'));
-    }
-
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.smart-input-wrapper')) {
-            closeAllDropdowns();
-        }
-    });
+    function selectItem(inputId, value, listId) { const input = document.getElementById(inputId); input.value = value; toggleReset(input); hideDropdown(listId, inputId); }
+    function showDropdown(inputId, listId) { closeAllDropdowns(); const list = document.getElementById(listId); const input = document.getElementById(inputId); list.style.display = 'block'; input.classList.add('input-open'); const items = list.getElementsByClassName('dropdown-item'); for (let item of items) { item.style.display = 'block'; } }
+    function hideDropdown(listId, inputId) { const list = document.getElementById(listId); const input = document.getElementById(inputId); setTimeout(() => { list.style.display = 'none'; input.classList.remove('input-open'); }, 150); }
+    function toggleDropdown(inputId, listId) { const list = document.getElementById(listId); if (list.style.display === 'block') { hideDropdown(listId, inputId); } else { showDropdown(inputId, listId); document.getElementById(inputId).focus(); } }
+    function filterDropdown(inputId, listId) { const input = document.getElementById(inputId); toggleReset(input); const filter = input.value.toLowerCase(); const list = document.getElementById(listId); const items = list.getElementsByClassName('dropdown-item'); list.style.display = 'block'; input.classList.add('input-open'); let hasVisible = false; for (let item of items) { if (item.innerText.toLowerCase().indexOf(filter) > -1) { item.style.display = "block"; hasVisible = true; } else { item.style.display = "none"; } } }
+    function closeAllDropdowns() { const lists = document.querySelectorAll('.custom-dropdown-list'); const inputs = document.querySelectorAll('.smart-input'); lists.forEach(l => l.style.display = 'none'); inputs.forEach(i => i.classList.remove('input-open')); }
+    document.addEventListener('click', function(e) { if (!e.target.closest('.smart-input-wrapper')) { closeAllDropdowns(); } });
 
     function changeLanguage() {
         const lang = document.getElementById('lang-select').value;
         localStorage.setItem('yesGeniusLang', lang);
         const t = getTexts(lang);
-
         document.getElementById('subtitle').innerText = t.sub;
         document.getElementById('tagline').innerHTML = t.tagline;
         document.getElementById('btn-verb').innerText = t.verb;
@@ -677,66 +333,48 @@
         document.getElementById('lbl-reason').innerText = t.rsn;
         document.getElementById('lbl-style').innerText = t.sty;
         document.getElementById('lbl-results').innerText = t.res;
-
         document.getElementById('vip-title').innerText = t.vipTitle;
         document.getElementById('b1').innerText = t.b1; document.getElementById('b2').innerText = t.b2;
         document.getElementById('b3').innerText = t.b3; document.getElementById('b4').innerText = t.b4;
         document.getElementById('vip-btn-main').innerText = t.vMain;
         document.getElementById('vip-btn-sub').innerText = t.vSub;
         document.getElementById('privacy-note').innerText = t.privacy;
-
         document.querySelectorAll('.smart-input').forEach(inp => inp.placeholder = t.ph);
-
-        populateDatalist('list-recipient', t.recList);
-        populateDatalist('list-reason', t.rsnList);
-        populateDatalist('list-style', t.styList);
-
+        populateDatalist('list-recipient', t.recList); populateDatalist('list-reason', t.rsnList); populateDatalist('list-style', t.styList);
         const smsOption = document.getElementById('opt-sms');
-        if (['zh'].includes(lang)) smsOption.innerText = "WeChat / SMS";
-        else if (['ja', 'th'].includes(lang)) smsOption.innerText = "LINE / SMS";
-        else if (['ko'].includes(lang)) smsOption.innerText = "KakaoTalk / SMS";
-        else if (['vn'].includes(lang)) smsOption.innerText = "Zalo / SMS";
-        else smsOption.innerText = "SMS / WhatsApp";
+        if (['zh'].includes(lang)) smsOption.innerText = "WeChat / SMS"; else if (['ja', 'th'].includes(lang)) smsOption.innerText = "LINE / SMS"; else if (['ko'].includes(lang)) smsOption.innerText = "KakaoTalk / SMS"; else if (['vn'].includes(lang)) smsOption.innerText = "Zalo / SMS"; else smsOption.innerText = "SMS / WhatsApp";
     }
 
-    // --- SERVER FETCH ---
+    // SERVER CALL
     async function generovat() {
         const btn = document.getElementById('btn-generate');
         const loader = document.getElementById('loader');
         const results = document.getElementById('vysledek');
-        
         const langCode = document.getElementById('lang-select').value;
-        const langName = langNames[langCode] || langCode;
-
         const requestData = {
             format: document.getElementById('format').value,
             adresat: document.getElementById('adresat').value,
             kategorie: document.getElementById('kategorie').value, 
             styl: document.getElementById('styl').value,
-            jazyk: langName
+            jazyk: langNames[langCode] || langCode,
+            licenseKey: userLicense // Posíláme klíč (pokud existuje)
         };
 
         if(!requestData.adresat) { alert("Please specify a Recipient!"); return; }
 
-        results.style.display = 'none';
-        btn.style.opacity = '0.5';
-        loader.style.display = 'block';
+        results.style.display = 'none'; btn.style.opacity = '0.5'; loader.style.display = 'block';
 
         try {
             const response = await fetch('/api/generovat', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestData)
             });
-
-            if (!response.ok) throw new Error(`Server Error: ${response.status}`);
             const data = await response.json();
-
             if (data.variants && Array.isArray(data.variants)) {
                 zobrazitVysledky(data.variants);
-            } else { throw new Error("Invalid data format"); }
-
+            } else { throw new Error("Invalid data"); }
         } catch (error) {
-            console.error("GEN ERROR:", error); alert("Connection Error: " + error.message);
+            console.error(error); alert("Connection Error");
         } finally {
             loader.style.display = 'none'; btn.style.opacity = '1';
         }
@@ -751,35 +389,31 @@
             const div = document.createElement('div');
             div.className = 'result-card';
             const safeText = text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-            div.innerHTML = `
-                <div class="result-text">${text}</div>
-                <div class="action-row">
-                    <button class="btn-action" onclick="kopirovat(this, '${safeText}')">📋 ${t.copy}</button>
-                    <button class="btn-action" onclick="sdilet('${safeText}')">🔗 ${t.share}</button>
-                </div>`;
+            div.innerHTML = `<div class="result-text">${text}</div><div class="action-row"><button class="btn-action" onclick="kopirovat(this, '${safeText}')">📋 ${t.copy}</button><button class="btn-action" onclick="sdilet('${safeText}')">🔗 ${t.share}</button></div>`;
             container.appendChild(div);
         });
         document.getElementById('vysledek').style.display = 'block';
         document.getElementById('vysledek').scrollIntoView({ behavior: 'smooth' });
     }
 
-    function kopirovat(btn, text) {
-        navigator.clipboard.writeText(text).then(() => {
-            let orig = btn.innerHTML; btn.innerHTML = "✅"; setTimeout(() => btn.innerHTML = orig, 1500);
-        });
-    }
+    function kopirovat(btn, text) { navigator.clipboard.writeText(text).then(() => { let orig = btn.innerHTML; btn.innerHTML = "✅"; setTimeout(() => btn.innerHTML = orig, 1500); }); }
+    function sdilet(text) { if (navigator.share) navigator.share({ title: 'YES Genius', text: text }); else kopirovat(this, text); }
+    function koupit() { window.location.href = PAYMENT_LINK; } // PŘÍMÉ OTEVŘENÍ STRIPE
 
-    function sdilet(text) {
-        if (navigator.share) navigator.share({ title: 'YES Genius', text: text }); else kopirovat(this, text);
-    }
-
-    function koupit() { window.location.href = PAYMENT_LINK; }
-    
-    // START
     window.onload = function() {
         const savedLang = localStorage.getItem('yesGeniusLang');
-        if (savedLang) { document.getElementById('lang-select').value = savedLang; }
-        changeLanguage(); 
+        if (savedLang) document.getElementById('lang-select').value = savedLang;
+        changeLanguage();
+        
+        // KONTROLA NÁVRATU ZE STRIPE
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('status') === 'success') {
+            const key = "YG-VIP-" + Math.random().toString(36).substr(2, 6).toUpperCase();
+            localStorage.setItem('yes_genius_license_v1', key);
+            userLicense = key;
+            document.getElementById('success-modal').style.display = 'flex';
+            window.history.replaceState({}, document.title, "/");
+        }
     }
 </script>
 </body>
