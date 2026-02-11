@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v2.3 (Ultimate Layout) --- */
+        /* --- CSS: YES GENIUS v2.4 (Perfect Alignment & Mobile Flags) --- */
         :root {
             --bg-black: #000000;
             --card-bg: rgba(18, 18, 18, 0.95);
@@ -49,26 +49,29 @@
             position: relative;
         }
 
-        /* --- HEADER v2.3 (25% Logo + Fixed Title) --- */
+        /* --- HEADER v2.4 (Top Align + Bigger Fonts) --- */
         header {
             display: flex;
-            align-items: center; /* Zarovnání na střed vertikálně */
+            /* ZAROVNÁNÍ NAHORU (Top Alignment) */
+            align-items: flex-start; 
             justify-content: space-between;
-            padding: 10px 0 20px 0;
+            padding: 15px 0 25px 0;
             width: 100%;
-            gap: 10px;
+            gap: 15px;
         }
 
-        /* 1. LOGO: Přesně 25% šířky kontejneru */
+        /* 1. LOGO: 25% šířky */
         .logo-wrapper {
-            flex: 0 0 25%; /* Fixní šířka 25% */
+            flex: 0 0 25%;
             max-width: 25%;
+            padding-top: 0; /* Reset */
         }
 
         .logo-img {
-            width: 100%; /* Vyplní wrapper */
-            aspect-ratio: 1/1; /* Čtverec */
+            width: 100%;
+            aspect-ratio: 1/1;
             border-radius: 14px;
+            /* Ztenčený border, stejný jako inputy */
             border: 1px solid var(--glass-border);
             object-fit: cover; 
             background: #000;
@@ -76,32 +79,35 @@
             display: block;
         }
 
-        /* 2. TITULEK: Musí se vejít a nezalomit */
+        /* 2. TITULEK: Zvětšený a kompaktní */
         .title-wrapper {
-            flex: 1; /* Zabere zbylé místo */
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            overflow: hidden; /* Ochrana proti přetečení */
-            padding-left: 5px;
+            overflow: hidden;
+            /* Jemná korekce, aby text opticky seděl k logu */
+            padding-top: 2px; 
         }
 
         h1 {
-            font-size: 1.5rem; /* Mírně zmenšeno pro bezpečnost */
+            /* ZVĚTŠENO pro kompaktnost */
+            font-size: 1.9rem; 
             font-weight: 900;
             margin: 0;
-            line-height: 1;
+            line-height: 0.95;
             letter-spacing: -0.5px;
             background: linear-gradient(to right, #fff 20%, var(--gold) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            white-space: nowrap; /* KLÍČOVÉ: Nikdy nezalomit řádek */
+            white-space: nowrap;
         }
 
         .subtitle {
             color: var(--gold);
-            font-size: 0.6rem;
-            margin-top: 4px;
+            /* ZVĚTŠENO */
+            font-size: 0.75rem; 
+            margin-top: 5px;
             font-weight: 800;
             letter-spacing: 1.5px;
             text-transform: uppercase;
@@ -109,43 +115,68 @@
         }
 
         .tagline-text {
-            font-size: 0.55rem;
-            color: #888;
-            margin-top: 3px;
+            /* ZVĚTŠENO */
+            font-size: 0.65rem; 
+            color: #999;
+            margin-top: 4px;
             line-height: 1.2;
             font-weight: 400;
-            opacity: 0.9;
         }
 
-        /* 3. JAZYKY: Minimalizované vpravo */
+        /* 3. JAZYKY: Desktop vs Mobil */
         .lang-wrapper {
-            flex: 0 0 auto; /* Zabere jen nutné místo */
+            flex: 0 0 auto;
             display: flex;
             justify-content: flex-end;
+            padding-top: 0; /* Zarovnání s horní hranou loga */
         }
 
         .lang-select {
             background: #050505;
             color: var(--gold);
             border: 1px solid var(--glass-border);
-            padding: 8px 6px;
-            border-radius: 8px;
-            font-size: 0.75rem;
+            padding: 10px 8px; /* Větší padding pro zarovnání s logem */
+            border-radius: 10px;
+            font-size: 0.85rem;
             outline: none;
             cursor: pointer;
             font-weight: 600;
-            text-align: right; /* Text zarovnaný doprava */
+            text-align: right;
             width: auto;
-            min-width: 60px;
-            max-width: 100px;
+            min-width: 130px; /* Dost místa na desktopu */
             
-            /* Custom šipka */
             appearance: none; -webkit-appearance: none;
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23d4af37%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
             background-repeat: no-repeat;
-            background-position: right 5px top 50%;
-            background-size: 8px auto;
-            padding-right: 18px;
+            background-position: right 8px top 50%;
+            background-size: 10px auto;
+            padding-right: 25px;
+        }
+
+        /* --- MOBILNÍ SPECIALITY (do 480px) --- */
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; } /* Trochu menší pro mobily */
+            .subtitle { font-size: 0.65rem; }
+            .tagline-text { font-size: 0.55rem; max-width: 150px; } /* Zalamování taglinu na mobilu */
+
+            /* Minimalizace jazyků na vlajku */
+            .lang-select {
+                min-width: 0;
+                width: 42px; /* Fixní malá šířka */
+                height: 42px;
+                padding: 5px; /* Malý padding */
+                padding-right: 0; /* Skrýt šipku paddingem */
+                font-size: 1.4rem; /* Velká vlajka */
+                text-align: center;
+                background-image: none; /* Skrýt šipku */
+                overflow: hidden; /* Oříznout text */
+                white-space: nowrap;
+                text-indent: 2px; /* Vycentrovat první znak (vlajku) */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            /* Pozn: Na mobilu se po kliknutí otevře nativní menu s plným textem */
         }
 
         /* FORMULÁŘ */
@@ -278,12 +309,6 @@
 
         #loader { display: none; text-align: center; margin-top: 15px; color: var(--gold); font-weight: 600; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Mobilní optimalizace pro H1 */
-        @media (max-width: 360px) {
-            h1 { font-size: 1.3rem; }
-            .lang-select { max-width: 70px; }
-        }
     </style>
 </head>
 <body>
@@ -406,12 +431,11 @@
 </div>
 
 <script>
-    /* --- YES GENIUS v2.3 (ULTIMATE LOGIC) --- */
+    /* --- YES GENIUS v2.4 (Ultimate Polish) --- */
 
     const PAYMENT_LINK = "https://buy.stripe.com/bJefZi4T3blacNUfeaa7C03"; 
 
-    // --- PŘEKLADY v2.3 ---
-    // Přidán Tagline, Slang a zpřesněné US/UK rozdíly
+    // --- PŘEKLADY ---
     const translations = {
         'en-US': { 
             sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days. We make sure you don't.", 
@@ -472,7 +496,6 @@
     function toggleReset(input) {
         const btn = input.parentElement.querySelector('.reset-btn');
         const arrow = input.parentElement.querySelector('.dropdown-arrow');
-        
         if (input.value.length > 0) {
             btn.style.display = 'block';
             arrow.style.display = 'none'; 
@@ -504,11 +527,8 @@
         const lang = document.getElementById('lang-select').value;
         const t = getTexts(lang);
 
-        // Header
         document.getElementById('subtitle').innerText = t.sub;
         document.getElementById('tagline').innerText = t.tagline;
-        
-        // Main UI
         document.getElementById('btn-verb').innerText = t.verb;
         document.getElementById('lbl-format').innerText = t.fmt;
         document.getElementById('lbl-target').innerText = t.tgt;
@@ -516,7 +536,6 @@
         document.getElementById('lbl-style').innerText = t.sty;
         document.getElementById('lbl-results').innerText = t.res;
 
-        // Footer
         document.getElementById('vip-title').innerText = t.vipTitle;
         document.getElementById('b1').innerText = t.b1;
         document.getElementById('b2').innerText = t.b2;
@@ -526,15 +545,12 @@
         document.getElementById('vip-btn-sub').innerText = t.vSub;
         document.getElementById('privacy-note').innerText = t.privacy;
 
-        // Placeholdery
         document.querySelectorAll('.smart-input').forEach(inp => inp.placeholder = t.ph);
 
-        // Seznamy
         populateDatalist('recipients-list', t.recList);
         populateDatalist('reasons-list', t.rsnList);
         populateDatalist('styles-list', t.styList);
 
-        // Asijské chaty
         const smsOption = document.getElementById('opt-sms');
         if (['zh'].includes(lang)) smsOption.innerText = "WeChat / SMS";
         else if (['ja', 'th'].includes(lang)) smsOption.innerText = "LINE / SMS";
@@ -630,7 +646,6 @@
 
     function koupit() { window.location.href = PAYMENT_LINK; }
     
-    // Start
     window.onload = function() { changeLanguage(); }
 </script>
 
