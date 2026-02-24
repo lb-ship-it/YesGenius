@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>YES Genius v4.4 | Digital Diplomat</title>
+    <title>YES Genius v4.5 | Digital Diplomat</title>
     
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#d4af37">
@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v4.4 (Ultimate Flag Edition) --- */
+        /* --- CSS: YES GENIUS v4.5 (Ultimate Flag Edition) --- */
         :root {
             --bg-black: #050505;
             --card-bg: rgba(18, 18, 18, 0.75);
@@ -65,7 +65,7 @@
             letter-spacing: 0.3px;
         }
 
-        /* CUSTOM VLAJKY (Obrázkové zajištění) */
+        /* CUSTOM VLAJKY (Obrázkové zajištění - Zvětšeno k okrajům) */
         .lang-wrapper { position: relative; flex: 0 0 auto; display: flex; justify-content: flex-end; align-items: flex-start; }
         .lang-flag-btn {
             background: rgba(15,15,15,0.8); border: 1px solid var(--glass-border);
@@ -78,17 +78,17 @@
         .lang-flag-btn:hover { border-color: var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
         
         /* OBRÁZKOVÉ VLAJKY CSS */
+        #current-flag {
+            display: flex; justify-content: center; align-items: center;
+            width: 100%; height: 100%;
+        }
         .flag-icon {
-            width: 24px;
-            height: 24px;
+            width: calc(100% - 6px); /* Vyplní prostor s 3px odstupem od kraje */
+            height: calc(100% - 6px);
             border-radius: 50%;
             object-fit: cover;
             pointer-events: none;
             box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-        }
-        .lang-flag-btn .flag-icon {
-            width: 28px;
-            height: 28px;
         }
 
         .lang-grid-dropdown {
@@ -110,11 +110,14 @@
         
         @media (max-width: 480px) { 
             h1 { font-size: 1.45rem; } 
+            
+            /* Zmenšení sloganu a tlačítka proti zalamování jen na mobilu */
+            .tagline { font-size: 0.7rem; line-height: 1.25; margin-top: 5px; }
+            .btn-main { font-size: 1.05rem !important; padding: 15px !important; }
+            
             .lang-flag-btn { width: 38px; height: 38px; }
-            .lang-flag-btn .flag-icon { width: 24px; height: 24px; }
             .lang-grid-dropdown { grid-template-columns: repeat(4, 1fr); right: -10px; padding: 12px; gap: 8px; }
             .lang-grid-item { width: 34px; height: 34px; }
-            .flag-icon { width: 20px; height: 20px; }
         }
 
         /* FORM CARD */
@@ -192,7 +195,7 @@
             <div id="ui-tagline" class="tagline">Even diplomats have bad days.<br>I make sure you don't.</div>
         </div>
         
-        <!-- Vlajkový výběr jazyka (Nyní s obrázky) -->
+        <!-- Vlajkový výběr jazyka -->
         <div class="lang-wrapper">
             <div class="lang-flag-btn" onclick="toggleLangDropdown(event)">
                 <span id="current-flag"><img src="https://flagcdn.com/w40/us.png" class="flag-icon" alt="en-US"></span>
@@ -204,7 +207,6 @@
     </header>
 
     <main class="glass-card">
-        <!-- Vylepšený Formát s Custom Dropdownem -->
         <div class="input-group">
             <label id="lbl-format">Format</label>
             <div class="smart-input-wrapper">
@@ -321,14 +323,11 @@
 </div>
 
 <script>
-    // TVŮJ NOVÝ STRIPE ODKAZ (9.99 USD)
     const PAYMENT_LINK = "https://buy.stripe.com/28E4gAgBL1KA29g1nka7C05"; 
     
-    // LICENČNÍ SYSTÉM A POKUSY
     let userLicense = localStorage.getItem('yes_genius_license_v1');
     let freeTries = parseInt(localStorage.getItem('yes_genius_free_tries') || '0');
 
-    // NASTAVENÍ VLAJEK PRO 24 JAZYKŮ vč. ISO kódů pro CDN obrázky
     const appLanguages = [
         { code: 'en-US', iso: 'us', name: 'American English' }, { code: 'en-GB', iso: 'gb', name: 'British English' }, { code: 'cs', iso: 'cz', name: 'Czech' },
         { code: 'de', iso: 'de', name: 'German' }, { code: 'uk', iso: 'ua', name: 'Ukrainian' }, { code: 'es', iso: 'es', name: 'Spanish' },
@@ -342,7 +341,6 @@
 
     let currentLang = localStorage.getItem('yesGeniusLang') || 'en-US';
 
-    // KOMPLETNÍ DATABÁZE PŘEKLADŮ
     const translations = {
         'en-US': { sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days.<br>I make sure you don't.", verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vipTitle: "👑 UNLOCK FULL POTENTIAL", b1: "No Monthly Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment", vMain: "GET LIFETIME ACCESS", lockT: "🔒 UNLOCK FULL ACCESS", lockX: "You've used your 3 free drafts! Get a Lifetime License.", haveKey: "I already have a key", keyT: "🔑 ENTER KEY", keyD: "Paste the license key.", keyB: "ACTIVATE", succT: "🎉 ACCESS GRANTED", succD: "License active! Generate unlimited drafts.", succB: "START USING", privacy: "We do not collect any personal data.", fmtList: ["SMS / WhatsApp", "Email", "Phone Call Script", "Slack / Teams"], recList: ["Boss", "Partner", "Wife", "Husband", "Mother-in-law", "Father-in-law", "Client", "Colleague", "Mom", "Dad", "Teacher"], rsnList: ["Running Late", "Feeling Sick", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"], styList: ["Professional", "Creative / Funny", "Slang / Street", "Dramatic", "Strictly Formal", "Casual", "Apologetic"] },
         'en-GB': { sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days.<br>I make sure you don't.", verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vipTitle: "👑 UNLOCK FULL POTENTIAL", b1: "No Monthly Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment", vMain: "GET LIFETIME ACCESS", lockT: "🔒 UNLOCK FULL ACCESS", lockX: "You've used your 3 free drafts! Get a Lifetime License.", haveKey: "I already have a key", keyT: "🔑 ENTER KEY", keyD: "Paste the license key.", keyB: "ACTIVATE", succT: "🎉 ACCESS GRANTED", succD: "License active! Generate unlimited drafts.", succB: "START USING", privacy: "We do not collect any personal data.", fmtList: ["SMS / WhatsApp", "Email", "Phone Call Script", "Slack / Teams"], recList: ["Boss", "Partner", "Wife", "Husband", "Mother-in-law", "Father-in-law", "Client", "Colleague", "Mum", "Dad", "Tutor"], rsnList: ["Running Late", "Feeling Unwell", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"], styList: ["Professional", "Creative / Witty", "Slang / Roadman", "Dramatic", "Strictly Formal", "Casual", "Apologetic"] },
