@@ -54,7 +54,7 @@
         h1 { font-size: 1.8rem; font-weight: 900; margin: 0; line-height: 0.95; letter-spacing: -0.5px; background: linear-gradient(to right, #fff 20%, var(--gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; }
         .subtitle { color: var(--gold); font-size: 0.75rem; margin-top: 5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
         
-        /* LUXUSNÍ TAGLINE */
+        /* LUXUSNÍ TAGLINE - Bez zalamování */
         .tagline {
             color: #ffffff;
             font-weight: 300;
@@ -63,9 +63,10 @@
             opacity: 0.85;
             margin-top: 8px;
             letter-spacing: 0.3px;
+            white-space: nowrap; /* Zabraňuje odskočení druhé věty */
         }
 
-        /* CUSTOM VLAJKY (Obrázkové zajištění - Zvětšeno k okrajům) */
+        /* CUSTOM VLAJKY */
         .lang-wrapper { position: relative; flex: 0 0 auto; display: flex; justify-content: flex-end; align-items: flex-start; }
         .lang-flag-btn {
             background: rgba(15,15,15,0.8); border: 1px solid var(--glass-border);
@@ -77,16 +78,17 @@
         }
         .lang-flag-btn:hover { border-color: var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
         
-        /* OBRÁZKOVÉ VLAJKY CSS */
+        /* OBRÁZKOVÉ VLAJKY CSS - Dokonale vyplňující kruh */
         #current-flag {
             display: flex; justify-content: center; align-items: center;
             width: 100%; height: 100%;
         }
         .flag-icon {
-            width: calc(100% - 6px); /* Vyplní prostor s 3px odstupem od kraje */
-            height: calc(100% - 6px);
+            width: calc(100% - 2px); /* Téměř naprosto vyplňuje prostor k okrajům */
+            height: calc(100% - 2px);
             border-radius: 50%;
             object-fit: cover;
+            object-position: center;
             pointer-events: none;
             box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
@@ -111,9 +113,9 @@
         @media (max-width: 480px) { 
             h1 { font-size: 1.45rem; } 
             
-            /* Zmenšení sloganu a tlačítka proti zalamování jen na mobilu */
-            .tagline { font-size: 0.7rem; line-height: 1.25; margin-top: 5px; }
-            .btn-main { font-size: 1.05rem !important; padding: 15px !important; }
+            /* Inteligentní zmenšení sloganu a tlačítka proti zalamování na mobilu */
+            .tagline { font-size: clamp(0.55rem, 3.5vw, 0.75rem); line-height: 1.3; margin-top: 5px; white-space: nowrap; }
+            .btn-main { font-size: 0.95rem !important; padding: 16px !important; letter-spacing: 0.5px !important; }
             
             .lang-flag-btn { width: 38px; height: 38px; }
             .lang-grid-dropdown { grid-template-columns: repeat(4, 1fr); right: -10px; padding: 12px; gap: 8px; }
@@ -147,10 +149,24 @@
         .reset-btn:hover { color: var(--gold); background: rgba(255,255,255,0.1); }
         .arrow-btn { position: absolute; right: 0; top: 0; width: 45px; height: 100%; background: transparent; border: none; cursor: pointer; z-index: 5; }
 
-        /* BUTTONS */
-        .btn-main { width: 100%; padding: 20px; margin-top: 10px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%); border: none; border-radius: 12px; color: #000; font-weight: 900; font-size: 1.25rem; text-transform: uppercase; cursor: pointer; box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3); transition: transform 0.2s, box-shadow 0.2s; display: flex; justify-content: center; align-items: center; gap: 10px; }
-        .btn-main:active { transform: scale(0.98); }
-        .btn-main:hover { box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5); }
+        /* NOVÉ LUXUSNÍ TLAČÍTKO (GENERATE) */
+        .btn-main { 
+            width: 100%; padding: 20px; margin-top: 10px; 
+            background: linear-gradient(135deg, #f9f2d0 0%, #d4af37 40%, #aa8a2e 100%); 
+            border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 12px; 
+            color: #050505; font-weight: 900; font-size: 1.25rem; text-transform: uppercase; 
+            cursor: pointer; box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4), inset 0 2px 5px rgba(255, 255, 255, 0.6); 
+            transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 8px; 
+            position: relative; overflow: hidden; white-space: nowrap; letter-spacing: 1px;
+        }
+        .btn-main::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-20deg); transition: 0.5s;
+        }
+        .btn-main:hover::after { left: 150%; }
+        .btn-main:active { transform: scale(0.97); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4); }
+        .btn-main:hover { box-shadow: 0 12px 35px rgba(212, 175, 55, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.8); transform: translateY(-2px); }
 
         /* MODALS */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 9999; display: none; justify-content: center; align-items: center; padding: 20px; }
@@ -251,7 +267,7 @@
         </div>
 
         <button id="btn-generate" class="btn-main" onclick="handleGenerateClick()">
-            YES <span id="btn-verb" style="margin-left: 5px;">GENERATE!</span>
+            ✨ <span style="opacity: 0.75; font-weight: 700; margin-right: 4px;">YES</span><span id="btn-verb">GENERATE!</span> ✨
         </button>
         <div id="loader">✨ AI is negotiating...</div>
     </main>
