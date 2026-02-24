@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>YES Genius v4.7 | Digital Diplomat</title>
+    <title>YES Genius v4.8 | Digital Diplomat</title>
     
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#d4af37">
@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v4.7 (Precision Alignment Edition) --- */
+        /* --- CSS: YES GENIUS v4.8 (Dynamic Mobile & PWA Edition) --- */
         :root {
             --bg-black: #050505;
             --card-bg: rgba(18, 18, 18, 0.75);
@@ -46,7 +46,7 @@
 
         .app-container { width: 100%; max-width: 500px; padding: 20px; display: flex; flex-direction: column; gap: 15px; position: relative; }
 
-        /* HEADER - V4.7 Matematicky přesné zarovnání */
+        /* HEADER - V4.8 Matematicky přesné zarovnání */
         header { display: flex; align-items: flex-start; justify-content: space-between; padding: 15px 0 25px 0; width: 100%; position: relative; z-index: 200; }
         
         .header-left { display: flex; gap: 12px; align-items: stretch; flex: 1; overflow: hidden; }
@@ -63,15 +63,16 @@
         /* Subtitle posunutý přirozeně do středu */
         .subtitle { color: var(--gold); font-size: 11px; margin: 0; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap; }
         
-        /* LUXUSNÍ TAGLINE - Spodní hrana lícuje s logem */
+        /* LUXUSNÍ TAGLINE - PC zobrazení */
         .tagline {
             color: #ffffff;
             font-weight: 300;
-            font-size: 13px; /* Příjemná mezivelikost */
+            font-size: 13px;
             line-height: 1.35;
             opacity: 0.85;
             margin: 0;
             letter-spacing: 0.3px;
+            white-space: nowrap; /* Pevné nezalamování na 2 řádky díky <br> */
         }
 
         /* CUSTOM VLAJKY */
@@ -117,13 +118,19 @@
         }
         .lang-grid-item:hover { background: rgba(212, 175, 55, 0.2); border-color: var(--gold); transform: scale(1.15); }
         
-        /* Responzivita hlavičky pro menší mobily */
+        /* Responzivita hlavičky pro menší mobily - DYNAMICKÝ FONT SIZE */
         @media (max-width: 480px) { 
-            .logo-wrapper { width: 75px; height: 75px; } /* Zmenšený block loga */
+            .logo-wrapper { width: 75px; height: 75px; } 
             .title-wrapper { height: 75px; }
-            h1 { font-size: 25px; } /* Přesně 1/3 ze 75px */
+            h1 { font-size: 25px; } 
             .subtitle { font-size: 9px; letter-spacing: 1px; } 
-            .tagline { font-size: 11.5px; line-height: 1.3; } /* Vyladěná "mezivelikost" */
+            
+            /* DYNAMICKÝ SLOGAN: Dokonale reaguje na šířku displeje, takže se nikdy neuřízne */
+            .tagline { 
+                font-size: clamp(8.5px, 2.9vw, 11px); 
+                line-height: 1.3; 
+                white-space: nowrap; 
+            }
             
             .btn-main, .btn-vip-large { font-size: 0.95rem !important; padding: 16px !important; letter-spacing: 0.5px !important; }
             
@@ -192,20 +199,19 @@
 
         .btn-vip-large { border-radius: 50px; flex-direction: column; }
         
-        /* Třídy pro 2px větší a tučnější text cen v tlačítku */
         .price-strike { text-decoration: line-through; color: rgba(0,0,0,0.6); margin-right: 5px; font-weight: 900; font-size: 15px; }
         .price-promo { color: #000; font-weight: 900; font-size: 15px; }
         @media (max-width: 480px) {
             .price-strike, .price-promo { font-size: 14px; }
         }
 
-        /* PWA INSTALL TOAST */
+        /* PWA INSTALL TOAST - DOTAŽENÝ DESIGN */
         .pwa-toast {
             position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%) translateY(150px);
             background: linear-gradient(135deg, rgba(20,20,20,0.95), rgba(5,5,5,0.98));
             border: 1px solid var(--gold); border-radius: 50px; padding: 12px 15px 12px 25px;
             display: flex; align-items: center; gap: 15px; 
-            box-shadow: 0 15px 40px rgba(0,0,0,0.9), 0 0 20px rgba(212,175,55,0.2);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9), 0 0 25px rgba(139, 92, 246, 0.2);
             backdrop-filter: blur(15px); z-index: 10000; opacity: 0; 
             transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             width: max-content; max-width: 90%;
@@ -215,13 +221,22 @@
         .pwa-text { color: #fff; font-size: 0.75rem; line-height: 1.3; text-align: left; }
         .pwa-text strong { color: var(--gold); font-size: 0.9rem; letter-spacing: 0.5px; text-transform: uppercase; }
         .pwa-btn { 
-            background: var(--gold); color: #000; border: none; padding: 10px 18px; 
+            background: linear-gradient(135deg, #f9f2d0 0%, #d4af37 45%, #aa8a2e 100%);
+            color: #000; border: none; padding: 10px 18px; 
             border-radius: 30px; font-weight: 800; cursor: pointer; font-size: 0.8rem; 
             transition: 0.2s; text-transform: uppercase; box-shadow: 0 4px 10px rgba(212,175,55,0.3);
         }
         .pwa-btn:hover { transform: scale(1.05); box-shadow: 0 6px 15px rgba(212,175,55,0.5); }
         .pwa-close { background: transparent; border: none; color: #666; font-size: 1.4rem; cursor: pointer; padding: 0 5px; transition: 0.2s; line-height: 1;}
         .pwa-close:hover { color: #fff; }
+
+        @media (max-width: 480px) {
+            .pwa-toast { padding: 10px 12px 10px 18px; gap: 10px; width: 95%; }
+            .pwa-icon { font-size: 1.5rem; }
+            .pwa-text { font-size: 0.65rem; }
+            .pwa-text strong { font-size: 0.8rem; }
+            .pwa-btn { padding: 8px 14px; font-size: 0.75rem; }
+        }
 
         /* MODALS */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 9999; display: none; justify-content: center; align-items: center; padding: 20px; }
@@ -233,7 +248,7 @@
         .key-input { width: 100%; padding: 15px; margin-bottom: 15px; background: #111; border: 1px solid #444; border-radius: 10px; color: var(--gold); font-family: monospace; font-size: 1.1rem; text-align: center; letter-spacing: 2px; }
         .key-input:focus { border-color: var(--gold); outline: none; }
 
-        /* VIP FOOTER - Sjednocené mezery a tenké fonty */
+        /* VIP FOOTER */
         .vip-footer { margin-top: 30px; padding: 30px 20px; background: linear-gradient(180deg, rgba(20,20,20,0.7) 0%, rgba(5,5,5,0.9) 100%); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 24px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.4); position: relative; z-index: 10; }
         .vip-title { color: var(--gold); font-size: 0.9rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; }
         .benefits-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 25px; font-size: 0.8rem; color: #ccc; }
@@ -241,7 +256,6 @@
         .vip-btn-main-text { font-size: 1.1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
         .vip-btn-sub-text { opacity: 0.9; margin-top: 3px; display: flex; align-items: center; justify-content: center; }
         
-        /* Symetrický tenký text dole (Ochrana soukromí) - Stejná mezera 25px jako má .benefits-list */
         .privacy-note { margin-top: 25px; font-size: 0.65rem; color: rgba(255,255,255,0.4); font-weight: 300; text-transform: uppercase; letter-spacing: 1px; }
 
         #vysledek { display: none; margin-top: 25px; animation: fadeIn 0.6s ease; }
@@ -269,14 +283,11 @@
             </div>
         </div>
         
-        <!-- Vlajkový výběr jazyka -->
         <div class="lang-wrapper">
             <div class="lang-flag-btn" onclick="toggleLangDropdown(event)">
                 <span id="current-flag"><img src="https://flagcdn.com/w40/us.png" class="flag-icon" alt="en-US"></span>
             </div>
-            <div class="lang-grid-dropdown" id="lang-grid">
-                <!-- Javascript sem vloží kulaté obrázkové vlajky -->
-            </div>
+            <div class="lang-grid-dropdown" id="lang-grid"></div>
         </div>
     </header>
 
