@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>YES Genius v4.2 | Digital Diplomat</title>
+    <title>YES Genius v4.3 | Digital Diplomat</title>
     
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#d4af37">
@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v4.2 (Freemium Lux Edition - Full UI) --- */
+        /* --- CSS: YES GENIUS v4.3 (Flag Edition + Thin Tagline) --- */
         :root {
             --bg-black: #050505;
             --card-bg: rgba(18, 18, 18, 0.75);
@@ -47,17 +47,58 @@
         .app-container { width: 100%; max-width: 500px; padding: 20px; display: flex; flex-direction: column; gap: 15px; position: relative; }
 
         /* HEADER */
-        header { display: flex; align-items: flex-start; justify-content: space-between; padding: 15px 0 25px 0; width: 100%; gap: 10px; position: relative; z-index: 20; }
+        header { display: flex; align-items: flex-start; justify-content: space-between; padding: 15px 0 25px 0; width: 100%; gap: 10px; position: relative; z-index: 200; }
         .logo-wrapper { flex: 0 0 25%; max-width: 25%; }
         .logo-img { width: 100%; aspect-ratio: 1/1; border-radius: 14px; border: 1px solid var(--glass-border); object-fit: cover; background: #000; box-shadow: 0 4px 15px rgba(0,0,0,0.6); }
         .title-wrapper { flex: 1; display: flex; flex-direction: column; justify-content: center; overflow: hidden; padding-top: 2px; }
         h1 { font-size: 1.8rem; font-weight: 900; margin: 0; line-height: 0.95; letter-spacing: -0.5px; background: linear-gradient(to right, #fff 20%, var(--gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; }
         .subtitle { color: var(--gold); font-size: 0.75rem; margin-top: 5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
         
-        .lang-wrapper { flex: 0 0 auto; display: flex; justify-content: flex-end; }
-        .lang-select { background: rgba(5,5,5,0.8); color: var(--gold); border: 1px solid var(--glass-border); padding: 10px 8px; border-radius: 10px; font-size: 0.85rem; outline: none; cursor: pointer; font-weight: 600; text-align: right; min-width: 130px; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23d4af37%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 8px top 50%; background-size: 10px auto; padding-right: 25px; transition: border-color 0.3s; backdrop-filter: blur(5px); }
-        .lang-select:focus { border-color: var(--gold); box-shadow: 0 0 12px rgba(212, 175, 55, 0.4); }
-        @media (max-width: 480px) { h1 { font-size: 1.5rem; } .lang-select { min-width: 0; width: 35px; height: 35px; padding: 0; font-size: 1rem; text-align: center; background-image: none; overflow: hidden; white-space: nowrap; text-indent: 0; display: flex; justify-content: center; } }
+        /* NOVÝ LUXUSNÍ TAGLINE */
+        .tagline {
+            color: #ffffff;
+            font-weight: 300;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            opacity: 0.85;
+            margin-top: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        /* CUSTOM VLAJKY (LANGUAGE SELECTOR) */
+        .lang-wrapper { position: relative; flex: 0 0 auto; display: flex; justify-content: flex-end; align-items: flex-start; }
+        .lang-flag-btn {
+            background: rgba(15,15,15,0.8); border: 1px solid var(--glass-border);
+            width: 44px; height: 44px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; cursor: pointer; backdrop-filter: blur(5px);
+            transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            user-select: none;
+        }
+        .lang-flag-btn:hover { border-color: var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
+        .lang-grid-dropdown {
+            position: absolute; top: calc(100% + 10px); right: 0;
+            background: rgba(10,10,10,0.95); border: 1px solid var(--gold);
+            border-radius: 16px; padding: 15px; display: none;
+            grid-template-columns: repeat(4, 1fr); gap: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9); backdrop-filter: blur(15px);
+            z-index: 2000; animation: fadeIn 0.2s ease;
+        }
+        .lang-grid-item {
+            width: 38px; height: 38px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; cursor: pointer; transition: 0.2s;
+            background: rgba(255,255,255,0.03); user-select: none;
+            border: 1px solid transparent;
+        }
+        .lang-grid-item:hover { background: rgba(212, 175, 55, 0.2); border-color: var(--gold); transform: scale(1.15); }
+        
+        @media (max-width: 480px) { 
+            h1 { font-size: 1.45rem; } 
+            .lang-flag-btn { width: 38px; height: 38px; font-size: 1.2rem; }
+            .lang-grid-dropdown { grid-template-columns: repeat(4, 1fr); right: -10px; padding: 12px; gap: 8px; }
+            .lang-grid-item { width: 34px; height: 34px; font-size: 1.3rem; }
+        }
 
         /* FORM CARD */
         .glass-card { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 25px 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 50; }
@@ -99,7 +140,7 @@
         .close-modal { position: absolute; top: 15px; right: 20px; color: #666; font-size: 1.5rem; cursor: pointer; transition: 0.2s; }
         .close-modal:hover { color: #fff; }
         .key-input { width: 100%; padding: 15px; margin-bottom: 15px; background: #111; border: 1px solid #444; border-radius: 10px; color: var(--gold); font-family: monospace; font-size: 1.1rem; text-align: center; letter-spacing: 2px; }
-        .key-input:focus { border-color: var(--gold); }
+        .key-input:focus { border-color: var(--gold); outline: none; }
 
         /* VIP FOOTER */
         .vip-footer { margin-top: 30px; padding: 30px 20px; background: linear-gradient(180deg, rgba(20,20,20,0.7) 0%, rgba(5,5,5,0.9) 100%); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 24px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.4); position: relative; z-index: 10; }
@@ -131,34 +172,17 @@
         <div class="title-wrapper">
             <h1>YES Genius</h1>
             <div id="ui-subtitle" class="subtitle">DIGITAL DIPLOMAT</div>
+            <div id="ui-tagline" class="tagline">Even diplomats have bad days.<br>I make sure you don't.</div>
         </div>
+        
+        <!-- Vlajkový výběr jazyka -->
         <div class="lang-wrapper">
-            <select id="lang-select" class="lang-select" onchange="changeLanguage()">
-                <option value="en-US" selected>🇺🇸 English (US)</option>
-                <option value="en-GB">🇬🇧 English (UK)</option>
-                <option value="cs">🇨🇿 Čeština</option>
-                <option value="de">🇩🇪 Deutsch</option>
-                <option value="uk">🇺🇦 Українська</option>
-                <option value="es">🇪🇸 Español</option>
-                <option value="fr">🇫🇷 Français</option>
-                <option value="it">🇮🇹 Italiano</option>
-                <option value="pt">🇵🇹 Português</option>
-                <option value="pl">🇵🇱 Polski</option>
-                <option value="nl">🇳🇱 Nederlands</option>
-                <option value="ru">🇷🇺 Русский</option>
-                <option value="tr">🇹🇷 Türkçe</option>
-                <option value="ar">🇸🇦 العربية</option>
-                <option value="zh">🇨🇳 中文</option>
-                <option value="ja">🇯🇵 日本語</option>
-                <option value="ko">🇰🇷 한국어</option>
-                <option value="hi">🇮🇳 हिन्दी</option>
-                <option value="sv">🇸🇪 Svenska</option>
-                <option value="no">🇳🇴 Norsk</option>
-                <option value="da">🇩🇰 Dansk</option>
-                <option value="fi">🇫🇮 Suomi</option>
-                <option value="el">🇬🇷 Ελληνικά</option>
-                <option value="ro">🇷🇴 Română</option>
-            </select>
+            <div class="lang-flag-btn" onclick="toggleLangDropdown(event)">
+                <span id="current-flag">🇺🇸</span>
+            </div>
+            <div class="lang-grid-dropdown" id="lang-grid">
+                <!-- Javascript sem vloží kulaté vlajky -->
+            </div>
         </div>
     </header>
 
@@ -270,7 +294,7 @@
         </div>
         <button class="btn-vip-large" onclick="koupit()">
             <span class="vip-btn-main-text" id="vip-btn-main">GET LIFETIME ACCESS</span>
-            <span class="vip-btn-sub-text" id="vip-btn-sub">
+            <span class="vip-btn-sub-text">
                 <span style="text-decoration: line-through; color: #666; margin-right: 5px;">$22.00</span>
                 <span style="color: #fff;">PROMO: $9.99</span>
             </span>
@@ -287,60 +311,74 @@
     let userLicense = localStorage.getItem('yes_genius_license_v1');
     let freeTries = parseInt(localStorage.getItem('yes_genius_free_tries') || '0');
 
-    // KOMPLETNÍ DATABÁZE PŘEKLADŮ A KONTEXTU PRO VŠECH 24 JAZYKŮ
+    // NASTAVENÍ VLAJEK PRO 24 JAZYKŮ vč. jména pro AI backend
+    const appLanguages = [
+        { code: 'en-US', flag: '🇺🇸', name: 'American English' }, { code: 'en-GB', flag: '🇬🇧', name: 'British English' }, { code: 'cs', flag: '🇨🇿', name: 'Czech' },
+        { code: 'de', flag: '🇩🇪', name: 'German' }, { code: 'uk', flag: '🇺🇦', name: 'Ukrainian' }, { code: 'es', flag: '🇪🇸', name: 'Spanish' },
+        { code: 'fr', flag: '🇫🇷', name: 'French' }, { code: 'it', flag: '🇮🇹', name: 'Italian' }, { code: 'pt', flag: '🇵🇹', name: 'Portuguese' },
+        { code: 'pl', flag: '🇵🇱', name: 'Polish' }, { code: 'nl', flag: '🇳🇱', name: 'Dutch' }, { code: 'ru', flag: '🇷🇺', name: 'Russian' },
+        { code: 'tr', flag: '🇹🇷', name: 'Turkish' }, { code: 'ar', flag: '🇸🇦', name: 'Arabic' }, { code: 'zh', flag: '🇨🇳', name: 'Chinese' },
+        { code: 'ja', flag: '🇯🇵', name: 'Japanese' }, { code: 'ko', flag: '🇰🇷', name: 'Korean' }, { code: 'hi', flag: '🇮🇳', name: 'Hindi' },
+        { code: 'sv', flag: '🇸🇪', name: 'Swedish' }, { code: 'no', flag: '🇳🇴', name: 'Norwegian' }, { code: 'da', flag: '🇩🇰', name: 'Danish' },
+        { code: 'fi', flag: '🇫🇮', name: 'Finnish' }, { code: 'el', flag: '🇬🇷', name: 'Greek' }, { code: 'ro', flag: '🇷🇴', name: 'Romanian' }
+    ];
+
+    let currentLang = localStorage.getItem('yesGeniusLang') || 'en-US';
+
+    // KOMPLETNÍ DATABÁZE PŘEKLADŮ
     const translations = {
-        'en-US': { sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vipTitle: "👑 UNLOCK FULL POTENTIAL", b1: "No Monthly Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment", vMain: "GET LIFETIME ACCESS", lockT: "🔒 UNLOCK FULL ACCESS", lockX: "You've used your 3 free drafts! Get a Lifetime License.", haveKey: "I already have a key", keyT: "🔑 ENTER KEY", keyD: "Paste the license key.", keyB: "ACTIVATE", succT: "🎉 ACCESS GRANTED", succD: "License active! Generate unlimited drafts.", succB: "START USING", privacy: "We do not collect any personal data.", fmtList: ["SMS / WhatsApp", "Email", "Phone Call Script", "Slack / Teams"], recList: ["Boss", "Partner", "Wife", "Husband", "Mother-in-law", "Father-in-law", "Client", "Colleague", "Mom", "Dad", "Teacher"], rsnList: ["Running Late", "Feeling Sick", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"], styList: ["Professional", "Creative / Funny", "Slang / Street", "Dramatic", "Strictly Formal", "Casual", "Apologetic"] },
-        'en-GB': { sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vipTitle: "👑 UNLOCK FULL POTENTIAL", b1: "No Monthly Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment", vMain: "GET LIFETIME ACCESS", lockT: "🔒 UNLOCK FULL ACCESS", lockX: "You've used your 3 free drafts! Get a Lifetime License.", haveKey: "I already have a key", keyT: "🔑 ENTER KEY", keyD: "Paste the license key.", keyB: "ACTIVATE", succT: "🎉 ACCESS GRANTED", succD: "License active! Generate unlimited drafts.", succB: "START USING", privacy: "We do not collect any personal data.", fmtList: ["SMS / WhatsApp", "Email", "Phone Call Script", "Slack / Teams"], recList: ["Boss", "Partner", "Wife", "Husband", "Mother-in-law", "Father-in-law", "Client", "Colleague", "Mum", "Dad", "Tutor"], rsnList: ["Running Late", "Feeling Unwell", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"], styList: ["Professional", "Creative / Witty", "Slang / Roadman", "Dramatic", "Strictly Formal", "Casual", "Apologetic"] },
-        'cs': { sub: "DIGITÁLNÍ DIPLOMAT", verb: "GENERUJ!", fmt: "Formát", tgt: "Adresát", rsn: "Důvod", sty: "Styl", ph: "Vyber nebo napiš...", res: "Tvé návrhy:", copy: "Kopírovat", share: "Sdílet", vipTitle: "👑 ODEMKNI PLNÝ POTENCIÁL", b1: "Žádné poplatky", b2: "Doživotní přístup", b3: "Aktualizace", b4: "Bezpečná platba", vMain: "ZÍSKAT PŘÍSTUP", lockT: "🔒 ODEMKNI PŘÍSTUP", lockX: "Využil jsi 3 návrhy zdarma! Pořiď si doživotní licenci.", haveKey: "Už mám klíč", keyT: "🔑 ZADEJ KLÍČ", keyD: "Vlož licenční klíč.", keyB: "AKTIVOVAT", succT: "🎉 PŘÍSTUP POVOLEN", succD: "Licence aktivní! Můžeš generovat neomezeně.", succB: "ZAČÍT POUŽÍVAT", privacy: "Nesbíráme žádné osobní údaje.", fmtList: ["SMS / WhatsApp", "E-mail", "Scénář telefonátu", "Slack / Teams"], recList: ["Šéf", "Partner", "Manželka", "Manžel", "Tchyně", "Tchán", "Klient", "Kolega", "Máma", "Táta", "Učitel"], rsnList: ["Jdu pozdě", "Jsem nemocný/á", "Nestíhám termín", "Ruším plány", "Rodinné důvody", "Porucha auta"], styList: ["Profesionální", "Kreativní / Vtipný", "Slang / Hovorový", "Dramatický", "Formální", "Neformální", "Omluvný"] },
-        'de': { sub: "DIGITALER DIPLOMAT", verb: "GENERIEREN!", fmt: "Format", tgt: "Empfänger", rsn: "Grund", sty: "Stil", ph: "Wählen oder tippen...", res: "Entwürfe:", copy: "Kopieren", share: "Teilen", vipTitle: "👑 POTENZIAL FREISCHALTEN", b1: "Keine Gebühren", b2: "Lebenslang", b3: "Updates", b4: "Sichere Zahlung", vMain: "ZUGANG ERHALTEN", lockT: "🔒 ZUGANG FREISCHALTEN", lockX: "3 kostenlose Versuche aufgebraucht!", haveKey: "Ich habe einen Schlüssel", keyT: "🔑 SCHLÜSSEL EINGEBEN", keyD: "Lizenzschlüssel einfügen.", keyB: "AKTIVIEREN", succT: "🎉 ZUGANG GEWÄHRT", succD: "Lizenz aktiv!", succB: "STARTEN", privacy: "Wir sammeln keine Daten.", fmtList: ["SMS / WhatsApp", "E-Mail", "Telefonskript", "Slack / Teams"], recList: ["Chef", "Partner", "Ehefrau", "Ehemann", "Schwiegermutter", "Schwiegervater", "Kunde", "Kollege", "Mama", "Papa", "Lehrer"], rsnList: ["Verspätung", "Krankheit", "Deadline verpasst", "Absage", "Notfall", "Autopanne"], styList: ["Professionell", "Kreativ", "Slang", "Dramatisch", "Formell", "Locker", "Entschuldigend"] },
-        'uk': { sub: "ЦИФРОВИЙ ДИПЛОМАТ", verb: "СТВОРИТИ!", fmt: "Формат", tgt: "Отримувач", rsn: "Причина", sty: "Стиль", ph: "Оберіть або введіть...", res: "Чернетки:", copy: "Копіювати", share: "Поділитися", vipTitle: "👑 РОЗБЛОКУЙ ДОСТУП", b1: "Без оплат", b2: "Довічний", b3: "Оновлення", b4: "Безпечно", vMain: "ОТРИМАТИ ДОСТУП", lockT: "🔒 ОБМЕЖЕНО", lockX: "Використано 3 спроби!", haveKey: "Маю ключ", keyT: "🔑 ВВЕСТИ КЛЮЧ", keyD: "Вставте ключ.", keyB: "АКТИВУВАТИ", succT: "🎉 ДОСТУП ВІДКРИТО", succD: "Ліцензія активна!", succB: "ПОЧАТИ", privacy: "Ми не збираємо дані.", fmtList: ["SMS / Viber", "Email", "Сценарій дзвінка", "Slack / Teams"], recList: ["Бос", "Партнер", "Дружина", "Чоловік", "Теща/Свекруха", "Тесть/Свекор", "Клієнт", "Колега", "Мама", "Тато", "Вчитель"], rsnList: ["Запізнююся", "Хвороба", "Зрив дедлайну", "Скасування", "Сімейні обставини", "Проблема з авто"], styList: ["Професійний", "Креативний", "Сленг", "Драматичний", "Офіційний", "Неформальний", "Вибачальний"] },
-        'es': { sub: "DIPLOMÁTICO DIGITAL", verb: "¡GENERAR!", fmt: "Formato", tgt: "Destinatario", rsn: "Razón", sty: "Estilo", ph: "Selecciona o escribe...", res: "Borradores:", copy: "Copiar", share: "Compartir", vipTitle: "👑 DESBLOQUEA TODO", b1: "Sin cuotas", b2: "Acceso de por vida", b3: "Actualizaciones", b4: "Pago seguro", vMain: "OBTENER ACCESO", lockT: "🔒 DESBLOQUEAR", lockX: "¡Has usado tus 3 intentos gratis!", haveKey: "Ya tengo clave", keyT: "🔑 INTRODUCIR CLAVE", keyD: "Pega la clave.", keyB: "ACTIVAR", succT: "🎉 ACCESO OTORGADO", succD: "¡Licencia activa!", succB: "EMPEZAR", privacy: "No recopilamos datos.", fmtList: ["SMS / WhatsApp", "Correo", "Guion de llamada", "Slack / Teams"], recList: ["Jefe", "Pareja", "Esposa", "Esposo", "Suegra", "Suegro", "Cliente", "Colega", "Mamá", "Papá", "Profesor"], rsnList: ["Llego tarde", "Enfermo", "Plazo perdido", "Cancelar planes", "Emergencia", "Coche averiado"], styList: ["Profesional", "Creativo", "Jerga", "Dramático", "Formal", "Casual", "Disculpa"] },
-        'fr': { sub: "DIPLOMATE NUMÉRIQUE", verb: "GÉNÉRER!", fmt: "Format", tgt: "Destinataire", rsn: "Raison", sty: "Style", ph: "Choisir ou écrire...", res: "Brouillons:", copy: "Copier", share: "Partager", vipTitle: "👑 DÉBLOQUER TOUT", b1: "Sans frais", b2: "Accès à vie", b3: "Mises à jour", b4: "Paiement sécurisé", vMain: "OBTENIR L'ACCÈS", lockT: "🔒 DÉBLOQUER", lockX: "3 essais gratuits utilisés!", haveKey: "J'ai une clé", keyT: "🔑 ENTRER LA CLÉ", keyD: "Coller la clé.", keyB: "ACTIVER", succT: "🎉 ACCÈS AUTORISÉ", succD: "Licence active!", succB: "COMMENCER", privacy: "Aucune donnée collectée.", fmtList: ["SMS / WhatsApp", "Email", "Scénario d'appel", "Slack / Teams"], recList: ["Patron", "Partenaire", "Femme", "Mari", "Belle-mère", "Beau-père", "Client", "Collègue", "Maman", "Papa", "Professeur"], rsnList: ["En retard", "Malade", "Délai manqué", "Annulation", "Urgence", "Panne de voiture"], styList: ["Professionnel", "Créatif", "Argot", "Dramatique", "Formel", "Décontracté", "Excuse"] },
-        'it': { sub: "DIPLOMATICO DIGITALE", verb: "GENERA!", fmt: "Formato", tgt: "Destinatario", rsn: "Motivo", sty: "Stile", ph: "Seleziona o scrivi...", res: "Bozze:", copy: "Copia", share: "Condividi", vipTitle: "👑 SBLOCCA TUTTO", b1: "Nessun canone", b2: "Accesso a vita", b3: "Aggiornamenti", b4: "Pagamento sicuro", vMain: "OTTIENI ACCESSO", lockT: "🔒 SBLOCCA", lockX: "Hai usato 3 prove gratuite!", haveKey: "Ho una chiave", keyT: "🔑 INSERISCI CHIAVE", keyD: "Incolla la chiave.", keyB: "ATTIVA", succT: "🎉 ACCESSO CONSENTITO", succD: "Licenza attiva!", succB: "INIZIA", privacy: "Non raccogliamo dati personali.", fmtList: ["SMS / WhatsApp", "Email", "Copione chiamata", "Slack / Teams"], recList: ["Capo", "Partner", "Moglie", "Marito", "Suocera", "Suocero", "Cliente", "Collega", "Mamma", "Papà", "Insegnante"], rsnList: ["In ritardo", "Malato", "Scadenza persa", "Cancellazione", "Emergenza", "Guasto auto"], styList: ["Professionale", "Creativo", "Slang", "Drammatico", "Formale", "Informale", "Scusa"] },
-        'pt': { sub: "DIPLOMATA DIGITAL", verb: "GERAR!", fmt: "Formato", tgt: "Destinatário", rsn: "Razão", sty: "Estilo", ph: "Selecione ou digite...", res: "Rascunhos:", copy: "Copiar", share: "Partilhar", vipTitle: "👑 DESBLOQUEAR TUDO", b1: "Sem mensalidade", b2: "Vitalício", b3: "Atualizações", b4: "Pagamento seguro", vMain: "OBTER ACESSO", lockT: "🔒 DESBLOQUEAR", lockX: "Usaste 3 tentativas grátis!", haveKey: "Já tenho uma chave", keyT: "🔑 INSERIR CHAVE", keyD: "Cole a chave.", keyB: "ATIVAR", succT: "🎉 ACESSO CONCEDIDO", succD: "Licença ativa!", succB: "COMEÇAR", privacy: "Não coletamos dados.", fmtList: ["SMS / WhatsApp", "Email", "Roteiro de chamada", "Slack / Teams"], recList: ["Chefe", "Parceiro", "Esposa", "Marido", "Sogra", "Sogro", "Cliente", "Colega", "Mãe", "Pai", "Professor"], rsnList: ["Atrasado", "Doente", "Prazo perdido", "Cancelar planos", "Emergência", "Problema no carro"], styList: ["Profissional", "Criativo", "Gíria", "Dramático", "Formal", "Casual", "Desculpa"] },
-        'pl': { sub: "CYFROWY DYPLOMATA", verb: "GENERUJ!", fmt: "Format", tgt: "Odbiorca", rsn: "Powód", sty: "Styl", ph: "Wybierz lub wpisz...", res: "Szkice:", copy: "Kopiuj", share: "Udostępnij", vipTitle: "👑 ODBLOKUJ POTENCJAŁ", b1: "Bez opłat", b2: "Dożywotni", b3: "Aktualizacje", b4: "Bezpiecznie", vMain: "UZYSKAJ DOSTĘP", lockT: "🔒 ODBLOKUJ", lockX: "Wykorzystałeś 3 darmowe próby!", haveKey: "Mam klucz", keyT: "🔑 WPROWADZ KLUCZ", keyD: "Wklej klucz.", keyB: "AKTYWUJ", succT: "🎉 DOSTĘP PRZYZNANY", succD: "Licencja aktywna!", succB: "ZACZNIJ", privacy: "Nie zbieramy danych.", fmtList: ["SMS / WhatsApp", "Email", "Skrypt rozmowy", "Slack / Teams"], recList: ["Szef", "Partner", "Żona", "Mąż", "Teściowa", "Teść", "Klient", "Kolega", "Mama", "Tata", "Nauczyciel"], rsnList: ["Spóźnienie", "Choroba", "Termin", "Odwołanie", "Nagły wypadek", "Awaria auta"], styList: ["Profesjonalny", "Kreatywny", "Slang", "Dramatyczny", "Formalny", "Luźny", "Przepraszający"] },
-        'nl': { sub: "DIGITALE DIPLOMAAT", verb: "GENEREREN!", fmt: "Formaat", tgt: "Ontvanger", rsn: "Reden", sty: "Stijl", ph: "Kies of typ...", res: "Concepten:", copy: "Kopiëren", share: "Delen", vipTitle: "👑 ONTGRENDEL ALLES", b1: "Geen kosten", b2: "Levenslang", b3: "Updates", b4: "Veilig", vMain: "KRIJG TOEGANG", lockT: "🔒 ONTGRENDELEN", lockX: "3 gratis pogingen gebruikt!", haveKey: "Ik heb een sleutel", keyT: "🔑 VOER SLEUTEL IN", keyD: "Plak de sleutel.", keyB: "ACTIVEREN", succT: "🎉 TOEGANG VERLEEND", succD: "Licentie actief!", succB: "STARTEN", privacy: "Geen data verzameld.", fmtList: ["SMS / WhatsApp", "Email", "Belscript", "Slack / Teams"], recList: ["Baas", "Partner", "Vrouw", "Man", "Schoonmoeder", "Schoonvader", "Klant", "Collega", "Mama", "Papa", "Docent"], rsnList: ["Te laat", "Ziek", "Deadline gemist", "Afzeggen", "Noodgeval", "Autopech"], styList: ["Professioneel", "Creatief", "Straattaal", "Dramatisch", "Formeel", "Informeel", "Verontschuldigend"] },
-        'ru': { sub: "ЦИФРОВОЙ ДИПЛОМАТ", verb: "СОЗДАТЬ!", fmt: "Формат", tgt: "Получатель", rsn: "Причина", sty: "Стиль", ph: "Выберите/введите...", res: "Черновики:", copy: "Копировать", share: "Поделиться", vipTitle: "👑 РАЗБЛОКИРОВАТЬ ДОСТУП", b1: "Без подписки", b2: "Вечный доступ", b3: "Обновления", b4: "Безопасно", vMain: "ПОЛУЧИТЬ ДОСТУП", lockT: "🔒 ДОСТУП ОГРАНИЧЕН", lockX: "Использовано 3 попытки!", haveKey: "У меня есть ключ", keyT: "🔑 ВВЕСТИ КЛЮЧ", keyD: "Вставьте ключ.", keyB: "АКТИВИРОВАТЬ", succT: "🎉 ДОСТУП ОТКРЫТ", succD: "Лицензия активна!", succB: "НАЧАТЬ", privacy: "Мы не собираем данные.", fmtList: ["SMS / WhatsApp", "Email", "Сценарий звонка", "Slack / Teams"], recList: ["Босс", "Партнер", "Жена", "Муж", "Теща/Свекровь", "Тесть/Свекор", "Клиент", "Коллега", "Мама", "Папа", "Учитель"], rsnList: ["Опаздываю", "Заболел", "Срыв сроков", "Отмена планов", "ЧП в семье", "Сломалась машина"], styList: ["Профессиональный", "Креативный", "Сленг", "Драматичный", "Формальный", "Неформальный", "Извиняющийся"] },
-        'tr': { sub: "DİJİTAL DİPLOMAT", verb: "OLUŞTUR!", fmt: "Biçim", tgt: "Alıcı", rsn: "Sebep", sty: "Tarz", ph: "Seç veya yaz...", res: "Taslaklar:", copy: "Kopyala", share: "Paylaş", vipTitle: "👑 TAM ERİŞİM", b1: "Aylık ücret yok", b2: "Ömür boyu", b3: "Güncellemeler", b4: "Güvenli", vMain: "ERİŞİM AL", lockT: "🔒 KİLİDİ AÇ", lockX: "3 ücretsiz deneme bitti!", haveKey: "Anahtarım var", keyT: "🔑 ANAHTARI GİR", keyD: "Anahtarı yapıştır.", keyB: "AKTİFLEŞTİR", succT: "🎉 ERİŞİM SAĞLANDI", succD: "Lisans aktif!", succB: "BAŞLA", privacy: "Veri toplamıyoruz.", fmtList: ["SMS / WhatsApp", "E-posta", "Telefon Metni", "Slack / Teams"], recList: ["Patron", "Partner", "Eş (K)", "Eş (E)", "Kayınvalide", "Kayınpeder", "Müşteri", "Meslektaş", "Anne", "Baba", "Öğretmen"], rsnList: ["Geç kaldım", "Hasta", "Son tarih", "İptal", "Acil durum", "Araba arızası"], styList: ["Profesyonel", "Yaratıcı", "Argo", "Dramatik", "Resmi", "Rahat", "Özür dileyen"] },
-        'ar': { sub: "الدبلوماسي الرقمي", verb: "توليد!", fmt: "صيغة", tgt: "المستلم", rsn: "السبب", sty: "النمط", ph: "اختر أو اكتب...", res: "المسودات:", copy: "نسخ", share: "مشاركة", vipTitle: "👑 فتح الإمكانات الكاملة", b1: "بلا رسوم", b2: "وصول مدى الحياة", b3: "تحديثات مجانية", b4: "دفع آمن", vMain: "احصل على الوصول", lockT: "🔒 فتح الوصول", lockX: "لقد استخدمت 3 محاولات مجانية!", haveKey: "لدي مفتاح", keyT: "🔑 أدخل المفتاح", keyD: "الصق مفتاح الترخيص.", keyB: "تفعيل", succT: "🎉 تم منح الوصول", succD: "الترخيص نشط!", succB: "ابدأ الاستخدام", privacy: "نحن لا نجمع أي بيانات شخصية.", fmtList: ["SMS / WhatsApp", "بريد إلكتروني", "نص مكالمة هاتفية", "Slack / Teams"], recList: ["المدير", "الشريك", "الزوجة", "الزوج", "الحماة", "الحمو", "العميل", "الزميل", "أمي", "أبي", "المعلم"], rsnList: ["تأخرت", "مريض", "فوات الموعد", "إلغاء", "طوارئ عائلية", "عطل سيارة"], styList: ["مهني", "إبداعي", "عامية", "درامي", "رسمي", "غير رسمي", "اعتذاري"] },
-        'zh': { sub: "数字外交官", verb: "生成！", fmt: "格式", tgt: "收件人", rsn: "原因", sty: "风格", ph: "选择或输入...", res: "草稿：", copy: "复制", share: "分享", vipTitle: "👑 解锁全部功能", b1: "无月费", b2: "终身访问", b3: "免费更新", b4: "安全支付", vMain: "获取权限", lockT: "🔒 访问受限", lockX: "已用完3次免费机会！", haveKey: "我已有密钥", keyT: "🔑 输入密钥", keyD: "粘贴许可证密钥。", keyB: "激活", succT: "🎉 激活成功", succD: "许可证已生效！", succB: "开始使用", privacy: "我们不收集个人数据。", fmtList: ["WeChat / SMS", "电子邮件", "电话脚本", "Slack / Teams"], recList: ["老板", "伴侣", "妻子", "丈夫", "岳母/婆婆", "岳父/公公", "客户", "同事", "妈妈", "爸爸", "老师"], rsnList: ["迟到", "生病", "错过截止", "取消计划", "家庭紧急", "车坏了"], styList: ["专业", "创意", "俚语", "戏剧性", "正式", "休闲", "抱歉"] },
-        'ja': { sub: "デジタル外交官", verb: "作成！", fmt: "形式", tgt: "受信者", rsn: "理由", sty: "スタイル", ph: "選択または入力...", res: "下書き：", copy: "コピー", share: "共有", vipTitle: "👑 フル機能を解除", b1: "月額なし", b2: "生涯アクセス", b3: "無料更新", b4: "安全な支払い", vMain: "アクセス権を取得", lockT: "🔒 アクセス制限", lockX: "無料枠を3回使用しました！", haveKey: "キーを持っています", keyT: "🔑 キーを入力", keyD: "ライセンスキーを貼り付けます。", keyB: "有効化", succT: "🎉 アクセス許可", succD: "ライセンスが有効になりました！", succB: "開始する", privacy: "個人情報は収集しません。", fmtList: ["LINE / SMS", "Eメール", "電話の台本", "Slack / Teams"], recList: ["上司", "パートナー", "妻", "夫", "義母", "義父", "クライアント", "同僚", "母", "父", "先生"], rsnList: ["遅刻", "病気", "期限切れ", "キャンセル", "家族の緊急", "車の故障"], styList: ["プロ", "クリエイティブ", "スラング", "ドラマチック", "フォーマル", "カジュアル", "謝罪"] },
-        'ko': { sub: "디지털 외교관", verb: "생성!", fmt: "형식", tgt: "수신자", rsn: "이유", sty: "스타일", ph: "선택 또는 입력...", res: "초안:", copy: "복사", share: "공유", vipTitle: "👑 잠금 해제", b1: "월비용 없음", b2: "평생 액세스", b3: "무료 업데이트", b4: "안전 결제", vMain: "액세스 받기", lockT: "🔒 제한된 액세스", lockX: "무료 3회를 모두 사용했습니다!", haveKey: "키가 있습니다", keyT: "🔑 키 입력", keyD: "라이선스 키를 붙여넣으세요.", keyB: "활성화", succT: "🎉 액세스 승인", succD: "라이선스가 활성화되었습니다!", succB: "시작하기", privacy: "개인정보를 수집하지 않습니다.", fmtList: ["KakaoTalk / SMS", "이메일", "전화 대본", "Slack / Teams"], recList: ["상사", "파트너", "아내", "남편", "장모/시어머니", "장인/시아버지", "고객", "동료", "엄마", "아빠", "선생님"], rsnList: ["지각", "아픔", "마감 놓침", "취소", "가족 비상", "차 고장"], styList: ["전문적", "창의적", "속어", "드라마틱", "공식적", "캐주얼", "사과"] },
-        'hi': { sub: "डिजिटल राजनयिक", verb: "बनाएं!", fmt: "प्रारूप", tgt: "प्राप्तकर्ता", rsn: "कारण", sty: "शैली", ph: "चुनें या टाइप करें...", res: "मसौदे:", copy: "कॉपी", share: "साझा", vipTitle: "👑 पूर्ण अनलॉक करें", b1: "कोई शुल्क नहीं", b2: "आजीवन पहुंच", b3: "मुफ्त अपडेट", b4: "सुरक्षित भुगतान", vMain: "एक्सेस प्राप्त करें", lockT: "🔒 एक्सेस अनलॉक करें", lockX: "आपने 3 मुफ्त ड्राफ्ट का उपयोग किया है!", haveKey: "मेरे पास एक कुंजी है", keyT: "🔑 कुंजी दर्ज करें", keyD: "लाइसेंस कुंजी चिपकाएँ।", keyB: "सक्रिय करें", succT: "🎉 एक्सेस मिला", succD: "लाइसेंस सक्रिय!", succB: "शुरू करें", privacy: "हम व्यक्तिगत डेटा एकत्र नहीं करते हैं।", fmtList: ["SMS / WhatsApp", "ईमेल", "फोन कॉल स्क्रिप्ट", "Slack / Teams"], recList: ["बॉस", "साथी", "पत्नी", "पति", "सास", "ससुर", "ग्राहक", "सहकर्मी", "माँ", "पिता", "अध्यापक"], rsnList: ["देर हो रही है", "बीमार", "समय सीमा चूकी", "योजना रद्द", "पारिवारिक आपातकाल", "कार खराब"], styList: ["पेशेवर", "रचनात्मक", "स्लैंग", "नाटकीय", "औपचारिक", "अनौपचारिक", "क्षमाप्रार्थी"] },
-        'sv': { sub: "DIGITAL DIPLOMAT", verb: "SKAPA!", fmt: "Format", tgt: "Mottagare", rsn: "Orsak", sty: "Stil", ph: "Välj eller skriv...", res: "Utkast:", copy: "Kopiera", share: "Dela", vipTitle: "👑 LÅS UPP ALLT", b1: "Inga avgifter", b2: "Livstidsåtkomst", b3: "Uppdateringar", b4: "Säker betalning", vMain: "FÅ ÅTKOMST", lockT: "🔒 LÅS UPP", lockX: "Du har använt 3 gratis utkast!", haveKey: "Jag har en nyckel", keyT: "🔑 ANGE NYCKEL", keyD: "Klistra in licensnyckeln.", keyB: "AKTIVERA", succT: "🎉 ÅTKOMST BEVILJAD", succD: "Licensen är aktiv!", succB: "BÖRJA ANVÄNDA", privacy: "Vi samlar inte in data.", fmtList: ["SMS / WhatsApp", "E-post", "Telefonskript", "Slack / Teams"], recList: ["Chef", "Partner", "Fru", "Make", "Svärmor", "Svärfar", "Kund", "Kollega", "Mamma", "Pappa", "Lärare"], rsnList: ["Försenad", "Sjuk", "Missad deadline", "Avboka", "Nödläge", "Bilproblem"], styList: ["Professionell", "Kreativ", "Slang", "Dramatisk", "Formell", "Avslappnad", "Ursäktande"] },
-        'no': { sub: "DIGITAL DIPLOMAT", verb: "GENERER!", fmt: "Format", tgt: "Mottaker", rsn: "Årsak", sty: "Stil", ph: "Velg eller skriv...", res: "Utkast:", copy: "Kopier", share: "Del", vipTitle: "👑 LÅS OPP ALT", b1: "Ingen gebyrer", b2: "Livstidstilgang", b3: "Oppdateringer", b4: "Sikker betaling", vMain: "FÅ TILGANG", lockT: "🔒 LÅS OPP", lockX: "Du har brukt dine 3 gratis forsøk!", haveKey: "Jeg har en nøkkel", keyT: "🔑 SKRIV INN NØKKEL", keyD: "Lim inn lisensnøkkelen.", keyB: "AKTIVER", succT: "🎉 TILGANG GITT", succD: "Lisens aktiv!", succB: "START", privacy: "Vi samler ikke data.", fmtList: ["SMS / WhatsApp", "E-post", "Telefonskript", "Slack / Teams"], recList: ["Sjef", "Partner", "Kone", "Mann", "Svigermor", "Svigerfar", "Kunde", "Kollega", "Mamma", "Pappa", "Lærer"], rsnList: ["Forsinket", "Syk", "Frist brutt", "Avlysning", "Nødstilfelle", "Biltrøbbel"], styList: ["Profesjonell", "Kreativ", "Slang", "Dramatisk", "Formell", "Uformell", "Unnskyldende"] },
-        'da': { sub: "DIGITAL DIPLOMAT", verb: "GENERER!", fmt: "Format", tgt: "Modtager", rsn: "Årsag", sty: "Stil", ph: "Vælg eller skriv...", res: "Kladder:", copy: "Kopier", share: "Del", vipTitle: "👑 LÅS OP FOR ALT", b1: "Ingen gebyrer", b2: "Livstidsadgang", b3: "Opdateringer", b4: "Sikker betaling", vMain: "FÅ ADGANG", lockT: "🔒 LÅS OP", lockX: "Du har brugt dine 3 gratis forsøg!", haveKey: "Jeg har en nøgle", keyT: "🔑 INDTAST NØGLE", keyD: "Indsæt licensnøglen.", keyB: "AKTIVER", succT: "🎉 ADGANG GIVET", succD: "Licens aktiv!", succB: "START", privacy: "Vi indsamler ikke data.", fmtList: ["SMS / WhatsApp", "E-mail", "Telefonskript", "Slack / Teams"], recList: ["Chef", "Partner", "Kone", "Mand", "Sviggermor", "Svigerfar", "Kunde", "Kollega", "Mor", "Far", "Lærer"], rsnList: ["Forsinket", "Syg", "Deadline overskredet", "Aflysning", "Nødsituation", "Bilproblemer"], styList: ["Professionel", "Kreativ", "Slang", "Dramatisk", "Formel", "Afslappet", "Undskyldende"] },
-        'fi': { sub: "DIGITAALINEN DIPLOMAATTI", verb: "LUO!", fmt: "Muoto", tgt: "Vastaanottaja", rsn: "Syy", sty: "Tyyli", ph: "Valitse tai kirjoita...", res: "Luonnokset:", copy: "Kopioi", share: "Jaa", vipTitle: "👑 AVAA KAIKKI", b1: "Ei maksuja", b2: "Elinikäinen", b3: "Päivitykset", b4: "Turvallinen", vMain: "HANKI PÄÄSY", lockT: "🔒 AVAA PÄÄSY", lockX: "Käytit 3 ilmaista yritystä!", haveKey: "Minulla on avain", keyT: "🔑 SYÖTÄ AVAIN", keyD: "Liitä lisenssiavain.", keyB: "AKTIVOI", succT: "🎉 PÄÄSY MYÖNNETTY", succD: "Lisenssi aktiivinen!", succB: "ALOITA", privacy: "Emme kerää tietoja.", fmtList: ["SMS / WhatsApp", "Sähköposti", "Puhelukäsikirjoitus", "Slack / Teams"], recList: ["Pomo", "Kumppani", "Vaimo", "Mies", "Anoppi", "Appi", "Asiakas", "Kollega", "Äiti", "Isä", "Opettaja"], rsnList: ["Myöhässä", "Sairas", "Määräaika", "Peruutus", "Hätätilanne", "Auto-ongelma"], styList: ["Ammattimainen", "Luova", "Slangi", "Dramaattinen", "Virallinen", "Rento", "Anteeksipyytelevä"] },
-        'el': { sub: "ΨΗΦΙΑΚΟΣ ΔΙΠΛΩΜΑΤΗΣ", verb: "ΔΗΜΙΟΥΡΓΙΑ!", fmt: "Μορφή", tgt: "Παραλήπτης", rsn: "Αιτία", sty: "Ύφος", ph: "Επιλέξτε ή γράψτε...", res: "Προσχέδια:", copy: "Αντιγραφή", share: "Κοινοποίηση", vipTitle: "👑 ΞΕΚΛΕΙΔΩΜΑ", b1: "Χωρίς χρεώσεις", b2: "Εφ' όρου ζωής", b3: "Ενημερώσεις", b4: "Ασφαλής", vMain: "ΑΠΟΚΤΗΣΤΕ ΠΡΟΣΒΑΣΗ", lockT: "🔒 ΞΕΚΛΕΙΔΩΜΑ", lockX: "Χρησιμοποιήσατε 3 δωρεάν προσπάθειες!", haveKey: "Έχω ήδη κλειδί", keyT: "🔑 ΕΙΣΑΓΩΓΗ ΚΛΕΙΔΙΟΥ", keyD: "Επικολλήστε το κλειδί.", keyB: "ΕΝΕΡΓΟΠΟΙΗΣΗ", succT: "🎉 ΠΡΟΣΒΑΣΗ ΕΠΙΤΡΑΠΗΚΕ", succD: "Άδεια ενεργή!", succB: "ΕΝΑΡΞΗ", privacy: "Δεν συλλέγουμε δεδομένα.", fmtList: ["SMS / WhatsApp", "Email", "Σενάριο Κλήσης", "Slack / Teams"], recList: ["Αφεντικό", "Σύντροφος", "Σύζυγος (Γ)", "Σύζυγος (Α)", "Πεθερά", "Πεθερός", "Πελάτης", "Συνάδελφος", "Μαμά", "Μπαμπάς", "Δάσκαλος"], rsnList: ["Αργοπορημένος", "Άρρωστος", "Προθεσμία", "Ακύρωση", "Επείγον", "Πρόβλημα αυτοκινήτου"], styList: ["Επαγγελματικό", "Δημιουργικό", "Αργκό", "Δραματικό", "Επίσημο", "Χαλαρό", "Απολογητικό"] },
-        'ro': { sub: "DIPLOMAT DIGITAL", verb: "GENEREAZĂ!", fmt: "Format", tgt: "Destinatar", rsn: "Motiv", sty: "Stil", ph: "Alege sau scrie...", res: "Ciorne:", copy: "Copiază", share: "Distribuie", vipTitle: "👑 DEBLOCARE TOTALĂ", b1: "Fără taxe", b2: "Acces pe viață", b3: "Actualizări", b4: "Plată sigură", vMain: "OBȚINE ACCES", lockT: "🔒 DEBLOCARE", lockX: "Ai folosit 3 încercări gratuite!", haveKey: "Am deja o cheie", keyT: "🔑 INTRODUCE CHEIA", keyD: "Lipește cheia.", keyB: "ACTIVEAZĂ", succT: "🎉 ACCES PERMIS", succD: "Licență activă!", succB: "ÎNCEPE", privacy: "Nu colectăm date.", fmtList: ["SMS / WhatsApp", "Email", "Scenariu Apel", "Slack / Teams"], recList: ["Șef", "Partener", "Soție", "Soț", "Soacră", "Socru", "Client", "Coleg", "Mama", "Tata", "Profesor"], rsnList: ["Întârziere", "Bolnav", "Termen limită", "Anulare", "Urgență", "Problemă auto"], styList: ["Profesional", "Creativ", "Argou", "Dramatic", "Formal", "Lejer", "Scuze"] },
-        'default': { sub: "DIGITAL DIPLOMAT", verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vipTitle: "👑 UNLOCK FULL POTENTIAL", b1: "No Monthly Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment", vMain: "GET LIFETIME ACCESS", lockT: "🔒 UNLOCK FULL ACCESS", lockX: "You've used your 3 free drafts! Get a Lifetime License.", haveKey: "I already have a key", keyT: "🔑 ENTER KEY", keyD: "Paste the license key.", keyB: "ACTIVATE", succT: "🎉 ACCESS GRANTED", succD: "License active! Generate unlimited drafts.", succB: "START USING", privacy: "We do not collect any personal data.", fmtList: ["SMS / WhatsApp", "Email", "Phone Call Script", "Slack / Teams"], recList: ["Boss", "Partner", "Wife", "Husband", "Mother-in-law", "Father-in-law", "Client", "Colleague", "Mom", "Dad", "Teacher"], rsnList: ["Running Late", "Feeling Sick", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"], styList: ["Professional", "Creative / Funny", "Slang / Street", "Dramatic", "Strictly Formal", "Casual", "Apologetic"] }
+        'en-US': { sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days.<br>I make sure you don't.", verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vipTitle: "👑 UNLOCK FULL POTENTIAL", b1: "No Monthly Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment", vMain: "GET LIFETIME ACCESS", lockT: "🔒 UNLOCK FULL ACCESS", lockX: "You've used your 3 free drafts! Get a Lifetime License.", haveKey: "I already have a key", keyT: "🔑 ENTER KEY", keyD: "Paste the license key.", keyB: "ACTIVATE", succT: "🎉 ACCESS GRANTED", succD: "License active!", succB: "START USING", privacy: "We do not collect any personal data.", fmtList: ["SMS / WhatsApp", "Email", "Phone Call Script", "Slack / Teams"], recList: ["Boss", "Partner", "Wife", "Husband", "Mother-in-law", "Father-in-law", "Client", "Colleague", "Mom", "Dad", "Teacher"], rsnList: ["Running Late", "Feeling Sick", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"], styList: ["Professional", "Creative / Funny", "Slang / Street", "Dramatic", "Strictly Formal", "Casual", "Apologetic"] },
+        'en-GB': { sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days.<br>I make sure you don't.", verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vipTitle: "👑 UNLOCK FULL POTENTIAL", b1: "No Monthly Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment", vMain: "GET LIFETIME ACCESS", lockT: "🔒 UNLOCK FULL ACCESS", lockX: "You've used your 3 free drafts! Get a Lifetime License.", haveKey: "I already have a key", keyT: "🔑 ENTER KEY", keyD: "Paste the license key.", keyB: "ACTIVATE", succT: "🎉 ACCESS GRANTED", succD: "License active!", succB: "START USING", privacy: "We do not collect any personal data.", fmtList: ["SMS / WhatsApp", "Email", "Phone Call Script", "Slack / Teams"], recList: ["Boss", "Partner", "Wife", "Husband", "Mother-in-law", "Father-in-law", "Client", "Colleague", "Mum", "Dad", "Tutor"], rsnList: ["Running Late", "Feeling Unwell", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"], styList: ["Professional", "Creative / Witty", "Slang / Roadman", "Dramatic", "Strictly Formal", "Casual", "Apologetic"] },
+        'cs': { sub: "DIGITÁLNÍ DIPLOMAT", tagline: "I diplomaté mají špatné dny.<br>Já dohlédnu, abyste je neměli.", verb: "GENERUJ!", fmt: "Formát", tgt: "Adresát", rsn: "Důvod", sty: "Styl", ph: "Vyber nebo napiš...", res: "Tvé návrhy:", copy: "Kopírovat", share: "Sdílet", vipTitle: "👑 ODEMKNI PLNÝ POTENCIÁL", b1: "Žádné poplatky", b2: "Doživotní přístup", b3: "Aktualizace", b4: "Bezpečná platba", vMain: "ZÍSKAT PŘÍSTUP", lockT: "🔒 ODEMKNI PŘÍSTUP", lockX: "Využil jsi 3 návrhy zdarma! Pořiď si licenci.", haveKey: "Už mám klíč", keyT: "🔑 ZADEJ KLÍČ", keyD: "Vlož licenční klíč.", keyB: "AKTIVOVAT", succT: "🎉 PŘÍSTUP POVOLEN", succD: "Licence aktivní!", succB: "ZAČÍT POUŽÍVAT", privacy: "Nesbíráme žádné osobní údaje.", fmtList: ["SMS / WhatsApp", "E-mail", "Scénář telefonátu", "Slack / Teams"], recList: ["Šéf", "Partner", "Manželka", "Manžel", "Tchyně", "Tchán", "Klient", "Kolega", "Máma", "Táta", "Učitel"], rsnList: ["Jdu pozdě", "Jsem nemocný/á", "Nestíhám termín", "Ruším plány", "Rodinné důvody", "Porucha auta"], styList: ["Profesionální", "Kreativní / Vtipný", "Slang / Hovorový", "Dramatický", "Formální", "Neformální", "Omluvný"] },
+        'de': { sub: "DIGITALER DIPLOMAT", tagline: "Auch Diplomaten haben schlechte Tage.<br>Ich sorge dafür, dass Sie keine haben.", verb: "GENERIEREN!", fmt: "Format", tgt: "Empfänger", rsn: "Grund", sty: "Stil", ph: "Wählen oder tippen...", res: "Entwürfe:", copy: "Kopieren", share: "Teilen", vipTitle: "👑 POTENZIAL FREISCHALTEN", b1: "Keine Gebühren", b2: "Lebenslang", b3: "Updates", b4: "Sichere Zahlung", vMain: "ZUGANG ERHALTEN", lockT: "🔒 ZUGANG FREISCHALTEN", lockX: "3 kostenlose Versuche aufgebraucht!", haveKey: "Ich habe einen Schlüssel", keyT: "🔑 SCHLÜSSEL EINGEBEN", keyD: "Lizenzschlüssel einfügen.", keyB: "AKTIVIEREN", succT: "🎉 ZUGANG GEWÄHRT", succD: "Lizenz aktiv!", succB: "STARTEN", privacy: "Wir sammeln keine Daten.", fmtList: ["SMS / WhatsApp", "E-Mail", "Telefonskript", "Slack / Teams"], recList: ["Chef", "Partner", "Ehefrau", "Ehemann", "Schwiegermutter", "Schwiegervater", "Kunde", "Kollege", "Mama", "Papa", "Lehrer"], rsnList: ["Verspätung", "Krankheit", "Deadline verpasst", "Absage", "Notfall", "Autopanne"], styList: ["Professionell", "Kreativ", "Slang", "Dramatisch", "Formell", "Locker", "Entschuldigend"] },
+        'uk': { sub: "ЦИФРОВИЙ ДИПЛОМАТ", tagline: "Навіть у дипломатів бувають погані дні.<br>Я зроблю так, щоб у вас їх не було.", verb: "СТВОРИТИ!", fmt: "Формат", tgt: "Отримувач", rsn: "Причина", sty: "Стиль", ph: "Оберіть або введіть...", res: "Чернетки:", copy: "Копіювати", share: "Поділитися", vipTitle: "👑 РОЗБЛОКУЙ ДОСТУП", b1: "Без оплат", b2: "Довічний", b3: "Оновлення", b4: "Безпечно", vMain: "ОТРИМАТИ ДОСТУП", lockT: "🔒 ОБМЕЖЕНО", lockX: "Використано 3 спроби!", haveKey: "Маю ключ", keyT: "🔑 ВВЕСТИ КЛЮЧ", keyD: "Вставте ключ.", keyB: "АКТИВУВАТИ", succT: "🎉 ДОСТУП ВІДКРИТО", succD: "Ліцензія активна!", succB: "ПОЧАТИ", privacy: "Ми не збираємо дані.", fmtList: ["SMS / Viber", "Email", "Сценарій дзвінка", "Slack / Teams"], recList: ["Бос", "Партнер", "Дружина", "Чоловік", "Теща/Свекруха", "Тесть/Свекор", "Клієнт", "Колега", "Мама", "Тато", "Вчитель"], rsnList: ["Запізнююся", "Хвороба", "Зрив дедлайну", "Скасування", "Сімейні обставини", "Проблема з авто"], styList: ["Професійний", "Креативний", "Сленг", "Драматичний", "Офіційний", "Неформальний", "Вибачальний"] },
+        'es': { sub: "DIPLOMÁTICO DIGITAL", tagline: "Hasta los diplomáticos tienen días malos.<br>Me aseguro de que tú no los tengas.", verb: "¡GENERAR!", fmt: "Formato", tgt: "Destinatario", rsn: "Razón", sty: "Estilo", ph: "Selecciona o escribe...", res: "Borradores:", copy: "Copiar", share: "Compartir", vipTitle: "👑 DESBLOQUEA TODO", b1: "Sin cuotas", b2: "De por vida", b3: "Actualizaciones", b4: "Pago seguro", vMain: "OBTENER ACCESO", lockT: "🔒 DESBLOQUEAR", lockX: "¡Has usado tus 3 intentos!", haveKey: "Ya tengo clave", keyT: "🔑 INTRODUCIR CLAVE", keyD: "Pega la clave.", keyB: "ACTIVAR", succT: "🎉 ACCESO OTORGADO", succD: "¡Licencia activa!", succB: "EMPEZAR", privacy: "No recopilamos datos.", fmtList: ["SMS / WhatsApp", "Correo", "Guion de llamada", "Slack / Teams"], recList: ["Jefe", "Pareja", "Esposa", "Esposo", "Suegra", "Suegro", "Cliente", "Colega", "Mamá", "Papá", "Profesor"], rsnList: ["Llego tarde", "Enfermo", "Plazo perdido", "Cancelar planes", "Emergencia", "Coche averiado"], styList: ["Profesional", "Creativo", "Jerga", "Dramático", "Formal", "Casual", "Disculpa"] },
+        'fr': { sub: "DIPLOMATE NUMÉRIQUE", tagline: "Même les diplomates ont des jours sans.<br>Je m'assure que ce ne soit pas votre cas.", verb: "GÉNÉRER!", fmt: "Format", tgt: "Destinataire", rsn: "Raison", sty: "Style", ph: "Choisir ou écrire...", res: "Brouillons:", copy: "Copier", share: "Partager", vipTitle: "👑 DÉBLOQUER TOUT", b1: "Sans frais", b2: "Accès à vie", b3: "Mises à jour", b4: "Paiement sécurisé", vMain: "OBTENIR L'ACCÈS", lockT: "🔒 DÉBLOQUER", lockX: "3 essais gratuits utilisés!", haveKey: "J'ai une clé", keyT: "🔑 ENTRER LA CLÉ", keyD: "Coller la clé.", keyB: "ACTIVER", succT: "🎉 ACCÈS AUTORISÉ", succD: "Licence active!", succB: "COMMENCER", privacy: "Aucune donnée collectée.", fmtList: ["SMS / WhatsApp", "Email", "Scénario d'appel", "Slack / Teams"], recList: ["Patron", "Partenaire", "Femme", "Mari", "Belle-mère", "Beau-père", "Client", "Collègue", "Maman", "Papa", "Professeur"], rsnList: ["En retard", "Malade", "Délai manqué", "Annulation", "Urgence", "Panne de voiture"], styList: ["Professionnel", "Créatif", "Argot", "Dramatique", "Formel", "Décontracté", "Excuse"] },
+        'it': { sub: "DIPLOMATICO DIGITALE", tagline: "Anche i diplomatici hanno giornate no.<br>Io mi assicuro che tu non ne abbia.", verb: "GENERA!", fmt: "Formato", tgt: "Destinatario", rsn: "Motivo", sty: "Stile", ph: "Seleziona o scrivi...", res: "Bozze:", copy: "Copia", share: "Condividi", vipTitle: "👑 SBLOCCA IL POTENZIALE", b1: "Nessun canone", b2: "Accesso a vita", b3: "Aggiornamenti", b4: "Pagamento sicuro", vMain: "OTTIENI ACCESSO", lockT: "🔒 SBLOCCA", lockX: "Hai usato 3 prove gratuite!", haveKey: "Ho una chiave", keyT: "🔑 INSERISCI CHIAVE", keyD: "Incolla la chiave.", keyB: "ATTIVA", succT: "🎉 ACCESSO CONSENTITO", succD: "Licenza attiva!", succB: "INIZIA", privacy: "Non raccogliamo dati personali.", fmtList: ["SMS / WhatsApp", "Email", "Copione chiamata", "Slack / Teams"], recList: ["Capo", "Partner", "Moglie", "Marito", "Suocera", "Suocero", "Cliente", "Collega", "Mamma", "Papà", "Insegnante"], rsnList: ["In ritardo", "Malato", "Scadenza persa", "Cancellazione", "Emergenza", "Guasto auto"], styList: ["Professionale", "Creativo", "Slang", "Drammatico", "Formale", "Informale", "Scusa"] },
+        'pt': { sub: "DIPLOMATA DIGITAL", tagline: "Até os diplomatas têm dias ruins.<br>Eu garanto que você não tenha.", verb: "GERAR!", fmt: "Formato", tgt: "Destinatário", rsn: "Razão", sty: "Estilo", ph: "Selecione ou digite...", res: "Rascunhos:", copy: "Copiar", share: "Partilhar", vipTitle: "👑 DESBLOQUEAR TUDO", b1: "Sem mensalidade", b2: "Vitalício", b3: "Atualizações", b4: "Pagamento seguro", vMain: "OBTER ACESSO", lockT: "🔒 DESBLOQUEAR", lockX: "Usaste 3 tentativas grátis!", haveKey: "Já tenho chave", keyT: "🔑 INSERIR CHAVE", keyD: "Cole a chave.", keyB: "ATIVAR", succT: "🎉 ACESSO CONCEDIDO", succD: "Licença ativa!", succB: "COMEÇAR", privacy: "Não coletamos dados.", fmtList: ["SMS / WhatsApp", "Email", "Roteiro de chamada", "Slack / Teams"], recList: ["Chefe", "Parceiro", "Esposa", "Marido", "Sogra", "Sogro", "Cliente", "Colega", "Mãe", "Pai", "Professor"], rsnList: ["Atrasado", "Doente", "Prazo perdido", "Cancelar planos", "Emergência", "Problema no carro"], styList: ["Profissional", "Criativo", "Gíria", "Dramático", "Formal", "Casual", "Desculpa"] },
+        'pl': { sub: "CYFROWY DYPLOMATA", tagline: "Nawet dyplomaci miewają gorsze dni.<br>Ja dbam o to, byś ty ich nie miał.", verb: "GENERUJ!", fmt: "Format", tgt: "Odbiorca", rsn: "Powód", sty: "Styl", ph: "Wybierz lub wpisz...", res: "Szkice:", copy: "Kopiuj", share: "Udostępnij", vipTitle: "👑 ODBLOKUJ POTENCJAŁ", b1: "Bez opłat", b2: "Dożywotni", b3: "Aktualizacje", b4: "Bezpiecznie", vMain: "UZYSKAJ DOSTĘP", lockT: "🔒 ODBLOKUJ", lockX: "Wykorzystałeś 3 darmowe próby!", haveKey: "Mam klucz", keyT: "🔑 WPROWADZ KLUCZ", keyD: "Wklej klucz.", keyB: "AKTYWUJ", succT: "🎉 DOSTĘP PRZYZNANY", succD: "Licencja aktywna!", succB: "ZACZNIJ", privacy: "Nie zbieramy danych.", fmtList: ["SMS / WhatsApp", "Email", "Skrypt rozmowy", "Slack / Teams"], recList: ["Szef", "Partner", "Żona", "Mąż", "Teściowa", "Teść", "Klient", "Kolega", "Mama", "Tata", "Nauczyciel"], rsnList: ["Spóźnienie", "Choroba", "Termin", "Odwołanie", "Nagły wypadek", "Awaria auta"], styList: ["Profesjonalny", "Kreatywny", "Slang", "Dramatyczny", "Formalny", "Luźny", "Przepraszający"] },
+        'nl': { sub: "DIGITALE DIPLOMAAT", tagline: "Zelfs diplomaten hebben slechte dagen.<br>Ik zorg ervoor dat jij ze niet hebt.", verb: "GENEREREN!", fmt: "Formaat", tgt: "Ontvanger", rsn: "Reden", sty: "Stijl", ph: "Kies of typ...", res: "Concepten:", copy: "Kopiëren", share: "Delen", vipTitle: "👑 ONTGRENDEL ALLES", b1: "Geen kosten", b2: "Levenslang", b3: "Updates", b4: "Veilig", vMain: "KRIJG TOEGANG", lockT: "🔒 ONTGRENDELEN", lockX: "3 gratis pogingen gebruikt!", haveKey: "Ik heb een sleutel", keyT: "🔑 VOER SLEUTEL IN", keyD: "Plak de sleutel.", keyB: "ACTIVEREN", succT: "🎉 TOEGANG VERLEEND", succD: "Licentie actief!", succB: "STARTEN", privacy: "Geen data verzameld.", fmtList: ["SMS / WhatsApp", "Email", "Belscript", "Slack / Teams"], recList: ["Baas", "Partner", "Vrouw", "Man", "Schoonmoeder", "Schoonvader", "Klant", "Collega", "Mama", "Papa", "Docent"], rsnList: ["Te laat", "Ziek", "Deadline gemist", "Afzeggen", "Noodgeval", "Autopech"], styList: ["Professioneel", "Creatief", "Straattaal", "Dramatisch", "Formeel", "Informeel", "Verontschuldigend"] },
+        'ru': { sub: "ЦИФРОВОЙ ДИПЛОМАТ", tagline: "Даже у дипломатов бывают плохие дни.<br>Я позабочусь, чтобы у вас их не было.", verb: "СОЗДАТЬ!", fmt: "Формат", tgt: "Получатель", rsn: "Причина", sty: "Стиль", ph: "Выберите/введите...", res: "Черновики:", copy: "Копировать", share: "Поделиться", vipTitle: "👑 РАЗБЛОКИРОВАТЬ ДОСТУП", b1: "Без подписки", b2: "Вечный доступ", b3: "Обновления", b4: "Безопасно", vMain: "ПОЛУЧИТЬ ДОСТУП", lockT: "🔒 ДОСТУП ОГРАНИЧЕН", lockX: "Использовано 3 попытки!", haveKey: "У меня есть ключ", keyT: "🔑 ВВЕСТИ КЛЮЧ", keyD: "Вставьте ключ.", keyB: "АКТИВИРОВАТЬ", succT: "🎉 ДОСТУП ОТКРЫТ", succD: "Лицензия активна!", succB: "НАЧАТЬ", privacy: "Мы не собираем данные.", fmtList: ["SMS / WhatsApp", "Email", "Сценарий звонка", "Slack / Teams"], recList: ["Босс", "Партнер", "Жена", "Муж", "Теща/Свекровь", "Тесть/Свекор", "Клиент", "Коллега", "Мама", "Папа", "Учитель"], rsnList: ["Опаздываю", "Заболел", "Срыв сроков", "Отмена планов", "ЧП в семье", "Сломалась машина"], styList: ["Профессиональный", "Креативный", "Сленг", "Драматичный", "Формальный", "Неформальный", "Извиняющийся"] },
+        'tr': { sub: "DİJİTAL DİPLOMAT", tagline: "Diplomatların bile kötü günleri olur.<br>Senin olmamasını sağlarım.", verb: "OLUŞTUR!", fmt: "Biçim", tgt: "Alıcı", rsn: "Sebep", sty: "Tarz", ph: "Seç veya yaz...", res: "Taslaklar:", copy: "Kopyala", share: "Paylaş", vipTitle: "👑 TAM ERİŞİM", b1: "Aylık ücret yok", b2: "Ömür boyu", b3: "Güncellemeler", b4: "Güvenli", vMain: "ERİŞİM AL", lockT: "🔒 KİLİDİ AÇ", lockX: "3 ücretsiz deneme bitti!", haveKey: "Anahtarım var", keyT: "🔑 ANAHTARI GİR", keyD: "Anahtarı yapıştır.", keyB: "AKTİFLEŞTİR", succT: "🎉 ERİŞİM SAĞLANDI", succD: "Lisans aktif!", succB: "BAŞLA", privacy: "Veri toplamıyoruz.", fmtList: ["SMS / WhatsApp", "E-posta", "Telefon Metni", "Slack / Teams"], recList: ["Patron", "Partner", "Eş", "Koca", "Kayınvalide", "Kayınpeder", "Müşteri", "Meslektaş", "Anne", "Baba", "Öğretmen"], rsnList: ["Geç kaldım", "Hasta", "Son tarih", "İptal", "Acil durum", "Araba arızası"], styList: ["Profesyonel", "Yaratıcı", "Argo", "Dramatik", "Resmi", "Rahat", "Özür dileyen"] },
+        'ar': { sub: "الدبلوماسي الرقمي", tagline: "حتى الدبلوماسيين لديهم أيام سيئة.<br>أنا أحرص على ألا يكون لديك.", verb: "توليد!", fmt: "صيغة", tgt: "المستلم", rsn: "السبب", sty: "النمط", ph: "اختر أو اكتب...", res: "المسودات:", copy: "نسخ", share: "مشاركة", vipTitle: "👑 فتح الإمكانات الكاملة", b1: "بلا رسوم", b2: "وصول مدى الحياة", b3: "تحديثات مجانية", b4: "دفع آمن", vMain: "احصل على الوصول", lockT: "🔒 فتح الوصول", lockX: "لقد استخدمت 3 محاولات مجانية!", haveKey: "لدي مفتاح", keyT: "🔑 أدخل المفتاح", keyD: "الصق مفتاح الترخيص.", keyB: "تفعيل", succT: "🎉 تم منح الوصول", succD: "الترخيص نشط!", succB: "ابدأ الاستخدام", privacy: "نحن لا نجمع أي بيانات.", fmtList: ["SMS / WhatsApp", "بريد إلكتروني", "نص مكالمة هاتفية", "Slack / Teams"], recList: ["المدير", "الشريك", "الزوجة", "الزوج", "الحماة", "الحمو", "العميل", "الزميل", "أمي", "أبي", "المعلم"], rsnList: ["تأخرت", "مريض", "فوات الموعد", "إلغاء", "طوارئ عائلية", "عطل سيارة"], styList: ["مهني", "إبداعي", "عامية", "درامي", "رسمي", "غير رسمي", "اعتذاري"] },
+        'zh': { sub: "数字外交官", tagline: "外交官也有糟糕的一天。<br>我确保你不会有。", verb: "生成！", fmt: "格式", tgt: "收件人", rsn: "原因", sty: "风格", ph: "选择或输入...", res: "草稿：", copy: "复制", share: "分享", vipTitle: "👑 解锁全部功能", b1: "无月费", b2: "终身访问", b3: "免费更新", b4: "安全支付", vMain: "获取权限", lockT: "🔒 访问受限", lockX: "已用完3次免费机会！", haveKey: "我已有密钥", keyT: "🔑 输入密钥", keyD: "粘贴许可证密钥。", keyB: "激活", succT: "🎉 激活成功", succD: "许可证已生效！", succB: "开始使用", privacy: "我们不收集个人数据。", fmtList: ["WeChat / SMS", "电子邮件", "电话脚本", "Slack / Teams"], recList: ["老板", "伴侣", "妻子", "丈夫", "岳母/婆婆", "岳父/公公", "客户", "同事", "妈妈", "爸爸", "老师"], rsnList: ["迟到", "生病", "错过截止", "取消计划", "家庭紧急", "车坏了"], styList: ["专业", "创意", "俚语", "戏剧性", "正式", "休闲", "抱歉"] },
+        'ja': { sub: "デジタル外交官", tagline: "外交官にも悪い日はある。<br>私がそうさせません。", verb: "作成！", fmt: "形式", tgt: "受信者", rsn: "理由", sty: "スタイル", ph: "選択または入力...", res: "下書き：", copy: "コピー", share: "共有", vipTitle: "👑 フル機能を解除", b1: "月額なし", b2: "生涯アクセス", b3: "無料更新", b4: "安全な支払い", vMain: "アクセス権を取得", lockT: "🔒 アクセス制限", lockX: "無料枠を3回使用しました！", haveKey: "キーを持っています", keyT: "🔑 キーを入力", keyD: "キーを貼り付けます。", keyB: "有効化", succT: "🎉 アクセス許可", succD: "ライセンスが有効！", succB: "開始する", privacy: "個人情報は収集しません。", fmtList: ["LINE / SMS", "Eメール", "電話の台本", "Slack / Teams"], recList: ["上司", "パートナー", "妻", "夫", "義母", "義父", "クライアント", "同僚", "母", "父", "先生"], rsnList: ["遅刻", "病気", "期限切れ", "キャンセル", "家族の緊急", "車の故障"], styList: ["プロ", "クリエイティブ", "スラング", "ドラマチック", "フォーマル", "カジュアル", "謝罪"] },
+        'ko': { sub: "디지털 외교관", tagline: "외교관도 힘든 날은 있다.<br>제가 당신을 지켜드립니다.", verb: "생성!", fmt: "형식", tgt: "수신자", rsn: "이유", sty: "스타일", ph: "선택 또는 입력...", res: "초안:", copy: "복사", share: "공유", vipTitle: "👑 잠금 해제", b1: "월비용 없음", b2: "평생 액세스", b3: "무료 업데이트", b4: "안전 결제", vMain: "액세스 받기", lockT: "🔒 제한된 액세스", lockX: "무료 3회를 모두 사용했습니다!", haveKey: "키가 있습니다", keyT: "🔑 키 입력", keyD: "키를 붙여넣으세요.", keyB: "활성화", succT: "🎉 액세스 승인", succD: "라이선스가 활성화되었습니다!", succB: "시작하기", privacy: "개인정보를 수집하지 않습니다.", fmtList: ["KakaoTalk / SMS", "이메일", "전화 대본", "Slack / Teams"], recList: ["상사", "파트너", "아내", "남편", "장모/시어머니", "장인/시아버지", "고객", "동료", "엄마", "아빠", "선생님"], rsnList: ["지각", "아픔", "마감 놓침", "취소", "가족 비상", "차 고장"], styList: ["전문적", "창의적", "속어", "드라마틱", "공식적", "캐주얼", "사과"] },
+        'hi': { sub: "डिजिटल राजनयिक", tagline: "राजनयिकों के भी बुरे दिन होते हैं।<br>मैं सुनिश्चित करता हूँ कि आपके न हों।", verb: "बनाएं!", fmt: "प्रारूप", tgt: "प्राप्तकर्ता", rsn: "कारण", sty: "शैली", ph: "चुनें या टाइप करें...", res: "मसौदे:", copy: "कॉपी", share: "साझा", vipTitle: "👑 पूर्ण अनलॉक करें", b1: "कोई शुल्क नहीं", b2: "आजीवन पहुंच", b3: "मुफ्त अपडेट", b4: "सुरक्षित भुगतान", vMain: "एक्सेस प्राप्त करें", lockT: "🔒 एक्सेस अनलॉक करें", lockX: "आपने 3 मुफ्त ड्राफ्ट का उपयोग किया है!", haveKey: "मेरे पास कुंजी है", keyT: "🔑 कुंजी दर्ज करें", keyD: "लाइसेंस कुंजी चिपकाएँ।", keyB: "सक्रिय करें", succT: "🎉 एक्सेस मिला", succD: "लाइसेंस सक्रिय!", succB: "शुरू करें", privacy: "हम व्यक्तिगत डेटा एकत्र नहीं करते हैं।", fmtList: ["SMS / WhatsApp", "ईमेल", "फोन कॉल स्क्रिप्ट", "Slack / Teams"], recList: ["बॉस", "साथी", "पत्नी", "पति", "सास", "ससुर", "ग्राहक", "सहकर्मी", "माँ", "पिता", "अध्यापक"], rsnList: ["देर हो रही है", "बीमार", "समय सीमा चूकी", "योजना रद्द", "पारिवारिक आपातकाल", "कार खराब"], styList: ["पेशेवर", "रचनात्मक", "स्लैंग", "नाटकीय", "औपचारिक", "अनौपचारिक", "क्षमाप्रार्थी"] },
+        'sv': { sub: "DIGITAL DIPLOMAT", tagline: "Även diplomater har dåliga dagar.<br>Jag ser till att du inte har det.", verb: "SKAPA!", fmt: "Format", tgt: "Mottagare", rsn: "Orsak", sty: "Stil", ph: "Välj eller skriv...", res: "Utkast:", copy: "Kopiera", share: "Dela", vipTitle: "👑 LÅS UPP ALLT", b1: "Inga avgifter", b2: "Livstidsåtkomst", b3: "Uppdateringar", b4: "Säker betalning", vMain: "FÅ ÅTKOMST", lockT: "🔒 LÅS UPP", lockX: "Du har använt 3 gratis utkast!", haveKey: "Jag har en nyckel", keyT: "🔑 ANGE NYCKEL", keyD: "Klistra in licensnyckeln.", keyB: "AKTIVERA", succT: "🎉 ÅTKOMST BEVILJAD", succD: "Licensen är aktiv!", succB: "BÖRJA", privacy: "Vi samlar inte in data.", fmtList: ["SMS / WhatsApp", "E-post", "Telefonskript", "Slack / Teams"], recList: ["Chef", "Partner", "Fru", "Make", "Svärmor", "Svärfar", "Kund", "Kollega", "Mamma", "Pappa", "Lärare"], rsnList: ["Försenad", "Sjuk", "Missad deadline", "Avboka", "Nödläge", "Bilproblem"], styList: ["Professionell", "Kreativ", "Slang", "Dramatisk", "Formell", "Avslappnad", "Ursäktande"] },
+        'no': { sub: "DIGITAL DIPLOMAT", tagline: "Selv diplomater har dårlige dager.<br>Jeg sørger for at du ikke har det.", verb: "GENERER!", fmt: "Format", tgt: "Mottaker", rsn: "Årsak", sty: "Stil", ph: "Velg eller skriv...", res: "Utkast:", copy: "Kopier", share: "Del", vipTitle: "👑 LÅS OPP ALT", b1: "Ingen gebyrer", b2: "Livstidstilgang", b3: "Oppdateringer", b4: "Sikker betaling", vMain: "FÅ TILGANG", lockT: "🔒 LÅS OPP", lockX: "Du har brukt dine 3 gratis forsøk!", haveKey: "Jeg har en nøkkel", keyT: "🔑 SKRIV INN NØKKEL", keyD: "Lim inn nøkkelen.", keyB: "AKTIVER", succT: "🎉 TILGANG GITT", succD: "Lisens aktiv!", succB: "START", privacy: "Vi samler ikke data.", fmtList: ["SMS / WhatsApp", "E-post", "Telefonskript", "Slack / Teams"], recList: ["Sjef", "Partner", "Kone", "Mann", "Svigermor", "Svigerfar", "Kunde", "Kollega", "Mamma", "Pappa", "Lærer"], rsnList: ["Forsinket", "Syk", "Frist brutt", "Avlysning", "Nødstilfelle", "Biltrøbbel"], styList: ["Profesjonell", "Kreativ", "Slang", "Dramatisk", "Formell", "Uformell", "Unnskyldende"] },
+        'da': { sub: "DIGITAL DIPLOMAT", tagline: "Selv diplomater har dårlige dage.<br>Jeg sørger for, at du ikke får det.", verb: "GENERER!", fmt: "Format", tgt: "Modtager", rsn: "Årsag", sty: "Stil", ph: "Vælg eller skriv...", res: "Kladder:", copy: "Kopier", share: "Del", vipTitle: "👑 LÅS OP FOR ALT", b1: "Ingen gebyrer", b2: "Livstidsadgang", b3: "Opdateringer", b4: "Sikker", vMain: "FÅ ADGANG", lockT: "🔒 LÅS OP", lockX: "Du har brugt dine 3 gratis forsøg!", haveKey: "Jeg har en nøgle", keyT: "🔑 INDTAST NØGLE", keyD: "Indsæt nøglen.", keyB: "AKTIVER", succT: "🎉 ADGANG GIVET", succD: "Licens aktiv!", succB: "START", privacy: "Vi indsamler ikke data.", fmtList: ["SMS / WhatsApp", "E-mail", "Telefonskript", "Slack / Teams"], recList: ["Chef", "Partner", "Kone", "Mand", "Sviggermor", "Svigerfar", "Kunde", "Kollega", "Mor", "Far", "Lærer"], rsnList: ["Forsinket", "Syg", "Deadline overskredet", "Aflysning", "Nødsituation", "Bilproblemer"], styList: ["Professionel", "Kreativ", "Slang", "Dramatisk", "Formel", "Afslappet", "Undskyldende"] },
+        'fi': { sub: "DIGITAALINEN DIPLOMAATTI", tagline: "Diplomaateillakin on huonoja päiviä.<br>Minä pidän huolen, ettei sinulla ole.", verb: "LUO!", fmt: "Muoto", tgt: "Vastaanottaja", rsn: "Syy", sty: "Tyyli", ph: "Valitse tai kirjoita...", res: "Luonnokset:", copy: "Kopioi", share: "Jaa", vipTitle: "👑 AVAA KAIKKI", b1: "Ei maksuja", b2: "Elinikäinen", b3: "Päivitykset", b4: "Turvallinen", vMain: "HANKI PÄÄSY", lockT: "🔒 AVAA PÄÄSY", lockX: "Käytit 3 ilmaista yritystä!", haveKey: "Minulla on avain", keyT: "🔑 SYÖTÄ AVAIN", keyD: "Liitä lisenssiavain.", keyB: "AKTIVOI", succT: "🎉 PÄÄSY MYÖNNETTY", succD: "Lisenssi aktiivinen!", succB: "ALOITA", privacy: "Emme kerää tietoja.", fmtList: ["SMS / WhatsApp", "Sähköposti", "Puhelukäsikirjoitus", "Slack / Teams"], recList: ["Pomo", "Kumppani", "Vaimo", "Mies", "Anoppi", "Appi", "Asiakas", "Kollega", "Äiti", "Isä", "Opettaja"], rsnList: ["Myöhässä", "Sairas", "Määräaika", "Peruutus", "Hätätilanne", "Auto-ongelma"], styList: ["Ammattimainen", "Luova", "Slangi", "Dramaattinen", "Virallinen", "Rento", "Anteeksipyytelevä"] },
+        'el': { sub: "ΨΗΦΙΑΚΟΣ ΔΙΠΛΩΜΑΤΗΣ", tagline: "Ακόμα και οι διπλωμάτες έχουν κακές μέρες.<br>Φροντίζω να μην έχετε.", verb: "ΔΗΜΙΟΥΡΓΙΑ!", fmt: "Μορφή", tgt: "Παραλήπτης", rsn: "Αιτία", sty: "Ύφος", ph: "Επιλέξτε/γράψτε...", res: "Προσχέδια:", copy: "Αντιγραφή", share: "Κοινοποίηση", vipTitle: "👑 ΞΕΚΛΕΙΔΩΜΑ", b1: "Χωρίς χρεώσεις", b2: "Εφ' όρου ζωής", b3: "Ενημερώσεις", b4: "Ασφαλής", vMain: "ΑΠΟΚΤΗΣΤΕ ΠΡΟΣΒΑΣΗ", lockT: "🔒 ΞΕΚΛΕΙΔΩΜΑ", lockX: "Χρησιμοποιήσατε 3 δωρεάν προσπάθειες!", haveKey: "Έχω κλειδί", keyT: "🔑 ΕΙΣΑΓΩΓΗ ΚΛΕΙΔΙΟΥ", keyD: "Επικολλήστε το κλειδί.", keyB: "ΕΝΕΡΓΟΠΟΙΗΣΗ", succT: "🎉 ΠΡΟΣΒΑΣΗ ΕΠΙΤΡΑΠΗΚΕ", succD: "Άδεια ενεργή!", succB: "ΕΝΑΡΞΗ", privacy: "Δεν συλλέγουμε δεδομένα.", fmtList: ["SMS / WhatsApp", "Email", "Σενάριο Κλήσης", "Slack / Teams"], recList: ["Αφεντικό", "Σύντροφος", "Σύζυγος", "Σύζυγος (Α)", "Πεθερά", "Πεθερός", "Πελάτης", "Συνάδελφος", "Μαμά", "Μπαμπάς", "Δάσκαλος"], rsnList: ["Αργοπορημένος", "Άρρωστος", "Προθεσμία", "Ακύρωση", "Επείγον", "Πρόβλημα αυτοκινήτου"], styList: ["Επαγγελματικό", "Δημιουργικό", "Αργκό", "Δραματικό", "Επίσημο", "Χαλαρό", "Απολογητικό"] },
+        'ro': { sub: "DIPLOMAT DIGITAL", tagline: "Chiar și diplomații au zile proaste.<br>Eu mă asigur că tu nu vei avea.", verb: "GENEREAZĂ!", fmt: "Format", tgt: "Destinatar", rsn: "Motiv", sty: "Stil", ph: "Alege sau scrie...", res: "Ciorne:", copy: "Copiază", share: "Distribuie", vipTitle: "👑 DEBLOCARE TOTALĂ", b1: "Fără taxe", b2: "Acces pe viață", b3: "Actualizări", b4: "Plată sigură", vMain: "OBȚINE ACCES", lockT: "🔒 DEBLOCARE", lockX: "Ai folosit 3 încercări gratuite!", haveKey: "Am o cheie", keyT: "🔑 INTRODUCE CHEIA", keyD: "Lipește cheia.", keyB: "ACTIVEAZĂ", succT: "🎉 ACCES PERMIS", succD: "Licență activă!", succB: "ÎNCEPE", privacy: "Nu colectăm date.", fmtList: ["SMS / WhatsApp", "Email", "Scenariu Apel", "Slack / Teams"], recList: ["Șef", "Partener", "Soție", "Soț", "Soacră", "Socru", "Client", "Coleg", "Mama", "Tata", "Profesor"], rsnList: ["Întârziere", "Bolnav", "Termen limită", "Anulare", "Urgență", "Problemă auto"], styList: ["Profesional", "Creativ", "Argou", "Dramatic", "Formal", "Lejer", "Scuze"] },
+        'default': { sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days.<br>I make sure you don't.", verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vipTitle: "👑 UNLOCK FULL POTENTIAL", b1: "No Monthly Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment", vMain: "GET LIFETIME ACCESS", lockT: "🔒 UNLOCK FULL ACCESS", lockX: "You've used your 3 free drafts! Get a Lifetime License.", haveKey: "I already have a key", keyT: "🔑 ENTER KEY", keyD: "Paste the license key.", keyB: "ACTIVATE", succT: "🎉 ACCESS GRANTED", succD: "License active! Generate unlimited drafts.", succB: "START USING", privacy: "We do not collect any personal data.", fmtList: ["SMS / WhatsApp", "Email", "Phone Call Script", "Slack / Teams"], recList: ["Boss", "Partner", "Wife", "Husband", "Mother-in-law", "Father-in-law", "Client", "Colleague", "Mom", "Dad", "Teacher"], rsnList: ["Running Late", "Feeling Sick", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"], styList: ["Professional", "Creative / Funny", "Slang / Street", "Dramatic", "Strictly Formal", "Casual", "Apologetic"] }
     };
 
     function getTexts(lang) { 
         return translations[lang] || translations['default']; 
     }
 
-    // PŘEKLAD OBSAHU V POLÍČKÁCH "ZA LETU" PŘI ZMĚNĚ JAZYKA
+    // PŘEKLAD OBSAHU V POLÍČKÁCH "ZA LETU" BEZPEČNĚ (Try-Catch)
     function translateField(id, oldList, newList) {
-        const input = document.getElementById(id);
-        if (!input.value) return;
-        const index = oldList.indexOf(input.value);
-        if (index !== -1 && newList[index]) {
-            input.value = newList[index];
-        }
+        try {
+            const input = document.getElementById(id);
+            if (!input.value || !oldList || !newList) return;
+            const index = oldList.indexOf(input.value);
+            if (index !== -1 && newList[index]) {
+                input.value = newList[index];
+            }
+        } catch (e) { console.warn("Translation skip for:", id); }
     }
 
     // --- CHYTRÁ LOGIKA PRO NAŠEptávače (Kontext) ---
     function getContextualReasons(t, adresatValue) {
-        if (!adresatValue) return t.rsnList;
-        // Zjistíme, jestli uživatel napsal/vybral pracovní nebo osobní kontakt
+        if (!adresatValue || !t.recList || !t.rsnList) return t.rsnList || [];
         let idx = t.recList.findIndex(r => r.toLowerCase() === adresatValue.toLowerCase());
         if (idx === -1) return t.rsnList; 
 
         // Indexy z recList: 0=Boss, 6=Client, 7=Colleague, 10=Teacher (pracovní)
         const workIndices = [0, 6, 7, 10];
         
-        // Seřadíme důvody podle toho, na koho cílí (funguje napříč všemi jazyky díky indexům v rsnList)
         // 0=Late, 1=Sick, 2=Deadline, 3=Cancel, 4=Emergency, 5=Car
         let workReasonsOrder = [2, 1, 0, 5, 4, 3]; 
         let personalReasonsOrder = [3, 4, 0, 5, 1, 2]; 
@@ -348,7 +386,6 @@
         let order = workIndices.includes(idx) ? workReasonsOrder : personalReasonsOrder;
         
         let contextualList = order.map(i => t.rsnList[i]).filter(Boolean);
-        // Doplníme případné chybějící prvky
         t.rsnList.forEach(item => { if(!contextualList.includes(item)) contextualList.push(item); });
         
         return contextualList;
@@ -356,8 +393,9 @@
 
     // --- UI FUNKCE ---
     function toggleReset(inputId) {
-        if (inputId === 'format') return; // U formátu reset nedáváme, je povinný a read-only
+        if (inputId === 'format') return; 
         const input = document.getElementById(inputId);
+        if(!input) return;
         const wrapper = input.parentElement;
         const btn = wrapper.querySelector('.reset-btn');
         const arrow = wrapper.querySelector('.dropdown-arrow');
@@ -380,14 +418,15 @@
         const list = document.getElementById('drop-' + id);
         const input = document.getElementById(id);
         
-        const lang = document.getElementById('lang-select').value;
-        const t = getTexts(lang);
+        const t = getTexts(currentLang);
         let items = [];
 
         if (id === 'format') items = t.fmtList;
         if (id === 'adresat') items = t.recList;
         if (id === 'kategorie') items = getContextualReasons(t, document.getElementById('adresat').value);
         if (id === 'styl') items = t.styList;
+
+        if(!items || items.length === 0) return;
 
         const filter = (id === 'format') ? "" : input.value.toLowerCase();
         const filteredItems = items.filter(item => item.toLowerCase().includes(filter));
@@ -398,13 +437,13 @@
                 const div = document.createElement('div');
                 div.className = 'dropdown-item'; 
                 div.innerText = item;
-                div.onmousedown = (e) => { e.preventDefault(); } // Zabrání ztrátě focusu před clickem
+                div.onmousedown = (e) => { e.preventDefault(); }
                 div.onclick = function(e) {
                     e.stopPropagation();
                     input.value = item; 
                     toggleReset(id); 
                     closeAllDropdowns();
-                    // Chytrý skok na další pole (vyjma formátu, ten se většinou zadá jen jednou)
+                    // Chytrý skok na další pole
                     if (id === 'adresat') setTimeout(() => document.getElementById('kategorie').focus(), 50);
                     if (id === 'kategorie') setTimeout(() => document.getElementById('styl').focus(), 50);
                 };
@@ -432,7 +471,7 @@
     }
 
     function closeAllDropdowns() {
-        document.querySelectorAll('.custom-dropdown-list').forEach(l => l.style.display = 'none');
+        document.querySelectorAll('.custom-dropdown-list, .lang-grid-dropdown').forEach(l => l.style.display = 'none');
         document.querySelectorAll('.smart-input').forEach(i => {
             i.style.borderBottomLeftRadius = '12px';
             i.style.borderBottomRightRadius = '12px';
@@ -441,29 +480,57 @@
     }
 
     document.addEventListener('click', function(e) {
-        if (!e.target.closest('.smart-input-wrapper')) { closeAllDropdowns(); }
+        if (!e.target.closest('.smart-input-wrapper') && !e.target.closest('.lang-wrapper')) { closeAllDropdowns(); }
     });
 
-    function changeLanguage() {
-        const lang = document.getElementById('lang-select').value;
-        const oldLang = localStorage.getItem('yesGeniusLang') || 'en-US';
-        localStorage.setItem('yesGeniusLang', lang);
+    // --- LOGIKA VLAJEK ---
+    function toggleLangDropdown(event) {
+        if(event) { event.stopPropagation(); event.preventDefault(); }
+        const list = document.getElementById('lang-grid');
+        closeAllDropdowns();
+        if (list.style.display !== 'grid') { list.style.display = 'grid'; }
+    }
+
+    function initFlags() {
+        const grid = document.getElementById('lang-grid');
+        grid.innerHTML = '';
+        appLanguages.forEach(lang => {
+            const btn = document.createElement('div');
+            btn.className = 'lang-grid-item';
+            btn.innerText = lang.flag;
+            btn.title = lang.code; 
+            btn.onclick = (e) => {
+                e.stopPropagation();
+                setLanguage(lang.code, lang.flag);
+                document.getElementById('lang-grid').style.display = 'none';
+            };
+            grid.appendChild(btn);
+        });
+    }
+
+    function setLanguage(newLangCode, flagEmoji) {
+        const oldLang = currentLang;
+        currentLang = newLangCode;
+        localStorage.setItem('yesGeniusLang', currentLang);
         
-        const t = getTexts(lang);
+        document.getElementById('current-flag').innerText = flagEmoji;
+        
+        const t = getTexts(currentLang);
         const oldT = getTexts(oldLang);
 
-        // PŘEKLAD ZADANÉHO OBSAHU V POLÍČKÁCH
+        // PŘEKLAD POLÍČEK
         translateField('format', oldT.fmtList, t.fmtList);
         translateField('adresat', oldT.recList, t.recList);
         translateField('kategorie', oldT.rsnList, t.rsnList);
         translateField('styl', oldT.styList, t.styList);
         
-        // Pokud pole formát zůstalo prázdné (což by nemělo), vložíme default
-        if(!document.getElementById('format').value) {
+        if(!document.getElementById('format').value && t.fmtList) {
             document.getElementById('format').value = t.fmtList[0];
         }
 
+        // TEXTY UI
         document.getElementById('ui-subtitle').innerText = t.sub;
+        document.getElementById('ui-tagline').innerHTML = t.tagline; // kvuli <br>
         document.getElementById('lbl-format').innerText = t.fmt;
         document.getElementById('lbl-target').innerText = t.tgt;
         document.getElementById('lbl-reason').innerText = t.rsn;
@@ -477,7 +544,6 @@
         document.getElementById('b4').innerText = t.b4;
         document.getElementById('vip-btn-main').innerText = t.vMain;
         
-        // Modaly a Paywall
         document.getElementById('ui-locked-title').innerText = t.lockT;
         document.getElementById('ui-locked-text').innerText = t.lockX;
         document.getElementById('paywall-btn-main').innerText = t.vMain + " ($9.99)";
@@ -503,8 +569,7 @@
     }
 
     function updateButtonStatus() {
-        const lang = document.getElementById('lang-select').value;
-        const t = getTexts(lang);
+        const t = getTexts(currentLang);
         let zbyva = 3 - freeTries;
         
         if (userLicense) {
@@ -534,15 +599,14 @@
         const loader = document.getElementById('loader');
         const results = document.getElementById('vysledek');
         
-        const langCode = document.getElementById('lang-select').value;
-        const langName = document.querySelector(`#lang-select option[value="${langCode}"]`).text; // Odesílá se plný název jazyka z rolovátka
+        const langObj = appLanguages.find(l => l.code === currentLang) || appLanguages[0];
 
         const requestData = {
             format: document.getElementById('format').value,
             adresat: document.getElementById('adresat').value,
             kategorie: document.getElementById('kategorie').value, 
             styl: document.getElementById('styl').value,
-            jazyk: langName
+            jazyk: langObj.name // Opravené API mapování
         };
 
         if(!requestData.adresat || !requestData.kategorie) { 
@@ -570,7 +634,6 @@
 
         } catch (error) {
             console.error("GEN ERROR:", error); 
-            // Vrať pokus při chybě spojení
             if(!userLicense) { freeTries--; localStorage.setItem('yes_genius_free_tries', freeTries.toString()); updateButtonStatus(); }
             alert("Connection Error. Please try again.");
         } finally {
@@ -580,8 +643,7 @@
 
     function zobrazitVysledky(data) {
         const container = document.getElementById('variants-container');
-        const lang = document.getElementById('lang-select').value;
-        const t = getTexts(lang);
+        const t = getTexts(currentLang);
         container.innerHTML = '';
         
         data.forEach(text => {
@@ -607,7 +669,7 @@
     }
 
     function sdilet(text) {
-        if (navigator.share) navigator.share({ title: 'YES Genius', text: text }); else kopirovat(this, text);
+        if (navigator.share) navigator.share({ title: 'YES Genius', text: text }); else kopirovat(document.createElement('button'), text);
     }
 
     function koupit() { window.location.href = PAYMENT_LINK; }
@@ -630,15 +692,17 @@
 
     window.onload = function() {
         const savedLang = localStorage.getItem('yesGeniusLang');
-        if (savedLang) { document.getElementById('lang-select').value = savedLang; }
+        if (savedLang) { currentLang = savedLang; }
+        
+        initFlags();
         
         // Inicializace formátu
-        const t = getTexts(document.getElementById('lang-select').value);
+        const t = getTexts(currentLang);
         document.getElementById('format').value = t.fmtList[0];
         
-        changeLanguage(); 
+        const startLang = appLanguages.find(l => l.code === currentLang) || appLanguages[0];
+        setLanguage(currentLang, startLang.flag); 
     }
 </script>
-
 </body>
 </html>
