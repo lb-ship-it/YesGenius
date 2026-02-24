@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>YES Genius v4.3 | Digital Diplomat</title>
+    <title>YES Genius v4.4 | Digital Diplomat</title>
     
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#d4af37">
@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v4.3 (Flag Edition + Thin Tagline) --- */
+        /* --- CSS: YES GENIUS v4.4 (Ultimate Flag Edition) --- */
         :root {
             --bg-black: #050505;
             --card-bg: rgba(18, 18, 18, 0.75);
@@ -54,7 +54,7 @@
         h1 { font-size: 1.8rem; font-weight: 900; margin: 0; line-height: 0.95; letter-spacing: -0.5px; background: linear-gradient(to right, #fff 20%, var(--gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; }
         .subtitle { color: var(--gold); font-size: 0.75rem; margin-top: 5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
         
-        /* NOVÝ LUXUSNÍ TAGLINE */
+        /* LUXUSNÍ TAGLINE */
         .tagline {
             color: #ffffff;
             font-weight: 300;
@@ -65,17 +65,32 @@
             letter-spacing: 0.3px;
         }
 
-        /* CUSTOM VLAJKY (LANGUAGE SELECTOR) */
+        /* CUSTOM VLAJKY (Obrázkové zajištění) */
         .lang-wrapper { position: relative; flex: 0 0 auto; display: flex; justify-content: flex-end; align-items: flex-start; }
         .lang-flag-btn {
             background: rgba(15,15,15,0.8); border: 1px solid var(--glass-border);
             width: 44px; height: 44px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            font-size: 1.5rem; cursor: pointer; backdrop-filter: blur(5px);
+            cursor: pointer; backdrop-filter: blur(5px);
             transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             user-select: none;
         }
         .lang-flag-btn:hover { border-color: var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
+        
+        /* OBRÁZKOVÉ VLAJKY CSS */
+        .flag-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            object-fit: cover;
+            pointer-events: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .lang-flag-btn .flag-icon {
+            width: 28px;
+            height: 28px;
+        }
+
         .lang-grid-dropdown {
             position: absolute; top: calc(100% + 10px); right: 0;
             background: rgba(10,10,10,0.95); border: 1px solid var(--gold);
@@ -87,7 +102,7 @@
         .lang-grid-item {
             width: 38px; height: 38px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            font-size: 1.5rem; cursor: pointer; transition: 0.2s;
+            cursor: pointer; transition: 0.2s;
             background: rgba(255,255,255,0.03); user-select: none;
             border: 1px solid transparent;
         }
@@ -95,9 +110,11 @@
         
         @media (max-width: 480px) { 
             h1 { font-size: 1.45rem; } 
-            .lang-flag-btn { width: 38px; height: 38px; font-size: 1.2rem; }
+            .lang-flag-btn { width: 38px; height: 38px; }
+            .lang-flag-btn .flag-icon { width: 24px; height: 24px; }
             .lang-grid-dropdown { grid-template-columns: repeat(4, 1fr); right: -10px; padding: 12px; gap: 8px; }
-            .lang-grid-item { width: 34px; height: 34px; font-size: 1.3rem; }
+            .lang-grid-item { width: 34px; height: 34px; }
+            .flag-icon { width: 20px; height: 20px; }
         }
 
         /* FORM CARD */
@@ -175,13 +192,13 @@
             <div id="ui-tagline" class="tagline">Even diplomats have bad days.<br>I make sure you don't.</div>
         </div>
         
-        <!-- Vlajkový výběr jazyka -->
+        <!-- Vlajkový výběr jazyka (Nyní s obrázky) -->
         <div class="lang-wrapper">
             <div class="lang-flag-btn" onclick="toggleLangDropdown(event)">
-                <span id="current-flag">🇺🇸</span>
+                <span id="current-flag"><img src="https://flagcdn.com/w40/us.png" class="flag-icon" alt="en-US"></span>
             </div>
             <div class="lang-grid-dropdown" id="lang-grid">
-                <!-- Javascript sem vloží kulaté vlajky -->
+                <!-- Javascript sem vloží kulaté obrázkové vlajky -->
             </div>
         </div>
     </header>
@@ -311,24 +328,24 @@
     let userLicense = localStorage.getItem('yes_genius_license_v1');
     let freeTries = parseInt(localStorage.getItem('yes_genius_free_tries') || '0');
 
-    // NASTAVENÍ VLAJEK PRO 24 JAZYKŮ vč. jména pro AI backend
+    // NASTAVENÍ VLAJEK PRO 24 JAZYKŮ vč. ISO kódů pro CDN obrázky
     const appLanguages = [
-        { code: 'en-US', flag: '🇺🇸', name: 'American English' }, { code: 'en-GB', flag: '🇬🇧', name: 'British English' }, { code: 'cs', flag: '🇨🇿', name: 'Czech' },
-        { code: 'de', flag: '🇩🇪', name: 'German' }, { code: 'uk', flag: '🇺🇦', name: 'Ukrainian' }, { code: 'es', flag: '🇪🇸', name: 'Spanish' },
-        { code: 'fr', flag: '🇫🇷', name: 'French' }, { code: 'it', flag: '🇮🇹', name: 'Italian' }, { code: 'pt', flag: '🇵🇹', name: 'Portuguese' },
-        { code: 'pl', flag: '🇵🇱', name: 'Polish' }, { code: 'nl', flag: '🇳🇱', name: 'Dutch' }, { code: 'ru', flag: '🇷🇺', name: 'Russian' },
-        { code: 'tr', flag: '🇹🇷', name: 'Turkish' }, { code: 'ar', flag: '🇸🇦', name: 'Arabic' }, { code: 'zh', flag: '🇨🇳', name: 'Chinese' },
-        { code: 'ja', flag: '🇯🇵', name: 'Japanese' }, { code: 'ko', flag: '🇰🇷', name: 'Korean' }, { code: 'hi', flag: '🇮🇳', name: 'Hindi' },
-        { code: 'sv', flag: '🇸🇪', name: 'Swedish' }, { code: 'no', flag: '🇳🇴', name: 'Norwegian' }, { code: 'da', flag: '🇩🇰', name: 'Danish' },
-        { code: 'fi', flag: '🇫🇮', name: 'Finnish' }, { code: 'el', flag: '🇬🇷', name: 'Greek' }, { code: 'ro', flag: '🇷🇴', name: 'Romanian' }
+        { code: 'en-US', iso: 'us', name: 'American English' }, { code: 'en-GB', iso: 'gb', name: 'British English' }, { code: 'cs', iso: 'cz', name: 'Czech' },
+        { code: 'de', iso: 'de', name: 'German' }, { code: 'uk', iso: 'ua', name: 'Ukrainian' }, { code: 'es', iso: 'es', name: 'Spanish' },
+        { code: 'fr', iso: 'fr', name: 'French' }, { code: 'it', iso: 'it', name: 'Italian' }, { code: 'pt', iso: 'pt', name: 'Portuguese' },
+        { code: 'pl', iso: 'pl', name: 'Polish' }, { code: 'nl', iso: 'nl', name: 'Dutch' }, { code: 'ru', iso: 'ru', name: 'Russian' },
+        { code: 'tr', iso: 'tr', name: 'Turkish' }, { code: 'ar', iso: 'sa', name: 'Arabic' }, { code: 'zh', iso: 'cn', name: 'Chinese' },
+        { code: 'ja', iso: 'jp', name: 'Japanese' }, { code: 'ko', iso: 'kr', name: 'Korean' }, { code: 'hi', iso: 'in', name: 'Hindi' },
+        { code: 'sv', iso: 'se', name: 'Swedish' }, { code: 'no', iso: 'no', name: 'Norwegian' }, { code: 'da', iso: 'dk', name: 'Danish' },
+        { code: 'fi', iso: 'fi', name: 'Finnish' }, { code: 'el', iso: 'gr', name: 'Greek' }, { code: 'ro', iso: 'ro', name: 'Romanian' }
     ];
 
     let currentLang = localStorage.getItem('yesGeniusLang') || 'en-US';
 
     // KOMPLETNÍ DATABÁZE PŘEKLADŮ
     const translations = {
-        'en-US': { sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days.<br>I make sure you don't.", verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vipTitle: "👑 UNLOCK FULL POTENTIAL", b1: "No Monthly Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment", vMain: "GET LIFETIME ACCESS", lockT: "🔒 UNLOCK FULL ACCESS", lockX: "You've used your 3 free drafts! Get a Lifetime License.", haveKey: "I already have a key", keyT: "🔑 ENTER KEY", keyD: "Paste the license key.", keyB: "ACTIVATE", succT: "🎉 ACCESS GRANTED", succD: "License active!", succB: "START USING", privacy: "We do not collect any personal data.", fmtList: ["SMS / WhatsApp", "Email", "Phone Call Script", "Slack / Teams"], recList: ["Boss", "Partner", "Wife", "Husband", "Mother-in-law", "Father-in-law", "Client", "Colleague", "Mom", "Dad", "Teacher"], rsnList: ["Running Late", "Feeling Sick", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"], styList: ["Professional", "Creative / Funny", "Slang / Street", "Dramatic", "Strictly Formal", "Casual", "Apologetic"] },
-        'en-GB': { sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days.<br>I make sure you don't.", verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vipTitle: "👑 UNLOCK FULL POTENTIAL", b1: "No Monthly Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment", vMain: "GET LIFETIME ACCESS", lockT: "🔒 UNLOCK FULL ACCESS", lockX: "You've used your 3 free drafts! Get a Lifetime License.", haveKey: "I already have a key", keyT: "🔑 ENTER KEY", keyD: "Paste the license key.", keyB: "ACTIVATE", succT: "🎉 ACCESS GRANTED", succD: "License active!", succB: "START USING", privacy: "We do not collect any personal data.", fmtList: ["SMS / WhatsApp", "Email", "Phone Call Script", "Slack / Teams"], recList: ["Boss", "Partner", "Wife", "Husband", "Mother-in-law", "Father-in-law", "Client", "Colleague", "Mum", "Dad", "Tutor"], rsnList: ["Running Late", "Feeling Unwell", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"], styList: ["Professional", "Creative / Witty", "Slang / Roadman", "Dramatic", "Strictly Formal", "Casual", "Apologetic"] },
+        'en-US': { sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days.<br>I make sure you don't.", verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vipTitle: "👑 UNLOCK FULL POTENTIAL", b1: "No Monthly Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment", vMain: "GET LIFETIME ACCESS", lockT: "🔒 UNLOCK FULL ACCESS", lockX: "You've used your 3 free drafts! Get a Lifetime License.", haveKey: "I already have a key", keyT: "🔑 ENTER KEY", keyD: "Paste the license key.", keyB: "ACTIVATE", succT: "🎉 ACCESS GRANTED", succD: "License active! Generate unlimited drafts.", succB: "START USING", privacy: "We do not collect any personal data.", fmtList: ["SMS / WhatsApp", "Email", "Phone Call Script", "Slack / Teams"], recList: ["Boss", "Partner", "Wife", "Husband", "Mother-in-law", "Father-in-law", "Client", "Colleague", "Mom", "Dad", "Teacher"], rsnList: ["Running Late", "Feeling Sick", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"], styList: ["Professional", "Creative / Funny", "Slang / Street", "Dramatic", "Strictly Formal", "Casual", "Apologetic"] },
+        'en-GB': { sub: "DIGITAL DIPLOMAT", tagline: "Even diplomats have bad days.<br>I make sure you don't.", verb: "GENERATE!", fmt: "Format", tgt: "Recipient", rsn: "Reason", sty: "Style", ph: "Select or type...", res: "Your Drafts:", copy: "Copy", share: "Share", vipTitle: "👑 UNLOCK FULL POTENTIAL", b1: "No Monthly Fees", b2: "Lifetime Access", b3: "Free Updates", b4: "Secure Payment", vMain: "GET LIFETIME ACCESS", lockT: "🔒 UNLOCK FULL ACCESS", lockX: "You've used your 3 free drafts! Get a Lifetime License.", haveKey: "I already have a key", keyT: "🔑 ENTER KEY", keyD: "Paste the license key.", keyB: "ACTIVATE", succT: "🎉 ACCESS GRANTED", succD: "License active! Generate unlimited drafts.", succB: "START USING", privacy: "We do not collect any personal data.", fmtList: ["SMS / WhatsApp", "Email", "Phone Call Script", "Slack / Teams"], recList: ["Boss", "Partner", "Wife", "Husband", "Mother-in-law", "Father-in-law", "Client", "Colleague", "Mum", "Dad", "Tutor"], rsnList: ["Running Late", "Feeling Unwell", "Missed Deadline", "Canceling Plans", "Family Emergency", "Car Trouble"], styList: ["Professional", "Creative / Witty", "Slang / Roadman", "Dramatic", "Strictly Formal", "Casual", "Apologetic"] },
         'cs': { sub: "DIGITÁLNÍ DIPLOMAT", tagline: "I diplomaté mají špatné dny.<br>Já dohlédnu, abyste je neměli.", verb: "GENERUJ!", fmt: "Formát", tgt: "Adresát", rsn: "Důvod", sty: "Styl", ph: "Vyber nebo napiš...", res: "Tvé návrhy:", copy: "Kopírovat", share: "Sdílet", vipTitle: "👑 ODEMKNI PLNÝ POTENCIÁL", b1: "Žádné poplatky", b2: "Doživotní přístup", b3: "Aktualizace", b4: "Bezpečná platba", vMain: "ZÍSKAT PŘÍSTUP", lockT: "🔒 ODEMKNI PŘÍSTUP", lockX: "Využil jsi 3 návrhy zdarma! Pořiď si licenci.", haveKey: "Už mám klíč", keyT: "🔑 ZADEJ KLÍČ", keyD: "Vlož licenční klíč.", keyB: "AKTIVOVAT", succT: "🎉 PŘÍSTUP POVOLEN", succD: "Licence aktivní!", succB: "ZAČÍT POUŽÍVAT", privacy: "Nesbíráme žádné osobní údaje.", fmtList: ["SMS / WhatsApp", "E-mail", "Scénář telefonátu", "Slack / Teams"], recList: ["Šéf", "Partner", "Manželka", "Manžel", "Tchyně", "Tchán", "Klient", "Kolega", "Máma", "Táta", "Učitel"], rsnList: ["Jdu pozdě", "Jsem nemocný/á", "Nestíhám termín", "Ruším plány", "Rodinné důvody", "Porucha auta"], styList: ["Profesionální", "Kreativní / Vtipný", "Slang / Hovorový", "Dramatický", "Formální", "Neformální", "Omluvný"] },
         'de': { sub: "DIGITALER DIPLOMAT", tagline: "Auch Diplomaten haben schlechte Tage.<br>Ich sorge dafür, dass Sie keine haben.", verb: "GENERIEREN!", fmt: "Format", tgt: "Empfänger", rsn: "Grund", sty: "Stil", ph: "Wählen oder tippen...", res: "Entwürfe:", copy: "Kopieren", share: "Teilen", vipTitle: "👑 POTENZIAL FREISCHALTEN", b1: "Keine Gebühren", b2: "Lebenslang", b3: "Updates", b4: "Sichere Zahlung", vMain: "ZUGANG ERHALTEN", lockT: "🔒 ZUGANG FREISCHALTEN", lockX: "3 kostenlose Versuche aufgebraucht!", haveKey: "Ich habe einen Schlüssel", keyT: "🔑 SCHLÜSSEL EINGEBEN", keyD: "Lizenzschlüssel einfügen.", keyB: "AKTIVIEREN", succT: "🎉 ZUGANG GEWÄHRT", succD: "Lizenz aktiv!", succB: "STARTEN", privacy: "Wir sammeln keine Daten.", fmtList: ["SMS / WhatsApp", "E-Mail", "Telefonskript", "Slack / Teams"], recList: ["Chef", "Partner", "Ehefrau", "Ehemann", "Schwiegermutter", "Schwiegervater", "Kunde", "Kollege", "Mama", "Papa", "Lehrer"], rsnList: ["Verspätung", "Krankheit", "Deadline verpasst", "Absage", "Notfall", "Autopanne"], styList: ["Professionell", "Kreativ", "Slang", "Dramatisch", "Formell", "Locker", "Entschuldigend"] },
         'uk': { sub: "ЦИФРОВИЙ ДИПЛОМАТ", tagline: "Навіть у дипломатів бувають погані дні.<br>Я зроблю так, щоб у вас їх не було.", verb: "СТВОРИТИ!", fmt: "Формат", tgt: "Отримувач", rsn: "Причина", sty: "Стиль", ph: "Оберіть або введіть...", res: "Чернетки:", copy: "Копіювати", share: "Поділитися", vipTitle: "👑 РОЗБЛОКУЙ ДОСТУП", b1: "Без оплат", b2: "Довічний", b3: "Оновлення", b4: "Безпечно", vMain: "ОТРИМАТИ ДОСТУП", lockT: "🔒 ОБМЕЖЕНО", lockX: "Використано 3 спроби!", haveKey: "Маю ключ", keyT: "🔑 ВВЕСТИ КЛЮЧ", keyD: "Вставте ключ.", keyB: "АКТИВУВАТИ", succT: "🎉 ДОСТУП ВІДКРИТО", succD: "Ліцензія активна!", succB: "ПОЧАТИ", privacy: "Ми не збираємо дані.", fmtList: ["SMS / Viber", "Email", "Сценарій дзвінка", "Slack / Teams"], recList: ["Бос", "Партнер", "Дружина", "Чоловік", "Теща/Свекруха", "Тесть/Свекор", "Клієнт", "Колега", "Мама", "Тато", "Вчитель"], rsnList: ["Запізнююся", "Хвороба", "Зрив дедлайну", "Скасування", "Сімейні обставини", "Проблема з авто"], styList: ["Професійний", "Креативний", "Сленг", "Драматичний", "Офіційний", "Неформальний", "Вибачальний"] },
@@ -483,7 +500,7 @@
         if (!e.target.closest('.smart-input-wrapper') && !e.target.closest('.lang-wrapper')) { closeAllDropdowns(); }
     });
 
-    // --- LOGIKA VLAJEK ---
+    // --- LOGIKA VLAJEK S OBRÁZKY (Oprava pro Windows) ---
     function toggleLangDropdown(event) {
         if(event) { event.stopPropagation(); event.preventDefault(); }
         const list = document.getElementById('lang-grid');
@@ -497,23 +514,27 @@
         appLanguages.forEach(lang => {
             const btn = document.createElement('div');
             btn.className = 'lang-grid-item';
-            btn.innerText = lang.flag;
-            btn.title = lang.code; 
+            btn.title = lang.name; 
+            
+            // Místo nespolehlivých textových emoji používáme vysoce kvalitní obrázky
+            btn.innerHTML = `<img src="https://flagcdn.com/w40/${lang.iso}.png" class="flag-icon" alt="${lang.code}">`;
+            
             btn.onclick = (e) => {
                 e.stopPropagation();
-                setLanguage(lang.code, lang.flag);
+                setLanguage(lang.code, lang.iso);
                 document.getElementById('lang-grid').style.display = 'none';
             };
             grid.appendChild(btn);
         });
     }
 
-    function setLanguage(newLangCode, flagEmoji) {
+    function setLanguage(newLangCode, isoCode) {
         const oldLang = currentLang;
         currentLang = newLangCode;
         localStorage.setItem('yesGeniusLang', currentLang);
         
-        document.getElementById('current-flag').innerText = flagEmoji;
+        // Změna hlavní vlajky v hlavičce
+        document.getElementById('current-flag').innerHTML = `<img src="https://flagcdn.com/w40/${isoCode}.png" class="flag-icon" alt="${newLangCode}">`;
         
         const t = getTexts(currentLang);
         const oldT = getTexts(oldLang);
@@ -694,14 +715,14 @@
         const savedLang = localStorage.getItem('yesGeniusLang');
         if (savedLang) { currentLang = savedLang; }
         
-        initFlags();
+        initFlags(); // ZDE SE NYNÍ VYKRESLUJÍ OBRÁZKY!
         
         // Inicializace formátu
         const t = getTexts(currentLang);
         document.getElementById('format').value = t.fmtList[0];
         
         const startLang = appLanguages.find(l => l.code === currentLang) || appLanguages[0];
-        setLanguage(currentLang, startLang.flag); 
+        setLanguage(currentLang, startLang.iso); 
     }
 </script>
 </body>
