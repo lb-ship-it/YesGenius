@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>YES Genius v5.2 | Digital Diplomat & Protector</title>
+    <title>YES Genius v5.5 | Digital Diplomat & Protector</title>
 
-    <link rel="icon" type="image/png" href="/favicon.png?v=2" />
-    <link rel="manifest" href="/manifest.json?v=2">
+    <link rel="icon" type="image/png" href="/favicon.png?v=8" />
+    <link rel="manifest" href="/manifest.json?v=8">
     <meta name="theme-color" content="#d4af37">
-    <link rel="apple-touch-icon" href="/favicon.png?v=2" />
+    <link rel="apple-touch-icon" href="/favicon.png?v=8" />
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v5.2 (Stalker Protection & History) --- */
+        /* --- CSS: YES GENIUS v5.5 (Stalker Protection & Extended History) --- */
         :root {
             --bg-black: #050505;
             --card-bg: rgba(18, 18, 18, 0.75);
@@ -98,19 +98,6 @@
             background: #000; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.6); 
         }
-        
-        .v-badge { 
-            position: absolute; 
-            bottom: -8px; 
-            right: -8px; 
-            background: var(--gold); 
-            color: #000; 
-            font-size: 0.6rem; 
-            font-weight: 900; 
-            padding: 2px 6px; 
-            border-radius: 10px; 
-            border: 2px solid #000; 
-        }
 
         .title-wrapper { 
             display: flex; 
@@ -160,7 +147,6 @@
             align-items: flex-end; 
         }
         
-        /* Tlačítko Historie */
         .btn-history-top {
             background: rgba(255,255,255,0.05); 
             border: 1px solid var(--glass-border);
@@ -184,7 +170,6 @@
             transform: scale(1.05); 
         }
 
-        /* Vlajky */
         .lang-wrapper { 
             position: relative; 
         }
@@ -195,7 +180,7 @@
             width: 44px; 
             height: 44px; 
             min-width: 44px; 
-            min-height: 44px;
+            min-height: 44px; 
             border-radius: 50%; 
             display: flex; 
             justify-content: center; 
@@ -205,8 +190,8 @@
             transition: 0.3s; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
             user-select: none; 
-            flex-shrink: 0;
-            overflow: hidden;
+            flex-shrink: 0; 
+            overflow: hidden; 
             padding: 0;
         }
         
@@ -777,7 +762,7 @@
     <header>
         <div class="header-left">
             <div class="logo-wrapper">
-                <img src="logo.jpg" alt="YES Genius Logo" class="logo-img">
+                <img src="logo.png" alt="YES Genius Logo" class="logo-img">
             </div>
             <div class="title-wrapper">
                 <h1>YES Genius</h1>
@@ -872,7 +857,10 @@
             <div class="modal-text" id="ui-locked-text">You've used your 3 free drafts! To continue using YES Genius, get a Lifetime License.</div>
             <button class="btn-vip-large" onclick="koupit()">
                 <span class="vip-btn-main-text" id="paywall-btn-main">GET LICENSE</span>
-                <span class="vip-btn-sub-text"><span class="price-strike">$22.00</span><span class="price-promo">PROMO: $9.99</span></span>
+                <span class="vip-btn-sub-text">
+                    <span class="price-strike">$22.00</span>
+                    <span class="price-promo">PROMO: $9.99</span>
+                </span>
             </button>
             <div style="margin-top: 20px; font-size: 0.8rem; color: #888; cursor: pointer; text-decoration: underline;" onclick="showKeyInput()" id="ui-have-key">I already have a key</div>
         </div>
@@ -911,20 +899,21 @@
         </div>
         <button class="btn-vip-large" onclick="koupit()">
             <span class="vip-btn-main-text" id="vip-btn-main">GET LIFETIME ACCESS</span>
-            <span class="vip-btn-sub-text"><span class="price-strike">$22.00</span><span class="price-promo">PROMO: $9.99</span></span>
+            <span class="vip-btn-sub-text">
+                <span class="price-strike">$22.00</span>
+                <span class="price-promo">PROMO: $9.99</span>
+            </span>
         </button>
-        <div class="privacy-note" id="privacy-note">We do not collect any personal data. History is stored locally. | v5.2</div>
+        <div class="privacy-note" id="privacy-note">We do not collect any personal data. History is stored locally. | v5.5</div>
     </footer>
 </div>
 
 <script>
-    // V5.2: NOVÝ PAYMENT LINK
     const PAYMENT_LINK = "https://buy.stripe.com/28E4gAgBL1KA29g1nka7C05"; 
     
     let userLicense = localStorage.getItem('yes_genius_license_v1');
     let freeTries = parseInt(localStorage.getItem('yes_genius_free_tries') || '0');
 
-    // 100% ROZBALENÝ ARRAY JAZYKŮ (Pro snadnou editaci jako v předchozí verzi)
     const appLanguages = [
         {
             code: 'en-US',
@@ -1050,7 +1039,6 @@
 
     let currentLang = localStorage.getItem('yesGeniusLang') || 'en-US';
 
-    // 100% ROZBALENÁ STRUKTURA PŘEKLADŮ VČETNĚ STALKERA A HISTORIE (Řádek po řádku, bez komprese!)
     const translations = {
         'en-US': {
             sub: "DIGITAL DIPLOMAT",
@@ -1064,6 +1052,7 @@
             res: "Your Drafts:",
             copy: "Copy",
             share: "Share",
+            del: "Delete",
             vipTitle: "UNLOCK FULL POTENTIAL",
             b1: "No Monthly Fees",
             b2: "Lifetime Access",
@@ -1139,6 +1128,7 @@
             res: "Your Drafts:",
             copy: "Copy",
             share: "Share",
+            del: "Delete",
             vipTitle: "UNLOCK FULL POTENTIAL",
             b1: "No Monthly Fees",
             b2: "Lifetime Access",
@@ -1214,6 +1204,7 @@
             res: "Tvé návrhy:",
             copy: "Kopírovat",
             share: "Sdílet",
+            del: "Smazat",
             vipTitle: "ODEMKNI PLNÝ POTENCIÁL",
             b1: "Žádné poplatky",
             b2: "Doživotní přístup",
@@ -1289,6 +1280,7 @@
             res: "Entwürfe:",
             copy: "Kopieren",
             share: "Teilen",
+            del: "Löschen",
             vipTitle: "POTENZIAL FREISCHALTEN",
             b1: "Keine Gebühren",
             b2: "Lebenslang",
@@ -1364,6 +1356,7 @@
             res: "Чернетки:",
             copy: "Копіювати",
             share: "Поділитися",
+            del: "Видалити",
             vipTitle: "РОЗБЛОКУЙ ДОСТУП",
             b1: "Без оплат",
             b2: "Довічний",
@@ -1439,6 +1432,7 @@
             res: "Borradores:",
             copy: "Copiar",
             share: "Compartir",
+            del: "Eliminar",
             vipTitle: "DESBLOQUEA TODO",
             b1: "Sin cuotas",
             b2: "De por vida",
@@ -1514,6 +1508,7 @@
             res: "Brouillons:",
             copy: "Copier",
             share: "Partager",
+            del: "Supprimer",
             vipTitle: "DÉBLOQUER TOUT",
             b1: "Sans frais",
             b2: "Accès à vie",
@@ -1589,6 +1584,7 @@
             res: "Bozze:",
             copy: "Copia",
             share: "Condividi",
+            del: "Elimina",
             vipTitle: "SBLOCCA IL POTENZIALE",
             b1: "Nessun canone",
             b2: "Accesso a vita",
@@ -1664,6 +1660,7 @@
             res: "Rascunhos:",
             copy: "Copiar",
             share: "Partilhar",
+            del: "Apagar",
             vipTitle: "DESBLOQUEAR TUDO",
             b1: "Sem mensalidade",
             b2: "Vitalício",
@@ -1739,6 +1736,7 @@
             res: "Szkice:",
             copy: "Kopiuj",
             share: "Udostępnij",
+            del: "Usuń",
             vipTitle: "ODBLOKUJ POTENCJAŁ",
             b1: "Bez opłat",
             b2: "Dożywotni",
@@ -1814,6 +1812,7 @@
             res: "Concepten:",
             copy: "Kopiëren",
             share: "Delen",
+            del: "Verwijderen",
             vipTitle: "ONTGRENDEL ALLES",
             b1: "Geen kosten",
             b2: "Levenslang",
@@ -1889,6 +1888,7 @@
             res: "Черновики:",
             copy: "Копировать",
             share: "Поделиться",
+            del: "Удалить",
             vipTitle: "РАЗБЛОКИРОВАТЬ ДОСТУП",
             b1: "Без подписки",
             b2: "Вечный доступ",
@@ -1964,6 +1964,7 @@
             res: "Taslaklar:",
             copy: "Kopyala",
             share: "Paylaş",
+            del: "Sil",
             vipTitle: "TAM ERİŞİM",
             b1: "Aylık ücret yok",
             b2: "Ömür boyu",
@@ -2039,6 +2040,7 @@
             res: "المسودات:",
             copy: "نسخ",
             share: "مشاركة",
+            del: "حذف",
             vipTitle: "فتح الإمكانات الكاملة",
             b1: "بلا رسوم",
             b2: "وصول مدى الحياة",
@@ -2114,6 +2116,7 @@
             res: "草稿：",
             copy: "复制",
             share: "分享",
+            del: "删除",
             vipTitle: "解锁全部功能",
             b1: "无月费",
             b2: "终身访问",
@@ -2189,6 +2192,7 @@
             res: "下書き：",
             copy: "コピー",
             share: "共有",
+            del: "削除",
             vipTitle: "フル機能を解除",
             b1: "月額なし",
             b2: "生涯アクセス",
@@ -2264,6 +2268,7 @@
             res: "초안:",
             copy: "복사",
             share: "공유",
+            del: "삭제",
             vipTitle: "잠금 해제",
             b1: "월비용 없음",
             b2: "평생 액세스",
@@ -2339,6 +2344,7 @@
             res: "मसौदे:",
             copy: "कॉपी",
             share: "साझा",
+            del: "मिटाएं",
             vipTitle: "पूर्ण अनलॉक करें",
             b1: "कोई शुल्क नहीं",
             b2: "आजीवन पहुंच",
@@ -2414,6 +2420,7 @@
             res: "Utkast:",
             copy: "Kopiera",
             share: "Dela",
+            del: "Radera",
             vipTitle: "LÅS UPP ALLT",
             b1: "Inga avgifter",
             b2: "Livstidsåtkomst",
@@ -2489,6 +2496,7 @@
             res: "Utkast:",
             copy: "Kopier",
             share: "Del",
+            del: "Slett",
             vipTitle: "LÅS OPP ALT",
             b1: "Ingen gebyrer",
             b2: "Livstidstilgang",
@@ -2564,6 +2572,7 @@
             res: "Kladder:",
             copy: "Kopier",
             share: "Del",
+            del: "Slet",
             vipTitle: "LÅS OP FOR ALT",
             b1: "Ingen gebyrer",
             b2: "Livstidsadgang",
@@ -2639,6 +2648,7 @@
             res: "Luonnokset:",
             copy: "Kopioi",
             share: "Jaa",
+            del: "Poista",
             vipTitle: "AVAA KAIKKI",
             b1: "Ei maksuja",
             b2: "Elinikäinen",
@@ -2714,6 +2724,7 @@
             res: "Προσχέδια:",
             copy: "Αντιγραφή",
             share: "Κοινοποίηση",
+            del: "Διαγραφή",
             vipTitle: "ΞΕΚΛΕΙΔΩΜΑ",
             b1: "Χωρίς χρεώσεις",
             b2: "Εφ' όρου ζωής",
@@ -2789,6 +2800,7 @@
             res: "Ciorne:",
             copy: "Copiază",
             share: "Distribuie",
+            del: "Șterge",
             vipTitle: "DEBLOCARE TOTALĂ",
             b1: "Fără taxe",
             b2: "Acces pe viață",
@@ -2864,6 +2876,7 @@
             res: "Your Drafts:",
             copy: "Copy",
             share: "Share",
+            del: "Delete",
             vipTitle: "UNLOCK FULL POTENTIAL",
             b1: "No Monthly Fees",
             b2: "Lifetime Access",
@@ -3186,7 +3199,7 @@
         document.getElementById('ui-success-text').innerText = t.succD; 
         document.getElementById('ui-success-btn').innerText = t.succB;
         
-        document.getElementById('privacy-note').innerText = t.privacy + " | v5.2";
+        document.getElementById('privacy-note').innerText = t.privacy + " | v5.5";
 
         document.querySelectorAll('.smart-input').forEach(inp => { 
             if(inp.id !== 'format') { 
@@ -3227,6 +3240,14 @@
         localStorage.setItem('yes_genius_history', JSON.stringify(hist));
     }
 
+    // Nová funkce pro mazání jednotlivých položek z historie
+    function deleteHistoryItem(index) {
+        let hist = JSON.parse(localStorage.getItem('yes_genius_history') || '[]');
+        hist.splice(index, 1);
+        localStorage.setItem('yes_genius_history', JSON.stringify(hist));
+        showHistory(); 
+    }
+
     function showHistory() {
         const modal = document.getElementById('history-modal');
         const container = document.getElementById('history-container');
@@ -3243,10 +3264,16 @@
                 const div = document.createElement('div');
                 div.className = 'hist-item';
                 const safeText = item.text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                
+                // Vloženy tlačítka Copy, Share a Delete
                 div.innerHTML = `
                     <div class="hist-meta"><span>${item.adresat} • ${item.styl}</span><span>${dateStr}</span></div>
                     <div class="hist-text">${item.text}</div>
-                    <button class="btn-action" style="width:100%; padding:8px;" onclick="kopirovat(this, '${safeText}')">📋 ${t.copy}</button>
+                    <div class="action-row" style="margin-top: 10px;">
+                        <button class="btn-action" style="padding:8px; font-size: 0.8rem;" onclick="kopirovat(this, '${safeText}')">📋 ${t.copy}</button>
+                        <button class="btn-action" style="padding:8px; font-size: 0.8rem;" onclick="sdilet('${safeText}')">🔗 ${t.share}</button>
+                        <button class="btn-action" style="padding:8px; font-size: 0.8rem; color: #ef4444; border-color: rgba(239, 68, 68, 0.2);" onclick="deleteHistoryItem(${index})">🗑️ ${t.del}</button>
+                    </div>
                 `;
                 container.appendChild(div);
             });
