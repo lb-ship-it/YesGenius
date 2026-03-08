@@ -3171,14 +3171,18 @@
         } 
     });
 
-    function toggleLangDropdown(event) {
+function toggleLangDropdown(event) {
         if(event) { 
             event.stopPropagation(); 
             event.preventDefault(); 
         }
         const list = document.getElementById('lang-grid');
-        closeAllDropdowns(); 
-        if (list.style.display !== 'grid') { 
+        const isOpen = list.style.display === 'grid'; // Zjistíme aktuální stav
+        
+        closeAllDropdowns(); // Zavře všechna okna
+        
+        // Otevře jen tehdy, pokud předtím nebylo otevřené
+        if (!isOpen) { 
             list.style.display = 'grid'; 
         }
     }
@@ -3519,5 +3523,6 @@
 </script>
 </body>
 </html>
+
 
 
