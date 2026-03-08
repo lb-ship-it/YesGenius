@@ -797,7 +797,7 @@
         <div class="input-group">
             <label id="lbl-format">Format</label>
             <div class="smart-input-wrapper">
-                <input type="text" id="format" class="smart-input" readonly style="cursor: pointer;" onclick="toggleDropdown('format', event)">
+                <input type="text" id="format" class="smart-input" readonly style="cursor: pointer;" onclick="smartInputClick('format', event)">
                 <button class="arrow-btn" onclick="toggleDropdown('format', event)"></button>
                 <div class="dropdown-arrow">▼</div>
                 <div id="drop-format" class="custom-dropdown-list"></div>
@@ -807,7 +807,7 @@
         <div class="input-group">
             <label id="lbl-target">Recipient</label>
             <div class="smart-input-wrapper">
-                <input type="text" id="adresat" class="smart-input" placeholder="Select or type..." autocomplete="off" oninput="filterDropdown('adresat')" onfocus="showDropdown('adresat')">
+                <input type="text" id="adresat" class="smart-input" placeholder="Select or type..." autocomplete="off" oninput="filterDropdown('adresat')" onclick="smartInputClick('adresat', event)">
                 <button class="arrow-btn" onclick="toggleDropdown('adresat', event)"></button>
                 <div class="dropdown-arrow">▼</div>
                 <button class="reset-btn" id="res-adresat" onclick="clearInput('adresat', event)">✕</button>
@@ -818,7 +818,7 @@
         <div class="input-group">
             <label id="lbl-reason">Reason</label>
             <div class="smart-input-wrapper">
-                <input type="text" id="kategorie" class="smart-input" placeholder="Select or type..." autocomplete="off" oninput="filterDropdown('kategorie')" onfocus="showDropdown('kategorie')">
+                <input type="text" id="kategorie" class="smart-input" placeholder="Select or type..." autocomplete="off" oninput="filterDropdown('kategorie')" onclick="smartInputClick('kategorie', event)">
                 <button class="arrow-btn" onclick="toggleDropdown('kategorie', event)"></button>
                 <div class="dropdown-arrow">▼</div>
                 <button class="reset-btn" id="res-kategorie" onclick="clearInput('kategorie', event)">✕</button>
@@ -829,7 +829,7 @@
         <div class="input-group">
             <label id="lbl-style">Style</label>
             <div class="smart-input-wrapper">
-                <input type="text" id="styl" class="smart-input" placeholder="Select or type..." autocomplete="off" oninput="filterDropdown('styl')" onfocus="showDropdown('styl')">
+                <input type="text" id="styl" class="smart-input" placeholder="Select or type..." autocomplete="off" oninput="filterDropdown('styl')" onclick="smartInputClick('styl', event)">
                 <button class="arrow-btn" onclick="toggleDropdown('styl', event)"></button>
                 <div class="dropdown-arrow">▼</div>
                 <button class="reset-btn" id="res-styl" onclick="clearInput('styl', event)">✕</button>
@@ -3566,6 +3566,7 @@ function toggleLangDropdown(event) {
 </script>
 </body>
 </html>
+
 
 
 
