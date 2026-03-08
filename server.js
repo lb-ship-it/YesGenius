@@ -1,13 +1,15 @@
 const stripe = process.env.STRIPE_SECRET_KEY ? require('stripe')(process.env.STRIPE_SECRET_KEY) : null;
 
 module.exports = async (req, res) => {
+    // Nastavení CORS hlaviček pro komunikaci s frontendem
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
+    // Ošetření pre-flight requestů
     if (req.method === 'OPTIONS') { res.status(204).end(); return; }
 
-    // 2. API GENEROVÁNÍ (AI Gemini)
+    // --- 1. API PRO GENEROVÁNÍ ZPRÁV (AI Gemini) ---
     if (req.url.includes('generovat') && req.method === 'POST') {
         let body = '';
         return new Promise((resolve) => {
@@ -16,10 +18,10 @@ module.exports = async (req, res) => {
                 try {
                     const { format, adresat, kategorie, styl, jazyk } = JSON.parse(body);
                     
-                    // ZMĚNA: Prompt je nyní v angličtině pro lepší univerzálnost
+                    // V5.2: Vylepšený prompt s kritickými instrukcemi pro asertivitu a Stalkera
                     const prompt = `
-                    Role: You are "Excuse Genius", a digital diplomat.
-                    Task: Generate 3 DISTINCT, believable, and slightly creative excuses/messages.
+                    Role: You are "YES Genius", a high-level digital diplomat and boundary setter.
+                    Task: Generate 3 DISTINCT, believable, and situation-appropriate messages.
                     
                     Context:
                     - Target Audience (Recipient): ${adresat}
@@ -27,13 +29,17 @@ module.exports = async (req, res) => {
                     - Tone/Style: ${styl}
                     - Format: ${format}
                     
+                    CRITICAL INSTRUCTION FOR "STALKER" OR ASSERTIVE TONES:
+                    If the recipient is a "Stalker", "Harasser", "Obsessive person" or the style requires a "Legal Warning", "Firm", "Assertive", or "Cold" tone: DO NOT apologize under any circumstances. Be extremely firm, clear, uncompromising, and set hard boundaries. Do not leave any room for further discussion.
+                    
                     STRICT RULES:
-                    1. OUTPUT LANGUAGE: MUST BE IN ${jazyk}. (If ${jazyk} is Japanese, write in Japanese. If Czech, write in Czech).
-                    2. Output Format: Provide ONLY a raw JSON array of strings. No markdown, no code blocks.
-                    3. Example format: ["Excuse 1", "Excuse 2", "Excuse 3"]
+                    1. OUTPUT LANGUAGE: MUST BE IN ${jazyk}. (If ${jazyk} is Japanese, write in Japanese. If Czech, write in Czech, etc.).
+                    2. Output Format: Provide ONLY a raw JSON array of strings. No markdown, no HTML formatting, no introductory text.
+                    3. Example format: ["Variant 1", "Variant 2", "Variant 3"]
                     `;
                     
-                    const apiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+                    // Volání Gemini API - Používáme rychlý a spolehlivý model
+                    const apiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${process.env.GEMINI_API_KEY}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
@@ -41,7 +47,9 @@ module.exports = async (req, res) => {
 
                     const data = await apiResponse.json();
                     let text = data.candidates?.[0]?.content?.parts?.[0]?.text || "[]";
-                    text = text.replace(/```json/g, "").replace(/```/g, "").trim(); 
+                    
+                    // Bezpečné čištění odpovědi od případných Markdown bloků
+                    text = text.replace(/```json/gi, "").replace(/```/g, "").trim(); 
                     
                     res.status(200).json({ variants: JSON.parse(text) });
                     resolve();
@@ -53,15 +61,20 @@ module.exports = async (req, res) => {
         });
     }
 
-    // 3. API PLATBA
+    // --- 2. API PRO PLATBU (Stripe) ---
     if (req.url.includes('platba') && req.method === 'POST') {
-        // ... (Zbytek kódu pro platbu zůstává stejný)
-        // ... (Zkopíruj si zbytek původního server.js pokud tam máš něco navíc, ale pro AI stačí změnit tu část nahoře)
         try {
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card'],
                 line_items: [{
-                    price_data: { currency: 'usd', product_data: { name: 'YES Genius License' }, unit_amount: 7900 }, 
+                    price_data: { 
+                        currency: 'usd', 
+                        product_data: { 
+                            name: 'YES Genius Lifetime License',
+                            description: 'Unlimited access to Digital Diplomat v5.2'
+                        }, 
+                        unit_amount: 999 // V5.2: Opraveno zpět na 9.99 USD (999 centů)
+                    }, 
                     quantity: 1,
                 }],
                 mode: 'payment',
@@ -74,5 +87,5 @@ module.exports = async (req, res) => {
         }
     }
 
-    res.status(200).json({ status: "Ready" });
-};
+    // Defaultní odpověď pro ověření stavu API
+    res.status(200).json({ status: "YES Genius v5.2 API Ready" });
