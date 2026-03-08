@@ -82,11 +82,7 @@
             overflow: hidden; 
         }
         
-        .logo-wrapper { 
-        <div class="logo-wrapper" onclick="resetApp()" style="cursor: pointer;" title="Reset">
-            
-            <img src="logo.png" alt="YES Genius Logo" class="logo-img">
-        </div>
+        .logo-wrapper {
             width: 90px; 
             height: 90px; 
             flex-shrink: 0; 
@@ -776,7 +772,7 @@
 <div class="app-container">
     <header>
         <div class="header-left">
-            <div class="logo-wrapper">
+            <div class="logo-wrapper" onclick="resetApp()" style="cursor: pointer;" title="Reset">
                 <img src="logo.png" alt="YES Genius Logo" class="logo-img">
             </div>
             <div class="title-wrapper">
@@ -3571,6 +3567,7 @@ function toggleLangDropdown(event) {
 </script>
 </body>
 </html>
+
 
 
 
