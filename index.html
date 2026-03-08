@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>YES Genius v5.5 | Digital Diplomat & Protector</title>
+    <title>YES Genius v5.6 | Digital Diplomat & Protector</title>
 
     <link rel="icon" type="image/png" href="/favicon.png?v=8" />
     <link rel="manifest" href="/manifest.json?v=8">
@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS: YES GENIUS v5.5 (Stalker Protection & Extended History) --- */
+        /* --- CSS: YES GENIUS v5.6 (Stalker Protection & Extended History) --- */
         :root {
             --bg-black: #050505;
             --card-bg: rgba(18, 18, 18, 0.75);
@@ -904,7 +904,7 @@
                 <span class="price-promo">PROMO: $9.99</span>
             </span>
         </button>
-        <div class="privacy-note" id="privacy-note">We do not collect any personal data. History is stored locally. | v5.5</div>
+        <div class="privacy-note" id="privacy-note">We do not collect any personal data. History is stored locally. | v5.6</div>
     </footer>
 </div>
 
@@ -2963,11 +2963,10 @@
         if (!adresatValue || !t.recList || !t.rsnList) return t.rsnList || [];
         let idx = t.recList.findIndex(r => r.toLowerCase() === adresatValue.toLowerCase());
         
-        // Stalker index je přesně 11
+        // V5.6: Stalker index je 11 - ODSTRANĚN DŮVOD "Jdu pozdě"
         if (idx === 11) return [
             t.rsnList[6], 
-            t.rsnList[7], 
-            t.rsnList[0]
+            t.rsnList[7] 
         ]; 
 
         const workIndices = [0, 6, 7, 10];
@@ -2987,12 +2986,11 @@
         if (!adresatValue || !t.recList || !t.styList) return t.styList || [];
         let idx = t.recList.findIndex(r => r.toLowerCase() === adresatValue.toLowerCase());
         
-        // Stalker index je přesně 11
+        // V5.6: Stalker index je 11 - ODSTRANĚN STYL "Profesionální"
         if (idx === 11) return [
             t.styList[7], 
             t.styList[8], 
-            t.styList[9], 
-            t.styList[0]
+            t.styList[9] 
         ]; 
         
         return t.styList.slice(0, 7);
@@ -3063,15 +3061,32 @@
                     input.value = item; 
                     toggleReset(id); 
                     closeAllDropdowns();
-                    if (id === 'adresat' && item === t.recList[11]) { 
-                        input.classList.add('stalker-alert'); 
-                    } else if (id === 'adresat') { 
-                        input.classList.remove('stalker-alert'); 
-                    }
-                    if (id === 'adresat') {
+                    
+                    // V5.6: Kontrola a vymazání neplatných políček po změně adresáta
+                    if (id === 'adresat') { 
+                        const newR = getContextualReasons(t, item);
+                        const newS = getContextualStyles(t, item);
+                        const kInput = document.getElementById('kategorie');
+                        const sInput = document.getElementById('styl');
+                        
+                        // Pokud stávající důvod už není v nové nabídce (např. Jdu pozdě už neplatí pro Stalkera), vymaž ho
+                        if (kInput.value && !newR.includes(kInput.value)) {
+                            kInput.value = ''; 
+                            toggleReset('kategorie');
+                        }
+                        if (sInput.value && !newS.includes(sInput.value)) {
+                            sInput.value = ''; 
+                            toggleReset('styl');
+                        }
+
+                        if (item === t.recList[11]) { 
+                            input.classList.add('stalker-alert'); 
+                        } else { 
+                            input.classList.remove('stalker-alert'); 
+                        }
+                        
                         setTimeout(() => document.getElementById('kategorie').focus(), 50);
-                    }
-                    if (id === 'kategorie') {
+                    } else if (id === 'kategorie') {
                         setTimeout(() => document.getElementById('styl').focus(), 50);
                     }
                 };
@@ -3199,7 +3214,7 @@
         document.getElementById('ui-success-text').innerText = t.succD; 
         document.getElementById('ui-success-btn').innerText = t.succB;
         
-        document.getElementById('privacy-note').innerText = t.privacy + " | v5.5";
+        document.getElementById('privacy-note').innerText = t.privacy + " | v5.6";
 
         document.querySelectorAll('.smart-input').forEach(inp => { 
             if(inp.id !== 'format') { 
@@ -3240,7 +3255,6 @@
         localStorage.setItem('yes_genius_history', JSON.stringify(hist));
     }
 
-    // Nová funkce pro mazání jednotlivých položek z historie
     function deleteHistoryItem(index) {
         let hist = JSON.parse(localStorage.getItem('yes_genius_history') || '[]');
         hist.splice(index, 1);
@@ -3265,7 +3279,6 @@
                 div.className = 'hist-item';
                 const safeText = item.text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
                 
-                // Vloženy tlačítka Copy, Share a Delete
                 div.innerHTML = `
                     <div class="hist-meta"><span>${item.adresat} • ${item.styl}</span><span>${dateStr}</span></div>
                     <div class="hist-text">${item.text}</div>
