@@ -952,6 +952,22 @@
         showDropdown(id);
     }
 
+function resetApp() {
+        const t = getTexts(currentLang);
+        // Format vrátíme na výchozí hodnotu, zbytek vymažeme
+        document.getElementById('format').value = t.fmtList[0]; 
+        
+        ['adresat', 'kategorie', 'styl'].forEach(id => {
+            const el = document.getElementById(id);
+            el.value = '';
+            el.classList.remove('stalker-alert');
+            toggleReset(id);
+        });
+        
+        closeAllDropdowns();
+        document.getElementById('vysledek').style.display = 'none'; // Schová předchozí výsledky
+    }
+    
     const appLanguages = [
         {
             code: 'en-US',
@@ -3550,6 +3566,7 @@ function toggleLangDropdown(event) {
 </script>
 </body>
 </html>
+
 
 
 
