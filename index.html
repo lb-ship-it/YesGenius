@@ -729,10 +729,11 @@
         }
         
         .benefits-list { 
-            display: flex; 
-            flex-wrap: wrap; 
+            display: grid; 
+            grid-template-columns: auto auto; 
             justify-content: center; 
-            gap: 12px; 
+            column-gap: 25px; 
+            row-gap: 10px; 
             margin-bottom: 25px; 
             font-size: 0.8rem; 
             color: #ccc; 
@@ -740,7 +741,8 @@
         
         .benefit-item { 
             white-space: nowrap; 
-        } 
+            text-align: left; 
+        }
         
         .bullet { 
             color: var(--gold); 
@@ -3567,6 +3569,7 @@ function toggleLangDropdown(event) {
 </script>
 </body>
 </html>
+
 
 
 
