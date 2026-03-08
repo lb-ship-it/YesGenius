@@ -29,10 +29,15 @@
             --radius: 16px;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+        }
 
         body {
-            margin: 0; padding: 0; font-family: 'Outfit', sans-serif;
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Outfit', sans-serif;
             background-color: var(--bg-black);
             background-image: 
                 radial-gradient(circle at top right, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
@@ -41,121 +46,729 @@
                 linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
             background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
             background-attachment: fixed;
-            color: var(--text-white); display: flex; justify-content: center;
-            min-height: 100vh; padding-bottom: 30px;
+            color: var(--text-white); 
+            display: flex; 
+            justify-content: center;
+            min-height: 100vh; 
+            padding-bottom: 30px;
         }
 
-        .app-container { width: 100%; max-width: 500px; padding: 20px; display: flex; flex-direction: column; gap: 15px; position: relative; }
+        .app-container { 
+            width: 100%; 
+            max-width: 500px; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            position: relative; 
+        }
 
         /* HEADER */
-        header { display: flex; align-items: flex-start; justify-content: space-between; padding: 15px 0 25px 0; width: 100%; position: relative; z-index: 200; }
-        .header-left { display: flex; gap: 12px; align-items: stretch; flex: 1; overflow: hidden; }
+        header { 
+            display: flex; 
+            align-items: flex-start; 
+            justify-content: space-between; 
+            padding: 15px 0 25px 0; 
+            width: 100%; 
+            position: relative; 
+            z-index: 200; 
+        }
         
-        .logo-wrapper { width: 90px; height: 90px; flex-shrink: 0; position: relative; }
-        .logo-img { width: 100%; height: 100%; border-radius: 14px; border: 1px solid var(--glass-border); object-fit: cover; background: #000; box-shadow: 0 4px 15px rgba(0,0,0,0.6); }
-        .v-badge { position: absolute; bottom: -8px; right: -8px; background: var(--gold); color: #000; font-size: 0.6rem; font-weight: 900; padding: 2px 6px; border-radius: 10px; border: 2px solid #000; }
+        .header-left { 
+            display: flex; 
+            gap: 12px; 
+            align-items: stretch; 
+            flex: 1; 
+            overflow: hidden; 
+        }
+        
+        .logo-wrapper { 
+            width: 90px; 
+            height: 90px; 
+            flex-shrink: 0; 
+            position: relative; 
+        }
+        
+        .logo-img { 
+            width: 100%; 
+            height: 100%; 
+            border-radius: 14px; 
+            border: 1px solid var(--glass-border); 
+            object-fit: cover; 
+            background: #000; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6); 
+        }
+        
+        .v-badge { 
+            position: absolute; 
+            bottom: -8px; 
+            right: -8px; 
+            background: var(--gold); 
+            color: #000; 
+            font-size: 0.6rem; 
+            font-weight: 900; 
+            padding: 2px 6px; 
+            border-radius: 10px; 
+            border: 2px solid #000; 
+        }
 
-        .title-wrapper { display: flex; flex-direction: column; justify-content: space-between; height: 90px; padding: 1px 0; }
-        h1 { font-size: 30px; font-weight: 900; margin: 0; line-height: 1; letter-spacing: -0.5px; background: linear-gradient(to right, #fff 15%, #f3e5ab 60%, var(--gold) 85%, #a684d1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; }
-        .subtitle { color: var(--gold); font-size: 11px; margin: 0; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap; }
-        .tagline { color: #ffffff; font-weight: 300; font-size: 13px; line-height: 1.35; opacity: 0.85; margin: 0; letter-spacing: 0.3px; white-space: nowrap; }
+        .title-wrapper { 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            height: 90px; 
+            padding: 1px 0; 
+        }
+        
+        h1 { 
+            font-size: 30px; 
+            font-weight: 900; 
+            margin: 0; 
+            line-height: 1; 
+            letter-spacing: -0.5px; 
+            background: linear-gradient(to right, #fff 15%, #f3e5ab 60%, var(--gold) 85%, #a684d1 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            white-space: nowrap; 
+        }
+        
+        .subtitle { 
+            color: var(--gold); 
+            font-size: 11px; 
+            margin: 0; 
+            font-weight: 800; 
+            letter-spacing: 1.5px; 
+            text-transform: uppercase; 
+            white-space: nowrap; 
+        }
+        
+        .tagline { 
+            color: #ffffff; 
+            font-weight: 300; 
+            font-size: 13px; 
+            line-height: 1.35; 
+            opacity: 0.85; 
+            margin: 0; 
+            letter-spacing: 0.3px; 
+            white-space: nowrap; 
+        }
 
-        .header-actions { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+        .header-actions { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px; 
+            align-items: flex-end; 
+        }
         
         /* Tlačítko Historie */
         .btn-history-top {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
-            color: var(--gold); padding: 6px 12px; border-radius: 20px;
-            font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: 0.2s;
-            display: flex; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid var(--glass-border);
+            color: var(--gold); 
+            padding: 6px 12px; 
+            border-radius: 20px;
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            cursor: pointer; 
+            transition: 0.2s;
+            display: flex; 
+            align-items: center; 
+            gap: 5px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
             backdrop-filter: blur(5px);
         }
-        .btn-history-top:hover { background: rgba(212,175,55,0.15); border-color: var(--gold); transform: scale(1.05); }
+        
+        .btn-history-top:hover { 
+            background: rgba(212,175,55,0.15); 
+            border-color: var(--gold); 
+            transform: scale(1.05); 
+        }
 
         /* Vlajky */
-        .lang-wrapper { position: relative; }
-        .lang-flag-btn { background: rgba(15,15,15,0.8); border: 1px solid var(--glass-border); width: 44px; height: 44px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; backdrop-filter: blur(5px); transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.5); user-select: none; }
-        .lang-flag-btn:hover { border-color: var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
-        .flag-icon { width: calc(100% - 2px); height: calc(100% - 2px); border-radius: 50%; object-fit: cover; object-position: center; pointer-events: none; }
+        .lang-wrapper { 
+            position: relative; 
+        }
+        
+        .lang-flag-btn { 
+            background: rgba(15,15,15,0.8); 
+            border: 1px solid var(--glass-border); 
+            width: 44px; 
+            height: 44px; 
+            min-width: 44px; 
+            min-height: 44px;
+            border-radius: 50%; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            cursor: pointer; 
+            backdrop-filter: blur(5px); 
+            transition: 0.3s; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
+            user-select: none; 
+            flex-shrink: 0;
+            overflow: hidden;
+            padding: 0;
+        }
+        
+        .lang-flag-btn:hover { 
+            border-color: var(--gold); 
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); 
+        }
+        
+        #current-flag { 
+            width: 100%; 
+            height: 100%; 
+            display: block; 
+        }
+        
+        .flag-icon { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            object-position: center; 
+            pointer-events: none; 
+            display: block; 
+        }
 
-        .lang-grid-dropdown { position: absolute; top: calc(100% + 10px); right: 0; background: rgba(10,10,10,0.95); border: 1px solid var(--gold); border-radius: 16px; padding: 15px; display: none; grid-template-columns: repeat(4, 1fr); gap: 12px; box-shadow: 0 15px 40px rgba(0,0,0,0.9); backdrop-filter: blur(15px); z-index: 2000; animation: fadeIn 0.2s ease; }
-        .lang-grid-item { width: 38px; height: 38px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; background: rgba(255,255,255,0.03); user-select: none; border: 1px solid transparent; }
-        .lang-grid-item:hover { background: rgba(212, 175, 55, 0.2); border-color: var(--gold); transform: scale(1.15); }
+        .lang-grid-dropdown { 
+            position: absolute; 
+            top: calc(100% + 10px); 
+            right: 0; 
+            background: rgba(10,10,10,0.95); 
+            border: 1px solid var(--gold); 
+            border-radius: 16px; 
+            padding: 15px; 
+            display: none; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 12px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9); 
+            backdrop-filter: blur(15px); 
+            z-index: 2000; 
+            animation: fadeIn 0.2s ease; 
+        }
+        
+        .lang-grid-item { 
+            width: 38px; 
+            height: 38px; 
+            border-radius: 50%; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            background: rgba(255,255,255,0.03); 
+            user-select: none; 
+            border: 1px solid transparent; 
+            overflow: hidden;
+        }
+        
+        .lang-grid-item:hover { 
+            background: rgba(212, 175, 55, 0.2); 
+            border-color: var(--gold); 
+            transform: scale(1.15); 
+        }
         
         @media (max-width: 480px) { 
-            .logo-wrapper { width: 75px; height: 75px; } .title-wrapper { height: 75px; } h1 { font-size: 25px; } .subtitle { font-size: 9px; letter-spacing: 1px; } 
+            .logo-wrapper { width: 75px; height: 75px; } 
+            .title-wrapper { height: 75px; } 
+            h1 { font-size: 25px; } 
+            .subtitle { font-size: 9px; letter-spacing: 1px; } 
             .tagline { font-size: clamp(8px, 2.8vw, 11px); line-height: 1.3; }
             .btn-history-top { font-size: 0.65rem; padding: 5px 10px; }
-            .lang-flag-btn { width: 38px; height: 38px; } .lang-grid-dropdown { right: -10px; padding: 12px; gap: 8px; } .lang-grid-item { width: 34px; height: 34px; }
+            .lang-flag-btn { width: 38px; height: 38px; min-width: 38px; min-height: 38px; } 
+            .lang-grid-dropdown { right: -10px; padding: 12px; gap: 8px; } 
+            .lang-grid-item { width: 34px; height: 34px; }
         }
 
         /* FORM CARD */
-        .glass-card { background: var(--card-bg); border: 1px solid var(--glass-border); border-top: 1px solid rgba(139, 92, 246, 0.25); border-radius: var(--radius); padding: 25px 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 -8px 25px rgba(139, 92, 246, 0.06); backdrop-filter: blur(16px); z-index: 50; }
-        .input-group { margin-bottom: 22px; position: relative; }
-        label { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-gray); margin-bottom: 8px; font-weight: 600; }
-        .smart-input-wrapper { position: relative; display: flex; align-items: center; width: 100%; }
+        .glass-card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--glass-border); 
+            border-top: 1px solid rgba(139, 92, 246, 0.25); 
+            border-radius: var(--radius); 
+            padding: 25px 20px; 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 -8px 25px rgba(139, 92, 246, 0.06); 
+            backdrop-filter: blur(16px); 
+            z-index: 50; 
+        }
         
-        input { width: 100%; padding: 16px; padding-right: 45px; background: rgba(5,5,5,0.6); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; color: white; font-size: 1rem; font-family: inherit; outline: none; transition: 0.3s; appearance: none; }
-        input:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); background: rgba(15,15,15,0.9); }
-        .stalker-alert { border-color: #ef4444 !important; color: #fca5a5 !important; box-shadow: 0 0 15px rgba(239, 68, 68, 0.2) !important; }
+        .input-group { 
+            margin-bottom: 22px; 
+            position: relative; 
+        }
+        
+        label { 
+            display: block; 
+            font-size: 0.7rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            color: var(--text-gray); 
+            margin-bottom: 8px; 
+            font-weight: 600; 
+        }
+        
+        .smart-input-wrapper { 
+            position: relative; 
+            display: flex; 
+            align-items: center; 
+            width: 100%; 
+        }
+        
+        input { 
+            width: 100%; 
+            padding: 16px; 
+            padding-right: 45px; 
+            background: rgba(5,5,5,0.6); 
+            border: 1px solid rgba(212, 175, 55, 0.3); 
+            border-radius: 12px; 
+            color: white; 
+            font-size: 1rem; 
+            font-family: inherit; 
+            outline: none; 
+            transition: 0.3s; 
+            appearance: none; 
+        }
+        
+        input:focus { 
+            border-color: var(--gold); 
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); 
+            background: rgba(15,15,15,0.9); 
+        }
+        
+        .stalker-alert { 
+            border-color: #ef4444 !important; 
+            color: #fca5a5 !important; 
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.2) !important; 
+        }
 
-        .custom-dropdown-list { position: absolute; top: calc(100% + 4px); left: 0; width: 100%; max-height: 250px; overflow-y: auto; background: rgba(15, 15, 15, 0.95); border: 1px solid var(--gold); border-radius: 12px; z-index: 1000; display: none; box-shadow: 0 15px 40px rgba(0,0,0,0.9); backdrop-filter: blur(10px); animation: slideDown 0.2s ease-out; }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        .dropdown-item { padding: 14px 16px; cursor: pointer; color: #ddd; font-size: 0.95rem; border-bottom: 1px solid rgba(255,255,255,0.05); transition: all 0.2s; }
-        .dropdown-item:last-child { border-bottom: none; }
-        .dropdown-item:hover { background: linear-gradient(90deg, rgba(212, 175, 55, 0.2), transparent); color: var(--gold); padding-left: 22px; border-left: 3px solid var(--gold); }
-        .item-alert { color: #fca5a5; font-weight: 700; } .item-alert:hover { border-left-color: #ef4444; color: #ef4444; background: linear-gradient(90deg, rgba(239, 68, 68, 0.15), transparent); }
+        .custom-dropdown-list { 
+            position: absolute; 
+            top: calc(100% + 4px); 
+            left: 0; 
+            width: 100%; 
+            max-height: 250px; 
+            overflow-y: auto; 
+            background: rgba(15, 15, 15, 0.95); 
+            border: 1px solid var(--gold); 
+            border-radius: 12px; 
+            z-index: 1000; 
+            display: none; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9); 
+            backdrop-filter: blur(10px); 
+            animation: slideDown 0.2s ease-out; 
+        }
         
-        .dropdown-arrow { position: absolute; right: 15px; color: var(--gold); font-size: 0.8rem; pointer-events: none; opacity: 0.8; }
-        .reset-btn { position: absolute; right: 10px; background: rgba(5,5,5,0.8); border: none; color: #888; font-size: 1.1rem; cursor: pointer; padding: 5px 8px; display: none; border-radius: 6px; z-index: 10; transition: 0.2s; }
-        .reset-btn:hover { color: var(--gold); background: rgba(255,255,255,0.1); }
-        .arrow-btn { position: absolute; right: 0; top: 0; width: 45px; height: 100%; background: transparent; border: none; cursor: pointer; z-index: 5; }
+        @keyframes slideDown { 
+            from { opacity: 0; transform: translateY(-10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        .dropdown-item { 
+            padding: 14px 16px; 
+            cursor: pointer; 
+            color: #ddd; 
+            font-size: 0.95rem; 
+            border-bottom: 1px solid rgba(255,255,255,0.05); 
+            transition: all 0.2s; 
+        }
+        
+        .dropdown-item:last-child { 
+            border-bottom: none; 
+        }
+        
+        .dropdown-item:hover { 
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.2), transparent); 
+            color: var(--gold); 
+            padding-left: 22px; 
+            border-left: 3px solid var(--gold); 
+        }
+        
+        .item-alert { 
+            color: #fca5a5; 
+            font-weight: 700; 
+        } 
+        
+        .item-alert:hover { 
+            border-left-color: #ef4444; 
+            color: #ef4444; 
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.15), transparent); 
+        }
+        
+        .dropdown-arrow { 
+            position: absolute; 
+            right: 15px; 
+            color: var(--gold); 
+            font-size: 0.8rem; 
+            pointer-events: none; 
+            opacity: 0.8; 
+        }
+        
+        .reset-btn { 
+            position: absolute; 
+            right: 10px; 
+            background: rgba(5,5,5,0.8); 
+            border: none; 
+            color: #888; 
+            font-size: 1.1rem; 
+            cursor: pointer; 
+            padding: 5px 8px; 
+            display: none; 
+            border-radius: 6px; 
+            z-index: 10; 
+            transition: 0.2s; 
+        }
+        
+        .reset-btn:hover { 
+            color: var(--gold); 
+            background: rgba(255,255,255,0.1); 
+        }
+        
+        .arrow-btn { 
+            position: absolute; 
+            right: 0; 
+            top: 0; 
+            width: 45px; 
+            height: 100%; 
+            background: transparent; 
+            border: none; 
+            cursor: pointer; 
+            z-index: 5; 
+        }
 
         /* TLAČÍTKA */
-        .btn-main, .btn-vip-large { width: 100%; padding: 20px; margin-top: 10px; background: linear-gradient(135deg, #f9f2d0 0%, #d4af37 45%, #aa8a2e 80%, #b28cff 100%); border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 12px; color: #050505; font-weight: 900; font-size: 1.25rem; text-transform: uppercase; cursor: pointer; box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35), inset 0 2px 5px rgba(255, 255, 255, 0.5), 0 4px 15px rgba(139, 92, 246, 0.25); transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 8px; position: relative; overflow: hidden; letter-spacing: 1px; }
-        .btn-main::after, .btn-vip-large::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transform: skewX(-20deg); transition: 0.5s; }
-        .btn-main:hover::after, .btn-vip-large:hover::after { left: 150%; }
-        .btn-main:active, .btn-vip-large:active { transform: scale(0.97); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4); }
-        .btn-main:hover, .btn-vip-large:hover { box-shadow: 0 12px 35px rgba(212, 175, 55, 0.5), inset 0 2px 5px rgba(255, 255, 255, 0.7); transform: translateY(-2px); }
-        .btn-vip-large { border-radius: 50px; flex-direction: column; }
-        .price-strike { text-decoration: line-through; color: rgba(0,0,0,0.6); margin-right: 5px; font-weight: 900; font-size: 15px; } .price-promo { color: #000; font-weight: 900; font-size: 15px; }
+        .btn-main, .btn-vip-large { 
+            width: 100%; 
+            padding: 20px; 
+            margin-top: 10px; 
+            background: linear-gradient(135deg, #f9f2d0 0%, #d4af37 45%, #aa8a2e 80%, #b28cff 100%); 
+            border: 1px solid rgba(255, 255, 255, 0.5); 
+            border-radius: 12px; 
+            color: #050505; 
+            font-weight: 900; 
+            font-size: 1.25rem; 
+            text-transform: uppercase; 
+            cursor: pointer; 
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35), inset 0 2px 5px rgba(255, 255, 255, 0.5), 0 4px 15px rgba(139, 92, 246, 0.25); 
+            transition: all 0.3s ease; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 8px; 
+            position: relative; 
+            overflow: hidden; 
+            letter-spacing: 1px; 
+        }
+        
+        .btn-main::after, .btn-vip-large::after { 
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: -100%; 
+            width: 50%; 
+            height: 100%; 
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); 
+            transform: skewX(-20deg); 
+            transition: 0.5s; 
+        }
+        
+        .btn-main:hover::after, .btn-vip-large:hover::after { 
+            left: 150%; 
+        }
+        
+        .btn-main:active, .btn-vip-large:active { 
+            transform: scale(0.97); 
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4); 
+        }
+        
+        .btn-main:hover, .btn-vip-large:hover { 
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.5), inset 0 2px 5px rgba(255, 255, 255, 0.7); 
+            transform: translateY(-2px); 
+        }
+        
+        .btn-vip-large { 
+            border-radius: 50px; 
+            flex-direction: column; 
+        }
+        
+        .price-strike { 
+            text-decoration: line-through; 
+            color: rgba(0,0,0,0.6); 
+            margin-right: 5px; 
+            font-weight: 900; 
+            font-size: 15px; 
+        } 
+        
+        .price-promo { 
+            color: #000; 
+            font-weight: 900; 
+            font-size: 15px; 
+        }
 
         /* MODALS (Paywall, Key, History) */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 9999; display: none; justify-content: center; align-items: center; padding: 15px; }
-        .modal-card { background: rgba(10,10,10,0.95); border: 1px solid var(--gold); border-radius: 24px; padding: 25px; max-width: 450px; width: 100%; box-shadow: 0 0 60px rgba(212, 175, 55, 0.3); animation: slideIn 0.4s ease; position: relative; max-height: 90vh; display: flex; flex-direction: column; }
-        .modal-title { font-size: 1.4rem; font-weight: 900; color: var(--gold); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
-        .modal-text { color: #ddd; margin-bottom: 20px; line-height: 1.5; font-size: 0.95rem; text-align: center; }
-        .close-modal { position: absolute; top: 15px; right: 20px; color: #666; font-size: 1.8rem; cursor: pointer; transition: 0.2s; line-height: 1;}
-        .close-modal:hover { color: #fff; }
+        .modal-overlay { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.85); 
+            backdrop-filter: blur(10px); 
+            z-index: 9999; 
+            display: none; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 15px; 
+        }
+        
+        .modal-card { 
+            background: rgba(10,10,10,0.95); 
+            border: 1px solid var(--gold); 
+            border-radius: 24px; 
+            padding: 25px; 
+            max-width: 450px; 
+            width: 100%; 
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.3); 
+            animation: slideIn 0.4s ease; 
+            position: relative; 
+            max-height: 90vh; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .modal-title { 
+            font-size: 1.4rem; 
+            font-weight: 900; 
+            color: var(--gold); 
+            margin-bottom: 10px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            text-align: center; 
+        }
+        
+        .modal-text { 
+            color: #ddd; 
+            margin-bottom: 20px; 
+            line-height: 1.5; 
+            font-size: 0.95rem; 
+            text-align: center; 
+        }
+        
+        .close-modal { 
+            position: absolute; 
+            top: 15px; 
+            right: 20px; 
+            color: #666; 
+            font-size: 1.8rem; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            line-height: 1;
+        }
+        
+        .close-modal:hover { 
+            color: #fff; 
+        }
+
+        .key-input { 
+            width: 100%; 
+            padding: 15px; 
+            margin-bottom: 15px; 
+            background: #111; 
+            border: 1px solid #444; 
+            border-radius: 10px; 
+            color: var(--gold); 
+            font-family: monospace; 
+            font-size: 1.1rem; 
+            text-align: center; 
+        }
 
         /* HISTORY MODAL SPECIFICS */
-        .history-list { overflow-y: auto; flex: 1; padding-right: 5px; display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px; }
-        .history-list::-webkit-scrollbar { width: 6px; } .history-list::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 10px; }
-        .hist-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 15px; }
-        .hist-meta { font-size: 0.65rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;}
-        .hist-text { font-size: 0.9rem; color: #eee; line-height: 1.4; white-space: pre-wrap; margin-bottom: 10px; }
-        .btn-hist-clear { background: transparent; border: 1px solid #ef4444; color: #ef4444; padding: 10px; border-radius: 10px; cursor: pointer; font-weight: 700; width: 100%; text-transform: uppercase; transition: 0.2s; }
-        .btn-hist-clear:hover { background: #ef4444; color: #fff; }
+        .history-list { 
+            overflow-y: auto; 
+            flex: 1; 
+            padding-right: 5px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            margin-bottom: 15px; 
+        }
+        
+        .history-list::-webkit-scrollbar { 
+            width: 6px; 
+        } 
+        
+        .history-list::-webkit-scrollbar-thumb { 
+            background: var(--gold-dim); 
+            border-radius: 10px; 
+        }
+        
+        .hist-item { 
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 12px; 
+            padding: 15px; 
+        }
+        
+        .hist-meta { 
+            font-size: 0.65rem; 
+            color: var(--gold); 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            margin-bottom: 8px; 
+            display: flex; 
+            justify-content: space-between; 
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
+            padding-bottom: 5px;
+        }
+        
+        .hist-text { 
+            font-size: 0.9rem; 
+            color: #eee; 
+            line-height: 1.4; 
+            white-space: pre-wrap; 
+            margin-bottom: 10px; 
+        }
+        
+        .btn-hist-clear { 
+            background: transparent; 
+            border: 1px solid #ef4444; 
+            color: #ef4444; 
+            padding: 10px; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-weight: 700; 
+            width: 100%; 
+            text-transform: uppercase; 
+            transition: 0.2s; 
+        }
+        
+        .btn-hist-clear:hover { 
+            background: #ef4444; 
+            color: #fff; 
+        }
 
         /* RESULTS SECTION */
-        #vysledek { display: none; margin-top: 25px; animation: fadeIn 0.6s ease; }
-        .result-card { background: rgba(255,255,255,0.05); border-left: 3px solid var(--gold); padding: 20px; margin-bottom: 15px; border-radius: 10px; backdrop-filter: blur(5px); }
-        .result-card.stalker-result { border-left-color: #ef4444; background: rgba(239, 68, 68, 0.05); }
-        .result-text { font-size: 1.05rem; line-height: 1.5; margin-bottom: 15px; color: #f0f0f0; }
-        .action-row { display: flex; gap: 10px; }
-        .btn-action { flex: 1; padding: 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; color: var(--gold); font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem; transition: 0.2s; }
-        .btn-action:hover { background: rgba(255,255,255,0.2); }
-        #loader { display: none; text-align: center; margin-top: 15px; color: var(--gold); font-weight: 600; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
+        #vysledek { 
+            display: none; 
+            margin-top: 25px; 
+            animation: fadeIn 0.6s ease; 
+        }
+        
+        .result-card { 
+            background: rgba(255,255,255,0.05); 
+            border-left: 3px solid var(--gold); 
+            padding: 20px; 
+            margin-bottom: 15px; 
+            border-radius: 10px; 
+            backdrop-filter: blur(5px); 
+        }
+        
+        .result-card.stalker-result { 
+            border-left-color: #ef4444; 
+            background: rgba(239, 68, 68, 0.05); 
+        }
+        
+        .result-text { 
+            font-size: 1.05rem; 
+            line-height: 1.5; 
+            margin-bottom: 15px; 
+            color: #f0f0f0; 
+        }
+        
+        .action-row { 
+            display: flex; 
+            gap: 10px; 
+        }
+        
+        .btn-action { 
+            flex: 1; 
+            padding: 12px; 
+            background: rgba(255,255,255,0.1); 
+            border: 1px solid rgba(255,255,255,0.05); 
+            border-radius: 8px; 
+            color: var(--gold); 
+            font-weight: 700; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 8px; 
+            font-size: 0.9rem; 
+            transition: 0.2s; 
+        }
+        
+        .btn-action:hover { 
+            background: rgba(255,255,255,0.2); 
+        }
+        
+        #loader { 
+            display: none; 
+            text-align: center; 
+            margin-top: 15px; 
+            color: var(--gold); 
+            font-weight: 600; 
+            text-shadow: 0 0 10px rgba(212,175,55,0.5); 
+        }
         
         /* FOOTER */
-        .vip-footer { margin-top: 30px; padding: 30px 20px; background: linear-gradient(180deg, rgba(20,20,20,0.7) 0%, rgba(5,5,5,0.9) 100%); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 24px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.4); position: relative; z-index: 10; }
-        .vip-title { color: var(--gold); font-size: 0.9rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; }
-        .benefits-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 25px; font-size: 0.8rem; color: #ccc; }
-        .benefit-item { white-space: nowrap; } .bullet { color: var(--gold); margin-right: 4px; }
-        .privacy-note { margin-top: 25px; font-size: 0.65rem; color: rgba(255,255,255,0.4); font-weight: 300; text-transform: uppercase; letter-spacing: 1px; }
+        .vip-footer { 
+            margin-top: 30px; 
+            padding: 30px 20px; 
+            background: linear-gradient(180deg, rgba(20,20,20,0.7) 0%, rgba(5,5,5,0.9) 100%); 
+            backdrop-filter: blur(10px); 
+            border: 1px solid var(--glass-border); 
+            border-radius: 24px; 
+            text-align: center; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4); 
+            position: relative; 
+            z-index: 10; 
+        }
+        
+        .vip-title { 
+            color: var(--gold); 
+            font-size: 0.9rem; 
+            font-weight: 900; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            margin-bottom: 15px; 
+        }
+        
+        .benefits-list { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 12px; 
+            margin-bottom: 25px; 
+            font-size: 0.8rem; 
+            color: #ccc; 
+        }
+        
+        .benefit-item { 
+            white-space: nowrap; 
+        } 
+        
+        .bullet { 
+            color: var(--gold); 
+            margin-right: 4px; 
+        }
+        
+        .privacy-note { 
+            margin-top: 25px; 
+            font-size: 0.65rem; 
+            color: rgba(255,255,255,0.4); 
+            font-weight: 300; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        @keyframes slideIn { 
+            from { transform: translateY(20px); opacity: 0; } 
+            to { transform: translateY(0); opacity: 1; } 
+        }
     </style>
 </head>
 <body>
@@ -164,8 +777,7 @@
     <header>
         <div class="header-left">
             <div class="logo-wrapper">
-                <img src="logo.png" alt="YES Genius Logo" class="logo-img">
-                <div class="v-badge">v5.2</div>
+                <img src="logo.jpg" alt="YES Genius Logo" class="logo-img">
             </div>
             <div class="title-wrapper">
                 <h1>YES Genius</h1>
@@ -267,8 +879,27 @@
     </div>
 
     <!-- Key & Success Modals -->
-    <div id="key-modal" class="modal-overlay"><div class="modal-card"><span class="close-modal" onclick="closeModal('key-modal')">×</span><div class="modal-title" id="ui-key-title">🔑 ENTER YOUR KEY</div><div class="modal-text" id="ui-key-desc">Paste the license key you received in your email.</div><input type="text" id="license-input" class="key-input" placeholder="YG-XXXX-XXXX" style="width:100%; padding:15px; margin-bottom:15px; background:#111; border:1px solid #444; border-radius:10px; color:var(--gold); font-family:monospace; font-size:1.1rem; text-align:center;"><button class="btn-vip-large" onclick="saveLicenseKey()"><span class="vip-btn-main-text" id="ui-key-btn">ACTIVATE</span></button></div></div>
-    <div id="success-modal" class="modal-overlay"><div class="modal-card"><div class="modal-title" id="ui-success-title">🎉 ACCESS GRANTED</div><div class="modal-text" id="ui-success-text">Your license is active! You can now generate unlimited drafts.</div><button class="btn-vip-large" onclick="closeModal('success-modal'); location.reload();"><span class="vip-btn-main-text" id="ui-success-btn">START USING</span></button></div></div>
+    <div id="key-modal" class="modal-overlay">
+        <div class="modal-card">
+            <span class="close-modal" onclick="closeModal('key-modal')">×</span>
+            <div class="modal-title" id="ui-key-title">🔑 ENTER YOUR KEY</div>
+            <div class="modal-text" id="ui-key-desc">Paste the license key you received in your email.</div>
+            <input type="text" id="license-input" class="key-input" placeholder="YG-XXXX-XXXX">
+            <button class="btn-vip-large" onclick="saveLicenseKey()">
+                <span class="vip-btn-main-text" id="ui-key-btn">ACTIVATE</span>
+            </button>
+        </div>
+    </div>
+    
+    <div id="success-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-title" id="ui-success-title">🎉 ACCESS GRANTED</div>
+            <div class="modal-text" id="ui-success-text">Your license is active! You can now generate unlimited drafts.</div>
+            <button class="btn-vip-large" onclick="closeModal('success-modal'); location.reload();">
+                <span class="vip-btn-main-text" id="ui-success-btn">START USING</span>
+            </button>
+        </div>
+    </div>
 
     <footer class="vip-footer">
         <div class="vip-title" id="vip-title">UNLOCK FULL POTENTIAL</div>
@@ -282,45 +913,144 @@
             <span class="vip-btn-main-text" id="vip-btn-main">GET LIFETIME ACCESS</span>
             <span class="vip-btn-sub-text"><span class="price-strike">$22.00</span><span class="price-promo">PROMO: $9.99</span></span>
         </button>
-        <div class="privacy-note" id="privacy-note">We do not collect any personal data. History is stored locally.</div>
+        <div class="privacy-note" id="privacy-note">We do not collect any personal data. History is stored locally. | v5.2</div>
     </footer>
 </div>
 
 <script>
+    // V5.2: NOVÝ PAYMENT LINK
     const PAYMENT_LINK = "https://buy.stripe.com/28E4gAgBL1KA29g1nka7C05"; 
+    
     let userLicense = localStorage.getItem('yes_genius_license_v1');
     let freeTries = parseInt(localStorage.getItem('yes_genius_free_tries') || '0');
 
+    // 100% ROZBALENÝ ARRAY JAZYKŮ (Pro snadnou editaci jako v předchozí verzi)
     const appLanguages = [
-        { code: 'en-US', iso: 'us', name: 'American English' },
-        { code: 'en-GB', iso: 'gb', name: 'British English' },
-        { code: 'cs', iso: 'cz', name: 'Czech' },
-        { code: 'de', iso: 'de', name: 'German' },
-        { code: 'uk', iso: 'ua', name: 'Ukrainian' },
-        { code: 'es', iso: 'es', name: 'Spanish' },
-        { code: 'fr', iso: 'fr', name: 'French' },
-        { code: 'it', iso: 'it', name: 'Italian' },
-        { code: 'pt', iso: 'pt', name: 'Portuguese' },
-        { code: 'pl', iso: 'pl', name: 'Polish' },
-        { code: 'nl', iso: 'nl', name: 'Dutch' },
-        { code: 'ru', iso: 'ru', name: 'Russian' },
-        { code: 'tr', iso: 'tr', name: 'Turkish' },
-        { code: 'ar', iso: 'sa', name: 'Arabic' },
-        { code: 'zh', iso: 'cn', name: 'Chinese' },
-        { code: 'ja', iso: 'jp', name: 'Japanese' },
-        { code: 'ko', iso: 'kr', name: 'Korean' },
-        { code: 'hi', iso: 'in', name: 'Hindi' },
-        { code: 'sv', iso: 'se', name: 'Swedish' },
-        { code: 'no', iso: 'no', name: 'Norwegian' },
-        { code: 'da', iso: 'dk', name: 'Danish' },
-        { code: 'fi', iso: 'fi', name: 'Finnish' },
-        { code: 'el', iso: 'gr', name: 'Greek' },
-        { code: 'ro', iso: 'ro', name: 'Romanian' }
+        {
+            code: 'en-US',
+            iso: 'us',
+            name: 'American English'
+        },
+        {
+            code: 'en-GB',
+            iso: 'gb',
+            name: 'British English'
+        },
+        {
+            code: 'cs',
+            iso: 'cz',
+            name: 'Czech'
+        },
+        {
+            code: 'de',
+            iso: 'de',
+            name: 'German'
+        },
+        {
+            code: 'uk',
+            iso: 'ua',
+            name: 'Ukrainian'
+        },
+        {
+            code: 'es',
+            iso: 'es',
+            name: 'Spanish'
+        },
+        {
+            code: 'fr',
+            iso: 'fr',
+            name: 'French'
+        },
+        {
+            code: 'it',
+            iso: 'it',
+            name: 'Italian'
+        },
+        {
+            code: 'pt',
+            iso: 'pt',
+            name: 'Portuguese'
+        },
+        {
+            code: 'pl',
+            iso: 'pl',
+            name: 'Polish'
+        },
+        {
+            code: 'nl',
+            iso: 'nl',
+            name: 'Dutch'
+        },
+        {
+            code: 'ru',
+            iso: 'ru',
+            name: 'Russian'
+        },
+        {
+            code: 'tr',
+            iso: 'tr',
+            name: 'Turkish'
+        },
+        {
+            code: 'ar',
+            iso: 'sa',
+            name: 'Arabic'
+        },
+        {
+            code: 'zh',
+            iso: 'cn',
+            name: 'Chinese'
+        },
+        {
+            code: 'ja',
+            iso: 'jp',
+            name: 'Japanese'
+        },
+        {
+            code: 'ko',
+            iso: 'kr',
+            name: 'Korean'
+        },
+        {
+            code: 'hi',
+            iso: 'in',
+            name: 'Hindi'
+        },
+        {
+            code: 'sv',
+            iso: 'se',
+            name: 'Swedish'
+        },
+        {
+            code: 'no',
+            iso: 'no',
+            name: 'Norwegian'
+        },
+        {
+            code: 'da',
+            iso: 'dk',
+            name: 'Danish'
+        },
+        {
+            code: 'fi',
+            iso: 'fi',
+            name: 'Finnish'
+        },
+        {
+            code: 'el',
+            iso: 'gr',
+            name: 'Greek'
+        },
+        {
+            code: 'ro',
+            iso: 'ro',
+            name: 'Romanian'
+        }
     ];
 
     let currentLang = localStorage.getItem('yesGeniusLang') || 'en-US';
 
-    // --- PLNĚ ROZBALENÁ STRUKTURA PŘEKLADŮ (BEZ MINIFIKACE) ---
+    // 100% ROZBALENÁ STRUKTURA PŘEKLADŮ VČETNĚ STALKERA A HISTORIE (Řádek po řádku, bez komprese!)
     const translations = {
         'en-US': {
             sub: "DIGITAL DIPLOMAT",
@@ -355,26 +1085,46 @@
             histEmpty: "No history yet. Generate some drafts first!",
             histClear: "DELETE HISTORY",
             fmtList: [
-                "SMS / WhatsApp", 
-                "Email", 
-                "Phone Call Script", 
+                "SMS / WhatsApp",
+                "Email",
+                "Phone Call Script",
                 "Slack / Teams"
             ],
             recList: [
-                "Boss", "Partner", "Wife", "Husband", 
-                "Mother-in-law", "Father-in-law", "Client", 
-                "Colleague", "Mom", "Dad", "Teacher", 
+                "Boss",
+                "Partner",
+                "Wife",
+                "Husband",
+                "Mother-in-law",
+                "Father-in-law",
+                "Client",
+                "Colleague",
+                "Mom",
+                "Dad",
+                "Teacher",
                 "Stalker / Harasser"
             ],
             rsnList: [
-                "Running Late", "Feeling Sick", "Missed Deadline", 
-                "Canceling Plans", "Family Emergency", "Car Trouble", 
-                "Stop contacting me", "Inappropriate behavior"
+                "Running Late",
+                "Feeling Sick",
+                "Missed Deadline",
+                "Canceling Plans",
+                "Family Emergency",
+                "Car Trouble",
+                "Stop contacting me",
+                "Inappropriate behavior"
             ],
             styList: [
-                "Professional", "Creative / Funny", "Slang / Street", 
-                "Dramatic", "Strictly Formal", "Casual", "Apologetic", 
-                "Firm & Assertive", "Legal Warning", "Cold & Final"
+                "Professional",
+                "Creative / Funny",
+                "Slang / Street",
+                "Dramatic",
+                "Strictly Formal",
+                "Casual",
+                "Apologetic",
+                "Firm & Assertive",
+                "Legal Warning",
+                "Cold & Final"
             ]
         },
         'en-GB': {
@@ -410,26 +1160,46 @@
             histEmpty: "No history yet.",
             histClear: "DELETE HISTORY",
             fmtList: [
-                "SMS / WhatsApp", 
-                "Email", 
-                "Phone Call Script", 
+                "SMS / WhatsApp",
+                "Email",
+                "Phone Call Script",
                 "Slack / Teams"
             ],
             recList: [
-                "Boss", "Partner", "Wife", "Husband", 
-                "Mother-in-law", "Father-in-law", "Client", 
-                "Colleague", "Mum", "Dad", "Tutor", 
+                "Boss",
+                "Partner",
+                "Wife",
+                "Husband",
+                "Mother-in-law",
+                "Father-in-law",
+                "Client",
+                "Colleague",
+                "Mum",
+                "Dad",
+                "Tutor",
                 "Stalker / Harasser"
             ],
             rsnList: [
-                "Running Late", "Feeling Unwell", "Missed Deadline", 
-                "Canceling Plans", "Family Emergency", "Car Trouble", 
-                "Stop contacting me", "Inappropriate behaviour"
+                "Running Late",
+                "Feeling Unwell",
+                "Missed Deadline",
+                "Canceling Plans",
+                "Family Emergency",
+                "Car Trouble",
+                "Stop contacting me",
+                "Inappropriate behaviour"
             ],
             styList: [
-                "Professional", "Creative / Witty", "Slang / Roadman", 
-                "Dramatic", "Strictly Formal", "Casual", "Apologetic", 
-                "Firm & Assertive", "Legal Warning", "Cold & Final"
+                "Professional",
+                "Creative / Witty",
+                "Slang / Roadman",
+                "Dramatic",
+                "Strictly Formal",
+                "Casual",
+                "Apologetic",
+                "Firm & Assertive",
+                "Legal Warning",
+                "Cold & Final"
             ]
         },
         'cs': {
@@ -465,26 +1235,46 @@
             histEmpty: "Zatím žádná historie.",
             histClear: "VYMAZAT HISTORII",
             fmtList: [
-                "SMS / WhatsApp", 
-                "E-mail", 
-                "Scénář telefonátu", 
+                "SMS / WhatsApp",
+                "E-mail",
+                "Scénář telefonátu",
                 "Slack / Teams"
             ],
             recList: [
-                "Šéf", "Partner", "Manželka", "Manžel", 
-                "Tchyně", "Tchán", "Klient", 
-                "Kolega", "Máma", "Táta", "Učitel", 
+                "Šéf",
+                "Partner",
+                "Manželka",
+                "Manžel",
+                "Tchyně",
+                "Tchán",
+                "Klient",
+                "Kolega",
+                "Máma",
+                "Táta",
+                "Učitel",
                 "Stalker / Nevyžádaná osoba"
             ],
             rsnList: [
-                "Jdu pozdě", "Jsem nemocný/á", "Nestíhám termín", 
-                "Ruším plány", "Rodinné důvody", "Porucha auta", 
-                "Přestaň mě kontaktovat", "Nevhodné chování"
+                "Jdu pozdě",
+                "Jsem nemocný/á",
+                "Nestíhám termín",
+                "Ruším plány",
+                "Rodinné důvody",
+                "Porucha auta",
+                "Přestaň mě kontaktovat",
+                "Nevhodné chování"
             ],
             styList: [
-                "Profesionální", "Kreativní / Vtipný", "Slang / Hovorový", 
-                "Dramatický", "Formální", "Neformální", "Omluvný", 
-                "Tvrdě asertivní", "Právní pohrůžka", "Chladný a definitivní"
+                "Profesionální",
+                "Kreativní / Vtipný",
+                "Slang / Hovorový",
+                "Dramatický",
+                "Formální",
+                "Neformální",
+                "Omluvný",
+                "Tvrdě asertivní",
+                "Právní pohrůžka",
+                "Chladný a definitivní"
             ]
         },
         'de': {
@@ -512,7 +1302,7 @@
             keyD: "Lizenzschlüssel einfügen.",
             keyB: "AKTIVIEREN",
             succT: "🎉 ZUGANG GEWÄHRT",
-            succD: "Lizenz aktiv!",
+            succD: "Licenz aktiv!",
             succB: "STARTEN",
             privacy: "Wir sammeln keine Daten. Verlauf bleibt lokal.",
             histBtn: "Verlauf",
@@ -520,26 +1310,46 @@
             histEmpty: "Noch kein Verlauf.",
             histClear: "VERLAUF LÖSCHEN",
             fmtList: [
-                "SMS / WhatsApp", 
-                "E-Mail", 
-                "Telefonskript", 
+                "SMS / WhatsApp",
+                "E-Mail",
+                "Telefonskript",
                 "Slack / Teams"
             ],
             recList: [
-                "Chef", "Partner", "Ehefrau", "Ehemann", 
-                "Schwiegermutter", "Schwiegervater", "Kunde", 
-                "Kollege", "Mama", "Papa", "Lehrer", 
+                "Chef",
+                "Partner",
+                "Ehefrau",
+                "Ehemann",
+                "Schwiegermutter",
+                "Schwiegervater",
+                "Kunde",
+                "Kollege",
+                "Mama",
+                "Papa",
+                "Lehrer",
                 "Stalker / Belästiger"
             ],
             rsnList: [
-                "Verspätung", "Krankheit", "Deadline verpasst", 
-                "Absage", "Notfall", "Autopanne", 
-                "Hör auf, mich zu kontaktieren", "Unangemessenes Verhalten"
+                "Verspätung",
+                "Krankheit",
+                "Deadline verpasst",
+                "Absage",
+                "Notfall",
+                "Autopanne",
+                "Hör auf, mich zu kontaktieren",
+                "Unangemessenes Verhalten"
             ],
             styList: [
-                "Professionell", "Kreativ", "Slang", 
-                "Dramatisch", "Formell", "Locker", "Entschuldigend", 
-                "Streng / Durchsetzungsfähig", "Rechtliche Warnung", "Kalt / Endgültig"
+                "Professionell",
+                "Kreativ",
+                "Slang",
+                "Dramatisch",
+                "Formell",
+                "Locker",
+                "Entschuldigend",
+                "Streng / Durchsetzungsfähig",
+                "Rechtliche Warnung",
+                "Kalt / Endgültig"
             ]
         },
         'uk': {
@@ -575,26 +1385,46 @@
             histEmpty: "Історія порожня.",
             histClear: "ОЧИСТИТЬ ІСТОРІЮ",
             fmtList: [
-                "SMS / Viber", 
-                "Email", 
-                "Сценарій дзвінка", 
+                "SMS / Viber",
+                "Email",
+                "Сценарій дзвінка",
                 "Slack / Teams"
             ],
             recList: [
-                "Бос", "Партнер", "Дружина", "Чоловік", 
-                "Теща/Свекруха", "Тесть/Свекор", "Клієнт", 
-                "Колега", "Мама", "Тато", "Вчитель", 
+                "Бос",
+                "Партнер",
+                "Дружина",
+                "Чоловік",
+                "Теща/Свекруха",
+                "Тесть/Свекор",
+                "Клієнт",
+                "Колега",
+                "Мама",
+                "Тато",
+                "Вчитель",
                 "Сталкер / Переслідувач"
             ],
             rsnList: [
-                "Запізнююся", "Хвороба", "Зрив дедлайну", 
-                "Скасування", "Сімейні обставини", "Проблема з авто", 
-                "Не контактуй зі мною", "Недоречна поведінка"
+                "Запізнююся",
+                "Хвороба",
+                "Зрив дедлайну",
+                "Скасування",
+                "Сімейні обставини",
+                "Проблема з авто",
+                "Не контактуй зі мною",
+                "Недоречна поведінка"
             ],
             styList: [
-                "Професійний", "Креативний", "Сленг", 
-                "Драматичний", "Офіційний", "Неформальний", "Вибачальний", 
-                "Жорстко асертивний", "Правовое попередження", "Холодний / Остаточний"
+                "Професійний",
+                "Креативний",
+                "Сленг",
+                "Драматичний",
+                "Офіційний",
+                "Неформальний",
+                "Вибачальний",
+                "Жорстко асертивний",
+                "Правовое попередження",
+                "Холодний / Остаточний"
             ]
         },
         'es': {
@@ -630,26 +1460,46 @@
             histEmpty: "Sin historial aún.",
             histClear: "BORRAR HISTORIAL",
             fmtList: [
-                "SMS / WhatsApp", 
-                "Correo", 
-                "Guion de llamada", 
+                "SMS / WhatsApp",
+                "Correo",
+                "Guion de llamada",
                 "Slack / Teams"
             ],
             recList: [
-                "Jefe", "Pareja", "Esposa", "Esposo", 
-                "Suegra", "Suegro", "Cliente", 
-                "Colega", "Mamá", "Papá", "Profesor", 
+                "Jefe",
+                "Pareja",
+                "Esposa",
+                "Esposo",
+                "Suegra",
+                "Suegro",
+                "Cliente",
+                "Colega",
+                "Mamá",
+                "Papá",
+                "Profesor",
                 "Acosador / Stalker"
             ],
             rsnList: [
-                "Llego tarde", "Enfermo", "Plazo perdido", 
-                "Cancelar planes", "Emergencia", "Coche averiado", 
-                "Deja de contactarme", "Comportamiento inapropiado"
+                "Llego tarde",
+                "Enfermo",
+                "Plazo perdido",
+                "Cancelar planes",
+                "Emergencia",
+                "Coche averiado",
+                "Deja de contactarme",
+                "Comportamiento inapropiado"
             ],
             styList: [
-                "Profesional", "Creativo", "Jerga", 
-                "Dramático", "Formal", "Casual", "Disculpa", 
-                "Firme / Asertivo", "Advertencia legal", "Frío / Definitivo"
+                "Profesional",
+                "Creativo",
+                "Jerga",
+                "Dramático",
+                "Formal",
+                "Casual",
+                "Disculpa",
+                "Firme / Asertivo",
+                "Advertencia legal",
+                "Frío / Definitivo"
             ]
         },
         'fr': {
@@ -685,26 +1535,46 @@
             histEmpty: "Pas d'historique.",
             histClear: "EFFACER L'HISTORIQUE",
             fmtList: [
-                "SMS / WhatsApp", 
-                "Email", 
-                "Scénario d'appel", 
+                "SMS / WhatsApp",
+                "Email",
+                "Scénario d'appel",
                 "Slack / Teams"
             ],
             recList: [
-                "Patron", "Partenaire", "Femme", "Mari", 
-                "Belle-mère", "Beau-père", "Client", 
-                "Collègue", "Maman", "Papa", "Professeur", 
+                "Patron",
+                "Partenaire",
+                "Femme",
+                "Mari",
+                "Belle-mère",
+                "Beau-père",
+                "Client",
+                "Collègue",
+                "Maman",
+                "Papa",
+                "Professeur",
                 "Harcèleur / Stalker"
             ],
             rsnList: [
-                "En retard", "Malade", "Délai manqué", 
-                "Annulation", "Urgence", "Panne de voiture", 
-                "Arrêtez de me contacter", "Comportement inapproprié"
+                "En retard",
+                "Malade",
+                "Délai manqué",
+                "Annulation",
+                "Urgence",
+                "Panne de voiture",
+                "Arrêtez de me contacter",
+                "Comportement inapproprié"
             ],
             styList: [
-                "Professionnel", "Créatif", "Argot", 
-                "Dramatique", "Formel", "Décontracté", "Excuse", 
-                "Ferme / Assertif", "Mise en garde légale", "Froid / Définitif"
+                "Professionnel",
+                "Créatif",
+                "Argot",
+                "Dramatique",
+                "Formel",
+                "Décontracté",
+                "Excuse",
+                "Ferme / Assertif",
+                "Mise en garde légale",
+                "Froid / Définitif"
             ]
         },
         'it': {
@@ -740,26 +1610,46 @@
             histEmpty: "Nessuna cronologia.",
             histClear: "CANCELLA CRONOLOGIA",
             fmtList: [
-                "SMS / WhatsApp", 
-                "Email", 
-                "Copione chiamata", 
+                "SMS / WhatsApp",
+                "Email",
+                "Copione chiamata",
                 "Slack / Teams"
             ],
             recList: [
-                "Capo", "Partner", "Moglie", "Marito", 
-                "Suocera", "Suocero", "Cliente", 
-                "Collega", "Mamma", "Papà", "Insegnante", 
+                "Capo",
+                "Partner",
+                "Moglie",
+                "Marito",
+                "Suocera",
+                "Suocero",
+                "Cliente",
+                "Collega",
+                "Mamma",
+                "Papà",
+                "Insegnante",
                 "Stalker / Molestatore"
             ],
             rsnList: [
-                "In ritardo", "Malato", "Scadenza persa", 
-                "Cancellazione", "Emergenza", "Guasto auto", 
-                "Smettila di contattarmi", "Comportamento inappropriato"
+                "In ritardo",
+                "Malato",
+                "Scadenza persa",
+                "Cancellazione",
+                "Emergenza",
+                "Guasto auto",
+                "Smettila di contattarmi",
+                "Comportamento inappropriato"
             ],
             styList: [
-                "Professionale", "Creativo", "Slang", 
-                "Drammatico", "Formale", "Informale", "Scusa", 
-                "Fermo / Assertivo", "Avvertimento legale", "Freddo / Definitivo"
+                "Professionale",
+                "Creativo",
+                "Slang",
+                "Drammatico",
+                "Formale",
+                "Informale",
+                "Scusa",
+                "Fermo / Assertivo",
+                "Avvertimento legale",
+                "Freddo / Definitivo"
             ]
         },
         'pt': {
@@ -795,26 +1685,46 @@
             histEmpty: "Ainda sem histórico.",
             histClear: "APAGAR HISTÓRICO",
             fmtList: [
-                "SMS / WhatsApp", 
-                "Email", 
-                "Roteiro de chamada", 
+                "SMS / WhatsApp",
+                "Email",
+                "Roteiro de chamada",
                 "Slack / Teams"
             ],
             recList: [
-                "Chefe", "Parceiro", "Esposa", "Marido", 
-                "Sogra", "Sogro", "Cliente", 
-                "Colega", "Mãe", "Pai", "Professor", 
+                "Chefe",
+                "Parceiro",
+                "Esposa",
+                "Marido",
+                "Sogra",
+                "Sogro",
+                "Cliente",
+                "Colega",
+                "Mãe",
+                "Pai",
+                "Professor",
                 "Stalker / Assediador"
             ],
             rsnList: [
-                "Atrasado", "Doente", "Prazo perdido", 
-                "Cancelar planos", "Emergência", "Problema no carro", 
-                "Pare de me contatar", "Comportamento inapropriado"
+                "Atrasado",
+                "Doente",
+                "Prazo perdido",
+                "Cancelar planos",
+                "Emergência",
+                "Problema no carro",
+                "Pare de me contatar",
+                "Comportamento inapropriado"
             ],
             styList: [
-                "Profissional", "Criativo", "Gíria", 
-                "Dramático", "Formal", "Casual", "Desculpa", 
-                "Firme / Assertivo", "Aviso Legal", "Frio / Definitivo"
+                "Profissional",
+                "Criativo",
+                "Gíria",
+                "Dramático",
+                "Formal",
+                "Casual",
+                "Desculpa",
+                "Firme / Assertivo",
+                "Aviso Legal",
+                "Frio / Definitivo"
             ]
         },
         'pl': {
@@ -850,26 +1760,46 @@
             histEmpty: "Brak historii.",
             histClear: "WYCZYŚĆ HISTORIĘ",
             fmtList: [
-                "SMS / WhatsApp", 
-                "Email", 
-                "Skrypt rozmowy", 
+                "SMS / WhatsApp",
+                "Email",
+                "Skrypt rozmowy",
                 "Slack / Teams"
             ],
             recList: [
-                "Szef", "Partner", "Żona", "Mąż", 
-                "Teściowa", "Teść", "Klient", 
-                "Kolega", "Mama", "Tata", "Nauczyciel", 
+                "Szef",
+                "Partner",
+                "Żona",
+                "Mąż",
+                "Teściowa",
+                "Teść",
+                "Klient",
+                "Kolega",
+                "Mama",
+                "Tata",
+                "Nauczyciel",
                 "Stalker / Natręt"
             ],
             rsnList: [
-                "Spóźnienie", "Choroba", "Termin", 
-                "Odwołanie", "Nagły wypadek", "Awaria auta", 
-                "Przestań się kontaktować", "Niestosowne zachowanie"
+                "Spóźnienie",
+                "Choroba",
+                "Termin",
+                "Odwołanie",
+                "Nagły wypadek",
+                "Awaria auta",
+                "Przestań się kontaktować",
+                "Niestosowne zachowanie"
             ],
             styList: [
-                "Profesjonalny", "Kreatywny", "Slang", 
-                "Dramatyczny", "Formalny", "Luźny", "Przepraszający", 
-                "Stanowczy / Asertywny", "Ostrzeżenie prawne", "Chłodny / Ostateczny"
+                "Profesjonalny",
+                "Kreatywny",
+                "Slang",
+                "Dramatyczny",
+                "Formalny",
+                "Luźny",
+                "Przepraszający",
+                "Stanowczy / Asertywny",
+                "Ostrzeżenie prawne",
+                "Chłodny / Ostateczny"
             ]
         },
         'nl': {
@@ -905,26 +1835,46 @@
             histEmpty: "Nog geen geschiedenis.",
             histClear: "WISSEN",
             fmtList: [
-                "SMS / WhatsApp", 
-                "Email", 
-                "Belscript", 
+                "SMS / WhatsApp",
+                "Email",
+                "Belscript",
                 "Slack / Teams"
             ],
             recList: [
-                "Baas", "Partner", "Vrouw", "Man", 
-                "Schoonmoeder", "Schoonvader", "Klant", 
-                "Collega", "Mama", "Papa", "Docent", 
+                "Baas",
+                "Partner",
+                "Vrouw",
+                "Man",
+                "Schoonmoeder",
+                "Schoonvader",
+                "Klant",
+                "Collega",
+                "Mama",
+                "Papa",
+                "Docent",
                 "Stalker / Lastigvaller"
             ],
             rsnList: [
-                "Te laat", "Ziek", "Deadline gemist", 
-                "Afzeggen", "Noodgeval", "Autopech", 
-                "Stop met contacteren", "Ongepast gedrag"
+                "Te laat",
+                "Ziek",
+                "Deadline gemist",
+                "Afzeggen",
+                "Noodgeval",
+                "Autopech",
+                "Stop met contacteren",
+                "Ongepast gedrag"
             ],
             styList: [
-                "Professioneel", "Creatief", "Straattaal", 
-                "Dramatisch", "Formeel", "Informeel", "Verontschuldigend", 
-                "Kordaat / Assertief", "Juridische waarschuwing", "Koud / Definitief"
+                "Professioneel",
+                "Creatief",
+                "Straattaal",
+                "Dramatisch",
+                "Formeel",
+                "Informeel",
+                "Verontschuldigend",
+                "Kordaat / Assertief",
+                "Juridische waarschuwing",
+                "Koud / Definitief"
             ]
         },
         'ru': {
@@ -960,26 +1910,46 @@
             histEmpty: "История пуста.",
             histClear: "ОЧИСТИТЬ ИСТОРИЮ",
             fmtList: [
-                "SMS / WhatsApp", 
-                "Email", 
-                "Сценарий звонка", 
+                "SMS / WhatsApp",
+                "Email",
+                "Сценарий звонка",
                 "Slack / Teams"
             ],
             recList: [
-                "Босс", "Партнер", "Жена", "Муж", 
-                "Теща/Свекровь", "Тесть/Свекор", "Клиент", 
-                "Коллега", "Мама", "Папа", "Учитель", 
+                "Босс",
+                "Партнер",
+                "Жена",
+                "Муж",
+                "Теща/Свекровь",
+                "Тесть/Свекор",
+                "Клиент",
+                "Коллега",
+                "Мама",
+                "Папа",
+                "Учитель",
                 "Сталкер / Преследователь"
             ],
             rsnList: [
-                "Опаздываю", "Заболел", "Срыв сроков", 
-                "Отмена планов", "ЧП в семье", "Сломалась машина", 
-                "Хватит мне писать/звонить", "Неподобающее поведение"
+                "Опаздываю",
+                "Заболел",
+                "Срыв сроков",
+                "Отмена планов",
+                "ЧП в семье",
+                "Сломалась машина",
+                "Хватит мне писать/звонить",
+                "Неподобающее поведение"
             ],
             styList: [
-                "Профессиональный", "Креативный", "Сленг", 
-                "Драматичный", "Формальный", "Неформальный", "Извиняющийся", 
-                "Жестко ассертивный", "Правовое предупреждение", "Холодный / Окончательный"
+                "Профессиональный",
+                "Креативный",
+                "Сленг",
+                "Драматичный",
+                "Формальный",
+                "Неформальный",
+                "Извиняющийся",
+                "Жестко ассертивный",
+                "Правовое предупреждение",
+                "Холодный / Окончательный"
             ]
         },
         'tr': {
@@ -1015,26 +1985,46 @@
             histEmpty: "Henüz geçmiş yok.",
             histClear: "GEÇMİŞİ SİL",
             fmtList: [
-                "SMS / WhatsApp", 
-                "E-posta", 
-                "Telefon Metni", 
+                "SMS / WhatsApp",
+                "E-posta",
+                "Telefon Metni",
                 "Slack / Teams"
             ],
             recList: [
-                "Patron", "Partner", "Eş", "Koca", 
-                "Kayınvalide", "Kayınpeder", "Müşteri", 
-                "Meslektaş", "Anne", "Baba", "Öğretmen", 
+                "Patron",
+                "Partner",
+                "Eş",
+                "Koca",
+                "Kayınvalide",
+                "Kayınpeder",
+                "Müşteri",
+                "Meslektaş",
+                "Anne",
+                "Baba",
+                "Öğretmen",
                 "Stalker / Tacizci"
             ],
             rsnList: [
-                "Geç kaldım", "Hasta", "Son tarih", 
-                "İptal", "Acil durum", "Araba arızası", 
-                "Benimle iletişime geçmeyi bırak", "Uygunsuz davranış"
+                "Geç kaldım",
+                "Hasta",
+                "Son tarih",
+                "İptal",
+                "Acil durum",
+                "Araba arızası",
+                "Benimle iletişime geçmeyi bırak",
+                "Uygunsuz davranış"
             ],
             styList: [
-                "Profesyonel", "Yaratıcı", "Argo", 
-                "Dramatik", "Resmi", "Rahat", "Özür dileyen", 
-                "Sert / Kararlı", "Yasal Uyarı", "Soğuk / Kesin"
+                "Profesyonel",
+                "Yaratıcı",
+                "Argo",
+                "Dramatik",
+                "Resmi",
+                "Rahat",
+                "Özür dileyen",
+                "Sert / Kararlı",
+                "Yasal Uyarı",
+                "Soğuk / Kesin"
             ]
         },
         'ar': {
@@ -1070,26 +2060,46 @@
             histEmpty: "لا يوجد سجل.",
             histClear: "مسح السجل",
             fmtList: [
-                "SMS / WhatsApp", 
-                "بريد إلكتروني", 
-                "نص مكالمة هاتفية", 
+                "SMS / WhatsApp",
+                "بريد إلكتروني",
+                "نص مكالمة هاتفية",
                 "Slack / Teams"
             ],
             recList: [
-                "المدير", "الشريك", "الزوجة", "الزوج", 
-                "الحماة", "الحمو", "العميل", 
-                "الزميل", "أمي", "أبي", "المعلم", 
+                "المدير",
+                "الشريك",
+                "الزوجة",
+                "الزوج",
+                "الحماة",
+                "الحمو",
+                "العميل",
+                "الزميل",
+                "أمي",
+                "أبي",
+                "المعلم",
                 "ملاحق / متحرش"
             ],
             rsnList: [
-                "تأخرت", "مريض", "فوات الموعد", 
-                "إلغاء", "طوارئ عائلية", "عطل سيارة", 
-                "توقف عن الاتصال بي", "سلوك غير لائق"
+                "تأخرت",
+                "مريض",
+                "فوات الموعد",
+                "إلغاء",
+                "طوارئ عائلية",
+                "عطل سيارة",
+                "توقف عن الاتصال بي",
+                "سلوك غير لائق"
             ],
             styList: [
-                "مهني", "إبداعي", "عامية", 
-                "درامي", "رسمي", "غير رسمي", "اعتذاري", 
-                "حازم وصارم", "تحذير قانوني", "بارد ونهائي"
+                "مهني",
+                "إبداعي",
+                "عامية",
+                "درامي",
+                "رسمي",
+                "غير رسمي",
+                "اعتذاري",
+                "حازم وصارم",
+                "تحذير قانوني",
+                "بارد ونهائي"
             ]
         },
         'zh': {
@@ -1125,26 +2135,46 @@
             histEmpty: "暂无历史记录",
             histClear: "清除历史",
             fmtList: [
-                "WeChat / SMS", 
-                "电子邮件", 
-                "电话脚本", 
+                "WeChat / SMS",
+                "电子邮件",
+                "电话脚本",
                 "Slack / Teams"
             ],
             recList: [
-                "老板", "伴侣", "妻子", "丈夫", 
-                "岳母/婆婆", "岳父/公公", "客户", 
-                "同事", "妈妈", "爸爸", "老师", 
+                "老板",
+                "伴侣",
+                "妻子",
+                "丈夫",
+                "岳母/婆婆",
+                "岳父/公公",
+                "客户",
+                "同事",
+                "妈妈",
+                "爸爸",
+                "老师",
                 "跟踪狂 / 骚扰者"
             ],
             rsnList: [
-                "迟到", "生病", "错过截止", 
-                "取消计划", "家庭紧急", "车坏了", 
-                "停止联系我", "不当行为"
+                "迟到",
+                "生病",
+                "错过截止",
+                "取消计划",
+                "家庭紧急",
+                "车坏了",
+                "停止联系我",
+                "不当行为"
             ],
             styList: [
-                "专业", "创意", "俚语", 
-                "戏剧性", "正式", "休闲", "抱歉", 
-                "坚定强硬", "法律警告", "冷酷绝情"
+                "专业",
+                "创意",
+                "俚语",
+                "戏剧性",
+                "正式",
+                "休闲",
+                "抱歉",
+                "坚定强硬",
+                "法律警告",
+                "冷酷绝情"
             ]
         },
         'ja': {
@@ -1180,26 +2210,46 @@
             histEmpty: "履歴はありません。",
             histClear: "履歴を削除",
             fmtList: [
-                "LINE / SMS", 
-                "Eメール", 
-                "電話の台本", 
+                "LINE / SMS",
+                "Eメール",
+                "電話の台本",
                 "Slack / Teams"
             ],
             recList: [
-                "上司", "パートナー", "妻", "夫", 
-                "義母", "義父", "クライアント", 
-                "同僚", "母", "父", "先生", 
+                "上司",
+                "パートナー",
+                "妻",
+                "夫",
+                "義母",
+                "義父",
+                "クライアント",
+                "同僚",
+                "母",
+                "父",
+                "先生",
                 "ストーカー / 嫌がらせ"
             ],
             rsnList: [
-                "遅刻", "病気", "期限切れ", 
-                "キャンセル", "家族の緊急", "車の故障", 
-                "連絡しないでください", "不適切な行動"
+                "遅刻",
+                "病気",
+                "期限切れ",
+                "キャンセル",
+                "家族の緊急",
+                "車の故障",
+                "連絡しないでください",
+                "不適切な行動"
             ],
             styList: [
-                "プロ", "クリエイティブ", "スラング", 
-                "ドラマチック", "フォーマル", "カジュアル", "謝罪", 
-                "毅然とした態度", "法的警告", "冷酷 / 最終的"
+                "プロ",
+                "クリエイティブ",
+                "スラング",
+                "ドラマチック",
+                "フォーマル",
+                "カジュアル",
+                "謝罪",
+                "毅然とした態度",
+                "法的警告",
+                "冷酷 / 最終的"
             ]
         },
         'ko': {
@@ -1235,26 +2285,46 @@
             histEmpty: "기록이 없습니다.",
             histClear: "기록 삭제",
             fmtList: [
-                "KakaoTalk / SMS", 
-                "이메일", 
-                "전화 대본", 
+                "KakaoTalk / SMS",
+                "이메일",
+                "전화 대본",
                 "Slack / Teams"
             ],
             recList: [
-                "상사", "파트너", "아내", "남편", 
-                "장모/시어머니", "장인/시아버지", "고객", 
-                "동료", "엄마", "아빠", "선생님", 
+                "상사",
+                "파트너",
+                "아내",
+                "남편",
+                "장모/시어머니",
+                "장인/시아버지",
+                "고객",
+                "동료",
+                "엄마",
+                "아빠",
+                "선생님",
                 "스토커 / 괴롭힘"
             ],
             rsnList: [
-                "지각", "아픔", "마감 놓침", 
-                "취소", "가족 비상", "차 고장", 
-                "연락하지 마세요", "부적절한 행동"
+                "지각",
+                "아픔",
+                "마감 놓침",
+                "취소",
+                "가족 비상",
+                "차 고장",
+                "연락하지 마세요",
+                "부적절한 행동"
             ],
             styList: [
-                "전문적", "창의적", "속어", 
-                "드라마틱", "공식적", "캐주얼", "사과", 
-                "단호하고 강력하게", "법적 경고", "차갑고 단호하게"
+                "전문적",
+                "창의적",
+                "속어",
+                "드라마틱",
+                "공식적",
+                "캐주얼",
+                "사과",
+                "단호하고 강력하게",
+                "법적 경고",
+                "차갑고 단호하게"
             ]
         },
         'hi': {
@@ -1290,26 +2360,46 @@
             histEmpty: "कोई इतिहास नहीं।",
             histClear: "इतिहास साफ़ करें",
             fmtList: [
-                "SMS / WhatsApp", 
-                "ईमेल", 
-                "फोन कॉल स्क्रिप्ट", 
+                "SMS / WhatsApp",
+                "ईमेल",
+                "फोन कॉल स्क्रिप्ट",
                 "Slack / Teams"
             ],
             recList: [
-                "बॉस", "साथी", "पत्नी", "पति", 
-                "सास", "ससुर", "ग्राहक", 
-                "सहकर्मी", "माँ", "पिता", "अध्यापक", 
+                "बॉस",
+                "साथी",
+                "पत्नी",
+                "पति",
+                "सास",
+                "ससुर",
+                "ग्राहक",
+                "सहकर्मी",
+                "माँ",
+                "पिता",
+                "अध्यापक",
                 "स्टॉकर / परेशान करने वाला"
             ],
             rsnList: [
-                "देर हो रही है", "बीमार", "समय सीमा चूकी", 
-                "योजना रद्द", "पारिवारिक आपातकाल", "कार खराब", 
-                "मुझसे संपर्क करना बंद करो", "अनुचित व्यवहार"
+                "देर हो रही है",
+                "बीमार",
+                "समय सीमा चूकी",
+                "योजना रद्द",
+                "पारिवारिक आपातकाल",
+                "कार खराब",
+                "मुझसे संपर्क करना बंद करो",
+                "अनुचित व्यवहार"
             ],
             styList: [
-                "पेशेवर", "रचनात्मक", "स्लैंग", 
-                "नाटकीय", "औपचारिक", "अनौपचारिक", "क्षमाप्रार्थी", 
-                "दृढ़ और मुखर", "कानूनी चेतावनी", "ठंडा और अंतिम"
+                "पेशेवर",
+                "रचनात्मक",
+                "स्लैंग",
+                "नाटकीय",
+                "औपचारिक",
+                "अनौपचारिक",
+                "क्षमाप्रार्थी",
+                "दृढ़ और मुखर",
+                "कानूनी चेतावनी",
+                "ठंडा और अंतिम"
             ]
         },
         'sv': {
@@ -1345,26 +2435,46 @@
             histEmpty: "Ingen historik än.",
             histClear: "RENSA HISTORIK",
             fmtList: [
-                "SMS / WhatsApp", 
-                "E-post", 
-                "Telefonskript", 
+                "SMS / WhatsApp",
+                "E-post",
+                "Telefonskript",
                 "Slack / Teams"
             ],
             recList: [
-                "Chef", "Partner", "Fru", "Make", 
-                "Svärmor", "Svärfar", "Kund", 
-                "Kollega", "Mamma", "Pappa", "Lärare", 
+                "Chef",
+                "Partner",
+                "Fru",
+                "Make",
+                "Svärmor",
+                "Svärfar",
+                "Kund",
+                "Kollega",
+                "Mamma",
+                "Pappa",
+                "Lärare",
                 "Stalker / Trakasserare"
             ],
             rsnList: [
-                "Försenad", "Sjuk", "Missad deadline", 
-                "Avboka", "Nödläge", "Bilproblem", 
-                "Sluta kontakta mig", "Olämpligt beteende"
+                "Försenad",
+                "Sjuk",
+                "Missad deadline",
+                "Avboka",
+                "Nödläge",
+                "Bilproblem",
+                "Sluta kontakta mig",
+                "Olämpligt beteende"
             ],
             styList: [
-                "Professionell", "Kreativ", "Slang", 
-                "Dramatisk", "Formell", "Avslappnad", "Ursäktande", 
-                "Bestämd / Bestämd", "Juridisk varning", "Kall / Definitiv"
+                "Professionell",
+                "Kreativ",
+                "Slang",
+                "Dramatisk",
+                "Formell",
+                "Avslappnad",
+                "Ursäktande",
+                "Bestämd / Bestämd",
+                "Juridisk varning",
+                "Kall / Definitiv"
             ]
         },
         'no': {
@@ -1400,26 +2510,46 @@
             histEmpty: "Ingen historikk.",
             histClear: "SLETT HISTORIKK",
             fmtList: [
-                "SMS / WhatsApp", 
-                "E-post", 
-                "Telefonskript", 
+                "SMS / WhatsApp",
+                "E-post",
+                "Telefonskript",
                 "Slack / Teams"
             ],
             recList: [
-                "Sjef", "Partner", "Kone", "Mann", 
-                "Svigermor", "Svigerfar", "Kunde", 
-                "Kollega", "Mamma", "Pappa", "Lærer", 
+                "Sjef",
+                "Partner",
+                "Kone",
+                "Mann",
+                "Svigermor",
+                "Svigerfar",
+                "Kunde",
+                "Kollega",
+                "Mamma",
+                "Pappa",
+                "Lærer",
                 "Stalker / Trakasserer"
             ],
             rsnList: [
-                "Forsinket", "Syk", "Frist brutt", 
-                "Avlysning", "Nødstilfelle", "Biltrøbbel", 
-                "Slutt å kontakte meg", "Upassende oppførsel"
+                "Forsinket",
+                "Syk",
+                "Frist brutt",
+                "Avlysning",
+                "Nødstilfelle",
+                "Biltrøbbel",
+                "Slutt å kontakte meg",
+                "Upassende oppførsel"
             ],
             styList: [
-                "Profesjonell", "Kreativ", "Slang", 
-                "Dramatisk", "Formell", "Uformell", "Unnskyldende", 
-                "Fast / Bestemt", "Juridisk advarsel", "Kald / Definitiv"
+                "Profesjonell",
+                "Kreativ",
+                "Slang",
+                "Dramatisk",
+                "Formell",
+                "Uformell",
+                "Unnskyldende",
+                "Fast / Bestemt",
+                "Juridisk advarsel",
+                "Kald / Definitiv"
             ]
         },
         'da': {
@@ -1455,26 +2585,46 @@
             histEmpty: "Ingen historik.",
             histClear: "RYD HISTORIK",
             fmtList: [
-                "SMS / WhatsApp", 
-                "E-mail", 
-                "Telefonskript", 
+                "SMS / WhatsApp",
+                "E-mail",
+                "Telefonskript",
                 "Slack / Teams"
             ],
             recList: [
-                "Chef", "Partner", "Kone", "Mand", 
-                "Sviggermor", "Svigerfar", "Kunde", 
-                "Kollega", "Mor", "Far", "Lærer", 
+                "Chef",
+                "Partner",
+                "Kone",
+                "Mand",
+                "Sviggermor",
+                "Svigerfar",
+                "Kunde",
+                "Kollega",
+                "Mor",
+                "Far",
+                "Lærer",
                 "Stalker / Chikanør"
             ],
             rsnList: [
-                "Forsinket", "Syg", "Deadline overskredet", 
-                "Aflysning", "Nødsituation", "Bilproblemer", 
-                "Stop med at kontakte mig", "Upassende adfærd"
+                "Forsinket",
+                "Syg",
+                "Deadline overskredet",
+                "Aflysning",
+                "Nødsituation",
+                "Bilproblemer",
+                "Stop med at kontakte mig",
+                "Upassende adfærd"
             ],
             styList: [
-                "Professionel", "Kreativ", "Slang", 
-                "Dramatisk", "Formel", "Afslappet", "Undskyldende", 
-                "Fast / Bestemt", "Juridisk advarsel", "Kold / Definitiv"
+                "Professionel",
+                "Kreativ",
+                "Slang",
+                "Dramatisk",
+                "Formel",
+                "Afslappet",
+                "Undskyldende",
+                "Fast / Bestemt",
+                "Juridisk advarsel",
+                "Kold / Definitiv"
             ]
         },
         'fi': {
@@ -1510,26 +2660,46 @@
             histEmpty: "Ei historiaa.",
             histClear: "TYHJENNÄ HISTORIA",
             fmtList: [
-                "SMS / WhatsApp", 
-                "Sähköposti", 
-                "Puhelukäsikirjoitus", 
+                "SMS / WhatsApp",
+                "Sähköposti",
+                "Puhelukäsikirjoitus",
                 "Slack / Teams"
             ],
             recList: [
-                "Pomo", "Kumppani", "Vaimo", "Mies", 
-                "Anoppi", "Appi", "Asiakas", 
-                "Kollega", "Äiti", "Isä", "Opettaja", 
+                "Pomo",
+                "Kumppani",
+                "Vaimo",
+                "Mies",
+                "Anoppi",
+                "Appi",
+                "Asiakas",
+                "Kollega",
+                "Äiti",
+                "Isä",
+                "Opettaja",
                 "Häirikkö / Stalker"
             ],
             rsnList: [
-                "Myöhässä", "Sairas", "Määräaika", 
-                "Peruutus", "Hätätilanne", "Auto-ongelma", 
-                "Lopeta yhteydenotto", "Sopimaton käytös"
+                "Myöhässä",
+                "Sairas",
+                "Määräaika",
+                "Peruutus",
+                "Hätätilanne",
+                "Auto-ongelma",
+                "Lopeta yhteydenotto",
+                "Sopimaton käytös"
             ],
             styList: [
-                "Ammattimainen", "Luova", "Slangi", 
-                "Dramaattinen", "Virallinen", "Rento", "Anteeksipyytelevä", 
-                "Luja / Päättäväinen", "Oikeudellinen varoitus", "Kylmä / Lopullinen"
+                "Ammattimainen",
+                "Luova",
+                "Slangi",
+                "Dramaattinen",
+                "Virallinen",
+                "Rento",
+                "Anteeksipyytelevä",
+                "Luja / Päättäväinen",
+                "Oikeudellinen varoitus",
+                "Kylmä / Lopullinen"
             ]
         },
         'el': {
@@ -1565,26 +2735,46 @@
             histEmpty: "Κανένα ιστορικό.",
             histClear: "ΔΙΑΓΡΑΦΗ ΙΣΤΟΡΙΚΟΥ",
             fmtList: [
-                "SMS / WhatsApp", 
-                "Email", 
-                "Σενάριο Κλήσης", 
+                "SMS / WhatsApp",
+                "Email",
+                "Σενάριο Κλήσης",
                 "Slack / Teams"
             ],
             recList: [
-                "Αφεντικό", "Σύντροφος", "Σύζυγος", "Σύζυγος (Α)", 
-                "Πεθερά", "Πεθερός", "Πελάτης", 
-                "Συνάδελφος", "Μαμά", "Μπαμπάς", "Δάσκαλος", 
+                "Αφεντικό",
+                "Σύντροφος",
+                "Σύζυγος",
+                "Σύζυγος (Α)",
+                "Πεθερά",
+                "Πεθερός",
+                "Πελάτης",
+                "Συνάδελφος",
+                "Μαμά",
+                "Μπαμπάς",
+                "Δάσκαλος",
                 "Stalker / Παρενόχληση"
             ],
             rsnList: [
-                "Αργοπορημένος", "Άρρωστος", "Προθεσμία", 
-                "Ακύρωση", "Επείγον", "Πρόβλημα αυτοκινήτου", 
-                "Σταμάτα να επικοινωνείς", "Ανάρμοστη συμπεριφορά"
+                "Αργοπορημένος",
+                "Άρρωστος",
+                "Προθεσμία",
+                "Ακύρωση",
+                "Επείγον",
+                "Πρόβλημα αυτοκινήτου",
+                "Σταμάτα να επικοινωνείς",
+                "Ανάρμοστη συμπεριφορά"
             ],
             styList: [
-                "Επαγγελματικό", "Δημιουργικό", "Αργκό", 
-                "Δραματικό", "Επίσημο", "Χαλαρό", "Απολογητικό", 
-                "Σταθερό / Κατηγορηματικό", "Νομική προειδοποίηση", "Ψυχρό / Οριστικό"
+                "Επαγγελματικό",
+                "Δημιουργικό",
+                "Αργκό",
+                "Δραματικό",
+                "Επίσημο",
+                "Χαλαρό",
+                "Απολογητικό",
+                "Σταθερό / Κατηγορηματικό",
+                "Νομική προειδοποίηση",
+                "Ψυχρό / Οριστικό"
             ]
         },
         'ro': {
@@ -1620,26 +2810,46 @@
             histEmpty: "Fără istoric.",
             histClear: "ȘTERGE ISTORIC",
             fmtList: [
-                "SMS / WhatsApp", 
-                "Email", 
-                "Scenariu Apel", 
+                "SMS / WhatsApp",
+                "Email",
+                "Scenariu Apel",
                 "Slack / Teams"
             ],
             recList: [
-                "Șef", "Partener", "Soție", "Soț", 
-                "Soacră", "Socru", "Client", 
-                "Coleg", "Mama", "Tata", "Profesor", 
+                "Șef",
+                "Partener",
+                "Soție",
+                "Soț",
+                "Soacră",
+                "Socru",
+                "Client",
+                "Coleg",
+                "Mama",
+                "Tata",
+                "Profesor",
                 "Stalker / Hărțuitor"
             ],
             rsnList: [
-                "Întârziere", "Bolnav", "Termen limită", 
-                "Anulare", "Urgență", "Problemă auto", 
-                "Nu mă mai contacta", "Comportament inadecvat"
+                "Întârziere",
+                "Bolnav",
+                "Termen limită",
+                "Anulare",
+                "Urgență",
+                "Problemă auto",
+                "Nu mă mai contacta",
+                "Comportament inadecvat"
             ],
             styList: [
-                "Profesional", "Creativ", "Argou", 
-                "Dramatic", "Formal", "Lejer", "Scuze", 
-                "Ferm / Asertiv", "Avertisment legal", "Rece / Definitiv"
+                "Profesional",
+                "Creativ",
+                "Argou",
+                "Dramatic",
+                "Formal",
+                "Lejer",
+                "Scuze",
+                "Ferm / Asertiv",
+                "Avertisment legal",
+                "Rece / Definitiv"
             ]
         },
         'default': {
@@ -1675,55 +2885,87 @@
             histEmpty: "No history yet.",
             histClear: "CLEAR",
             fmtList: [
-                "SMS / WhatsApp", 
-                "Email", 
-                "Phone Call Script", 
+                "SMS / WhatsApp",
+                "Email",
+                "Phone Call Script",
                 "Slack / Teams"
             ],
             recList: [
-                "Boss", "Partner", "Wife", "Husband", 
-                "Mother-in-law", "Father-in-law", "Client", 
-                "Colleague", "Mom", "Dad", "Teacher", 
+                "Boss",
+                "Partner",
+                "Wife",
+                "Husband",
+                "Mother-in-law",
+                "Father-in-law",
+                "Client",
+                "Colleague",
+                "Mom",
+                "Dad",
+                "Teacher",
                 "Stalker"
             ],
             rsnList: [
-                "Running Late", "Feeling Sick", "Missed Deadline", 
-                "Canceling Plans", "Family Emergency", "Car Trouble", 
-                "Stop contacting me", "Inappropriate behavior"
+                "Running Late",
+                "Feeling Sick",
+                "Missed Deadline",
+                "Canceling Plans",
+                "Family Emergency",
+                "Car Trouble",
+                "Stop contacting me",
+                "Inappropriate behavior"
             ],
             styList: [
-                "Professional", "Creative / Funny", "Slang / Street", 
-                "Dramatic", "Strictly Formal", "Casual", "Apologetic", 
-                "Firm & Assertive", "Legal Warning", "Cold & Final"
+                "Professional",
+                "Creative / Funny",
+                "Slang / Street",
+                "Dramatic",
+                "Strictly Formal",
+                "Casual",
+                "Apologetic",
+                "Firm & Assertive",
+                "Legal Warning",
+                "Cold & Final"
             ]
         }
     };
 
-    function getTexts(lang) { return translations[lang] || translations['default']; }
+    function getTexts(lang) { 
+        return translations[lang] || translations['default']; 
+    }
 
     function translateField(id, oldList, newList) {
         try {
             const input = document.getElementById(id);
             if (!input.value || !oldList || !newList) return;
             const index = oldList.indexOf(input.value);
-            if (index !== -1 && newList[index]) { input.value = newList[index]; }
-        } catch (e) { console.warn("Translation skip for:", id); }
+            if (index !== -1 && newList[index]) { 
+                input.value = newList[index]; 
+            }
+        } catch (e) { 
+            console.warn("Translation skip for:", id); 
+        }
     }
 
-    // V5.2: LOGIKA PRO ZOBRAZENÍ STALKER DŮVODŮ A STYLŮ
     function getContextualReasons(t, adresatValue) {
         if (!adresatValue || !t.recList || !t.rsnList) return t.rsnList || [];
         let idx = t.recList.findIndex(r => r.toLowerCase() === adresatValue.toLowerCase());
         
-        // 11 je index pro "Stalker"
-        if (idx === 11) return [t.rsnList[6], t.rsnList[7], t.rsnList[0]]; 
+        // Stalker index je přesně 11
+        if (idx === 11) return [
+            t.rsnList[6], 
+            t.rsnList[7], 
+            t.rsnList[0]
+        ]; 
 
         const workIndices = [0, 6, 7, 10];
         let order = workIndices.includes(idx) ? [2, 1, 0, 5, 4, 3] : [3, 4, 0, 5, 1, 2]; 
         
         let contextualList = order.map(i => t.rsnList[i]).filter(Boolean);
-        // Add remaining (excluding stalker specific 6 and 7)
-        t.rsnList.forEach((item, i) => { if(!contextualList.includes(item) && i < 6) contextualList.push(item); });
+        t.rsnList.forEach((item, i) => { 
+            if(!contextualList.includes(item) && i < 6) {
+                contextualList.push(item); 
+            }
+        });
         
         return contextualList;
     }
@@ -1732,10 +2974,14 @@
         if (!adresatValue || !t.recList || !t.styList) return t.styList || [];
         let idx = t.recList.findIndex(r => r.toLowerCase() === adresatValue.toLowerCase());
         
-        // 11 je index pro "Stalker"
-        if (idx === 11) return [t.styList[7], t.styList[8], t.styList[9], t.styList[0]]; 
+        // Stalker index je přesně 11
+        if (idx === 11) return [
+            t.styList[7], 
+            t.styList[8], 
+            t.styList[9], 
+            t.styList[0]
+        ]; 
         
-        // Exclude stalker specific (7, 8, 9) for normal requests
         return t.styList.slice(0, 7);
     }
 
@@ -1748,15 +2994,26 @@
         const arrow = wrapper.querySelector('.dropdown-arrow');
         if (!btn || !arrow) return;
         
-        if (input.value.length > 0) { btn.style.display = 'block'; arrow.style.display = 'none'; } 
-        else { btn.style.display = 'none'; arrow.style.display = 'block'; }
+        if (input.value.length > 0) { 
+            btn.style.display = 'block'; 
+            arrow.style.display = 'none'; 
+        } else { 
+            btn.style.display = 'none'; 
+            arrow.style.display = 'block'; 
+        }
     }
 
     function clearInput(id, event) {
-        if(event) { event.stopPropagation(); event.preventDefault(); }
+        if(event) { 
+            event.stopPropagation(); 
+            event.preventDefault(); 
+        }
         const input = document.getElementById(id);
-        input.value = ''; toggleReset(id); 
-        setTimeout(() => { input.focus(); }, 10); 
+        input.value = ''; 
+        toggleReset(id); 
+        setTimeout(() => { 
+            input.focus(); 
+        }, 10); 
     }
 
     function showDropdown(id) {
@@ -1780,101 +3037,193 @@
             filteredItems.forEach((item, index) => {
                 const div = document.createElement('div');
                 div.className = 'dropdown-item'; 
-                // Zvýraznění tvrdých možností červeně
                 if ((id === 'kategorie' && (item === t.rsnList[6] || item === t.rsnList[7])) || 
                     (id === 'styl' && (item === t.styList[7] || item === t.styList[8] || item === t.styList[9]))) {
                     div.classList.add('item-alert');
                 }
                 div.innerText = item;
-                div.onmousedown = (e) => { e.preventDefault(); }
+                div.onmousedown = (e) => { 
+                    e.preventDefault(); 
+                }
                 div.onclick = function(e) {
-                    e.stopPropagation(); input.value = item; toggleReset(id); closeAllDropdowns();
-                    // Zabarvení inputu do červena při stalker módu
-                    if (id === 'adresat' && item === t.recList[11]) { input.classList.add('stalker-alert'); } 
-                    else if (id === 'adresat') { input.classList.remove('stalker-alert'); }
-                    if (id === 'adresat') setTimeout(() => document.getElementById('kategorie').focus(), 50);
-                    if (id === 'kategorie') setTimeout(() => document.getElementById('styl').focus(), 50);
+                    e.stopPropagation(); 
+                    input.value = item; 
+                    toggleReset(id); 
+                    closeAllDropdowns();
+                    if (id === 'adresat' && item === t.recList[11]) { 
+                        input.classList.add('stalker-alert'); 
+                    } else if (id === 'adresat') { 
+                        input.classList.remove('stalker-alert'); 
+                    }
+                    if (id === 'adresat') {
+                        setTimeout(() => document.getElementById('kategorie').focus(), 50);
+                    }
+                    if (id === 'kategorie') {
+                        setTimeout(() => document.getElementById('styl').focus(), 50);
+                    }
                 };
                 list.appendChild(div);
             });
             list.style.display = 'block';
-            input.style.borderBottomLeftRadius = '0'; input.style.borderBottomRightRadius = '0'; input.style.borderColor = 'var(--gold)';
-        } else { list.style.display = 'none'; }
+            input.style.borderBottomLeftRadius = '0'; 
+            input.style.borderBottomRightRadius = '0'; 
+            input.style.borderColor = 'var(--gold)';
+        } else { 
+            list.style.display = 'none'; 
+        }
     }
 
     function toggleDropdown(id, event) {
-        if(event) { event.stopPropagation(); event.preventDefault(); }
+        if(event) { 
+            event.stopPropagation(); 
+            event.preventDefault(); 
+        }
         const list = document.getElementById('drop-' + id);
-        if (list.style.display === 'block') { closeAllDropdowns(); } else { document.getElementById(id).focus(); showDropdown(id); }
+        if (list.style.display === 'block') { 
+            closeAllDropdowns(); 
+        } else { 
+            document.getElementById(id).focus(); 
+            showDropdown(id); 
+        }
     }
-    function filterDropdown(id) { toggleReset(id); showDropdown(id); }
+    
+    function filterDropdown(id) { 
+        toggleReset(id); 
+        showDropdown(id); 
+    }
 
     function closeAllDropdowns() {
-        document.querySelectorAll('.custom-dropdown-list, .lang-grid-dropdown').forEach(l => l.style.display = 'none');
-        document.querySelectorAll('.smart-input').forEach(i => { i.style.borderBottomLeftRadius = '12px'; i.style.borderBottomRightRadius = '12px'; i.style.borderColor = 'rgba(212, 175, 55, 0.3)'; });
+        document.querySelectorAll('.custom-dropdown-list, .lang-grid-dropdown').forEach(l => {
+            l.style.display = 'none';
+        });
+        document.querySelectorAll('.smart-input').forEach(i => { 
+            i.style.borderBottomLeftRadius = '12px'; 
+            i.style.borderBottomRightRadius = '12px'; 
+            i.style.borderColor = 'rgba(212, 175, 55, 0.3)'; 
+        });
     }
 
-    document.addEventListener('click', function(e) { if (!e.target.closest('.smart-input-wrapper') && !e.target.closest('.lang-wrapper')) { closeAllDropdowns(); } });
+    document.addEventListener('click', function(e) { 
+        if (!e.target.closest('.smart-input-wrapper') && !e.target.closest('.lang-wrapper')) { 
+            closeAllDropdowns(); 
+        } 
+    });
 
     function toggleLangDropdown(event) {
-        if(event) { event.stopPropagation(); event.preventDefault(); }
+        if(event) { 
+            event.stopPropagation(); 
+            event.preventDefault(); 
+        }
         const list = document.getElementById('lang-grid');
-        closeAllDropdowns(); if (list.style.display !== 'grid') { list.style.display = 'grid'; }
+        closeAllDropdowns(); 
+        if (list.style.display !== 'grid') { 
+            list.style.display = 'grid'; 
+        }
     }
 
     function initFlags() {
-        const grid = document.getElementById('lang-grid'); grid.innerHTML = '';
+        const grid = document.getElementById('lang-grid'); 
+        grid.innerHTML = '';
         appLanguages.forEach(lang => {
-            const btn = document.createElement('div'); btn.className = 'lang-grid-item'; btn.title = lang.name; 
+            const btn = document.createElement('div'); 
+            btn.className = 'lang-grid-item'; 
+            btn.title = lang.name; 
             btn.innerHTML = `<img src="https://flagcdn.com/w40/${lang.iso}.png" class="flag-icon" alt="${lang.code}">`;
-            btn.onclick = (e) => { e.stopPropagation(); setLanguage(lang.code, lang.iso); document.getElementById('lang-grid').style.display = 'none'; };
+            btn.onclick = (e) => { 
+                e.stopPropagation(); 
+                setLanguage(lang.code, lang.iso); 
+                document.getElementById('lang-grid').style.display = 'none'; 
+            };
             grid.appendChild(btn);
         });
     }
 
     function setLanguage(newLangCode, isoCode) {
-        const oldLang = currentLang; currentLang = newLangCode; localStorage.setItem('yesGeniusLang', currentLang);
+        const oldLang = currentLang; 
+        currentLang = newLangCode; 
+        localStorage.setItem('yesGeniusLang', currentLang);
+        
         document.getElementById('current-flag').innerHTML = `<img src="https://flagcdn.com/w40/${isoCode}.png" class="flag-icon" alt="${newLangCode}">`;
         
-        const t = getTexts(currentLang); const oldT = getTexts(oldLang);
-        translateField('format', oldT.fmtList, t.fmtList); translateField('adresat', oldT.recList, t.recList);
-        translateField('kategorie', oldT.rsnList, t.rsnList); translateField('styl', oldT.styList, t.styList);
-        if(!document.getElementById('format').value && t.fmtList) { document.getElementById('format').value = t.fmtList[0]; }
-
-        document.getElementById('ui-subtitle').innerText = t.sub; document.getElementById('ui-tagline').innerHTML = t.tagline; 
-        document.getElementById('lbl-format').innerText = t.fmt; document.getElementById('lbl-target').innerText = t.tgt;
-        document.getElementById('lbl-reason').innerText = t.rsn; document.getElementById('lbl-style').innerText = t.sty;
-        document.getElementById('lbl-results').innerText = t.res; document.getElementById('ui-hist-btn').innerText = `🕒 ${t.histBtn}`;
-        document.getElementById('ui-hist-title').innerText = t.histT; document.getElementById('ui-hist-clear').innerText = t.histClear;
+        const t = getTexts(currentLang); 
+        const oldT = getTexts(oldLang);
         
-        document.getElementById('vip-title').innerText = t.vipTitle; document.getElementById('b1').innerText = t.b1; 
-        document.getElementById('b2').innerText = t.b2; document.getElementById('b3').innerText = t.b3; 
-        document.getElementById('b4').innerText = t.b4; document.getElementById('vip-btn-main').innerText = t.vMain;
+        translateField('format', oldT.fmtList, t.fmtList); 
+        translateField('adresat', oldT.recList, t.recList);
+        translateField('kategorie', oldT.rsnList, t.rsnList); 
+        translateField('styl', oldT.styList, t.styList);
         
-        document.getElementById('ui-locked-title').innerText = t.lockT; document.getElementById('ui-locked-text').innerText = t.lockX;
-        document.getElementById('paywall-btn-main').innerText = t.vMain; document.getElementById('ui-have-key').innerText = t.haveKey;
-        document.getElementById('ui-key-title').innerText = t.keyT; document.getElementById('ui-key-desc').innerText = t.keyD;
-        document.getElementById('ui-key-btn').innerText = t.keyB; document.getElementById('ui-success-title').innerText = t.succT;
-        document.getElementById('ui-success-text').innerText = t.succD; document.getElementById('ui-success-btn').innerText = t.succB;
-        document.getElementById('privacy-note').innerText = t.privacy;
+        if(!document.getElementById('format').value && t.fmtList) { 
+            document.getElementById('format').value = t.fmtList[0]; 
+        }
 
-        document.querySelectorAll('.smart-input').forEach(inp => { if(inp.id !== 'format') { inp.placeholder = t.ph; } toggleReset(inp.id); });
+        document.getElementById('ui-subtitle').innerText = t.sub; 
+        document.getElementById('ui-tagline').innerHTML = t.tagline; 
+        document.getElementById('lbl-format').innerText = t.fmt; 
+        document.getElementById('lbl-target').innerText = t.tgt;
+        document.getElementById('lbl-reason').innerText = t.rsn; 
+        document.getElementById('lbl-style').innerText = t.sty;
+        document.getElementById('lbl-results').innerText = t.res; 
+        document.getElementById('ui-hist-btn').innerText = `🕒 ${t.histBtn}`;
+        document.getElementById('ui-hist-title').innerText = t.histT; 
+        document.getElementById('ui-hist-clear').innerText = t.histClear;
+        
+        document.getElementById('vip-title').innerText = t.vipTitle; 
+        document.getElementById('b1').innerText = t.b1; 
+        document.getElementById('b2').innerText = t.b2; 
+        document.getElementById('b3').innerText = t.b3; 
+        document.getElementById('b4').innerText = t.b4; 
+        document.getElementById('vip-btn-main').innerText = t.vMain;
+        
+        document.getElementById('ui-locked-title').innerText = t.lockT; 
+        document.getElementById('ui-locked-text').innerText = t.lockX;
+        document.getElementById('paywall-btn-main').innerText = t.vMain; 
+        document.getElementById('ui-have-key').innerText = t.haveKey;
+        document.getElementById('ui-key-title').innerText = t.keyT; 
+        document.getElementById('ui-key-desc').innerText = t.keyD;
+        document.getElementById('ui-key-btn').innerText = t.keyB; 
+        document.getElementById('ui-success-title').innerText = t.succT;
+        document.getElementById('ui-success-text').innerText = t.succD; 
+        document.getElementById('ui-success-btn').innerText = t.succB;
+        
+        document.getElementById('privacy-note').innerText = t.privacy + " | v5.2";
+
+        document.querySelectorAll('.smart-input').forEach(inp => { 
+            if(inp.id !== 'format') { 
+                inp.placeholder = t.ph; 
+            } 
+            toggleReset(inp.id); 
+        });
+        
         updateButtonStatus();
     }
 
     function updateButtonStatus() {
-        const t = getTexts(currentLang); let zbyva = 3 - freeTries;
-        if (userLicense) { document.getElementById('btn-verb').innerHTML = `${t.verb}`; } 
-        else if (zbyva > 0) { document.getElementById('btn-verb').innerHTML = `${t.verb} <span style="font-weight: 300; opacity: 0.9; font-size: 0.85em;">(${zbyva} FREE)</span>`; } 
-        else { document.getElementById('btn-verb').innerHTML = `${t.verb}`; }
+        const t = getTexts(currentLang); 
+        let zbyva = 3 - freeTries;
+        
+        if (userLicense) { 
+            document.getElementById('btn-verb').innerHTML = `${t.verb}`; 
+        } else if (zbyva > 0) { 
+            document.getElementById('btn-verb').innerHTML = `${t.verb} <span style="font-weight: 300; opacity: 0.9; font-size: 0.85em;">(${zbyva} FREE)</span>`; 
+        } else { 
+            document.getElementById('btn-verb').innerHTML = `${t.verb}`; 
+        }
     }
 
-    // --- V5.2: HISTORY SYSTEM ---
+    // --- HISTORY SYSTEM ---
     function saveToHistory(variants, reqData) {
         let hist = JSON.parse(localStorage.getItem('yes_genius_history') || '[]');
         let contentToSave = variants.join('\n\n--- OR ---\n\n');
-        hist.unshift({ date: new Date().toISOString(), adresat: reqData.adresat, styl: reqData.styl, text: contentToSave });
-        if(hist.length > 20) hist.pop(); // Keep last 20 queries
+        hist.unshift({ 
+            date: new Date().toISOString(), 
+            adresat: reqData.adresat, 
+            styl: reqData.styl, 
+            text: contentToSave 
+        });
+        if(hist.length > 20) {
+            hist.pop(); 
+        }
         localStorage.setItem('yes_genius_history', JSON.stringify(hist));
     }
 
@@ -1905,15 +3254,23 @@
         modal.style.display = 'flex';
     }
 
-    function clearHistory() { localStorage.removeItem('yes_genius_history'); showHistory(); }
+    function clearHistory() { 
+        localStorage.removeItem('yes_genius_history'); 
+        showHistory(); 
+    }
 
     // --- GENERATE ACTION ---
     async function handleGenerateClick() {
-        if (userLicense) { generovat(); } 
-        else if (freeTries < 3) {
-            freeTries++; localStorage.setItem('yes_genius_free_tries', freeTries.toString());
-            updateButtonStatus(); generovat();
-        } else { document.getElementById('paywall-modal').style.display = 'flex'; }
+        if (userLicense) { 
+            generovat(); 
+        } else if (freeTries < 3) {
+            freeTries++; 
+            localStorage.setItem('yes_genius_free_tries', freeTries.toString());
+            updateButtonStatus(); 
+            generovat();
+        } else { 
+            document.getElementById('paywall-modal').style.display = 'flex'; 
+        }
     }
 
     async function generovat() {
@@ -1932,15 +3289,22 @@
 
         if(!requestData.adresat || !requestData.kategorie) { 
             alert("Please fill all fields!"); 
-            if(freeTries > 0 && !userLicense) { freeTries--; localStorage.setItem('yes_genius_free_tries', freeTries.toString()); updateButtonStatus(); }
+            if(freeTries > 0 && !userLicense) { 
+                freeTries--; 
+                localStorage.setItem('yes_genius_free_tries', freeTries.toString()); 
+                updateButtonStatus(); 
+            }
             return; 
         }
 
-        results.style.display = 'none'; btn.style.opacity = '0.5'; loader.style.display = 'block';
+        results.style.display = 'none'; 
+        btn.style.opacity = '0.5'; 
+        loader.style.display = 'block';
 
         try {
             const response = await fetch('/api/generovat', {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestData)
             });
 
@@ -1949,13 +3313,22 @@
 
             if (data.variants && Array.isArray(data.variants)) {
                 zobrazitVysledky(data.variants, requestData.adresat);
-                saveToHistory(data.variants, requestData); // V5.2 Save history
-            } else { throw new Error("Invalid format"); }
+                saveToHistory(data.variants, requestData); 
+            } else { 
+                throw new Error("Invalid format"); 
+            }
         } catch (error) {
             console.error("GEN ERROR:", error); 
-            if(!userLicense) { freeTries--; localStorage.setItem('yes_genius_free_tries', freeTries.toString()); updateButtonStatus(); }
+            if(!userLicense) { 
+                freeTries--; 
+                localStorage.setItem('yes_genius_free_tries', freeTries.toString()); 
+                updateButtonStatus(); 
+            }
             alert("Connection Error. Please try again.");
-        } finally { loader.style.display = 'none'; btn.style.opacity = '1'; }
+        } finally { 
+            loader.style.display = 'none'; 
+            btn.style.opacity = '1'; 
+        }
     }
 
     function zobrazitVysledky(data, adresat) {
@@ -1963,7 +3336,7 @@
         const t = getTexts(currentLang);
         container.innerHTML = '';
         
-        const isStalker = (adresat === t.recList[11]); // V5.2 Check if stalker
+        const isStalker = (adresat === t.recList[11]); 
 
         data.forEach(text => {
             const div = document.createElement('div');
@@ -1977,21 +3350,64 @@
                 </div>`;
             container.appendChild(div);
         });
+        
         document.getElementById('vysledek').style.display = 'block';
         document.getElementById('vysledek').scrollIntoView({ behavior: 'smooth' });
     }
 
-    function kopirovat(btn, text) { navigator.clipboard.writeText(text).then(() => { let orig = btn.innerHTML; btn.innerHTML = "✅"; setTimeout(() => btn.innerHTML = orig, 1500); }); }
-    function sdilet(text) { if (navigator.share) navigator.share({ title: 'YES Genius', text: text }); else kopirovat(document.createElement('button'), text); }
-    function koupit() { window.location.href = PAYMENT_LINK; }
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-    function showKeyInput() { closeModal('paywall-modal'); document.getElementById('key-modal').style.display = 'flex'; }
-    function saveLicenseKey() { const key = document.getElementById('license-input').value.trim(); if (key.length > 5) { localStorage.setItem('yes_genius_license_v1', key); userLicense = key; closeModal('key-modal'); document.getElementById('success-modal').style.display = 'flex'; updateButtonStatus(); } else { alert("Invalid Key"); } }
+    function kopirovat(btn, text) { 
+        navigator.clipboard.writeText(text).then(() => { 
+            let orig = btn.innerHTML; 
+            btn.innerHTML = "✅"; 
+            setTimeout(() => btn.innerHTML = orig, 1500); 
+        }); 
+    }
+    
+    function sdilet(text) { 
+        if (navigator.share) {
+            navigator.share({ title: 'YES Genius', text: text }); 
+        } else {
+            kopirovat(document.createElement('button'), text); 
+        }
+    }
+    
+    function koupit() { 
+        window.location.href = PAYMENT_LINK; 
+    }
+    
+    function closeModal(id) { 
+        document.getElementById(id).style.display = 'none'; 
+    }
+    
+    function showKeyInput() { 
+        closeModal('paywall-modal'); 
+        document.getElementById('key-modal').style.display = 'flex'; 
+    }
+    
+    function saveLicenseKey() { 
+        const key = document.getElementById('license-input').value.trim(); 
+        if (key.length > 5) { 
+            localStorage.setItem('yes_genius_license_v1', key); 
+            userLicense = key; 
+            closeModal('key-modal'); 
+            document.getElementById('success-modal').style.display = 'flex'; 
+            updateButtonStatus(); 
+        } else { 
+            alert("Invalid Key"); 
+        } 
+    }
 
     window.onload = function() {
-        const savedLang = localStorage.getItem('yesGeniusLang'); if (savedLang) { currentLang = savedLang; }
+        const savedLang = localStorage.getItem('yesGeniusLang'); 
+        if (savedLang) { 
+            currentLang = savedLang; 
+        }
+        
         initFlags(); 
-        const t = getTexts(currentLang); document.getElementById('format').value = t.fmtList[0];
+        
+        const t = getTexts(currentLang); 
+        document.getElementById('format').value = t.fmtList[0];
+        
         const startLang = appLanguages.find(l => l.code === currentLang) || appLanguages[0];
         setLanguage(currentLang, startLang.iso); 
     }
