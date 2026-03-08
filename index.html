@@ -925,6 +925,33 @@
     let userLicense = localStorage.getItem('yes_genius_license_v1');
     let freeTries = parseInt(localStorage.getItem('yes_genius_free_tries') || '0');
 
+    function smartInputClick(id, event) {
+        if(event) { 
+            event.stopPropagation(); 
+        }
+        
+        const input = document.getElementById(id);
+        const val = input.value;
+        const t = getTexts(currentLang);
+        
+        // Kontrola, zda je hodnota předdefinovaná ze seznamu
+        let isPredefined = false;
+        if (id === 'format' && t.fmtList.includes(val)) isPredefined = true;
+        if (id === 'adresat' && t.recList.includes(val)) isPredefined = true;
+        if (id === 'kategorie' && t.rsnList.includes(val)) isPredefined = true;
+        if (id === 'styl' && t.styList.includes(val)) isPredefined = true;
+
+        // Pokud je ze seznamu (není vlastní), pole vymažeme
+        if (isPredefined && val !== '') {
+            input.value = '';
+            toggleReset(id);
+            if (id === 'adresat') input.classList.remove('stalker-alert');
+        }
+
+        // Zobrazíme nabídku
+        showDropdown(id);
+    }
+
     const appLanguages = [
         {
             code: 'en-US',
@@ -3523,6 +3550,7 @@ function toggleLangDropdown(event) {
 </script>
 </body>
 </html>
+
 
 
 
