@@ -886,7 +886,7 @@
             <span class="close-modal" onclick="closeModal('key-modal')">×</span>
             <div class="modal-title" id="ui-key-title">🔑 ENTER YOUR KEY</div>
             <div class="modal-text" id="ui-key-desc">Paste the license key you received in your email.</div>
-            <input type="text" id="license-input" class="key-input" placeholder="YG-XXXX-XXXX">
+            <input type="text" id="license-input" class="key-input" placeholder="YG-XXXX-XXXX" maxlength="12" oninput="formatKeyInput(this)">
             <button class="btn-vip-large" onclick="saveLicenseKey()">
                 <span class="vip-btn-main-text" id="ui-key-btn">ACTIVATE</span>
             </button>
@@ -3538,17 +3538,36 @@ function toggleLangDropdown(event) {
         closeModal('paywall-modal'); 
         document.getElementById('key-modal').style.display = 'flex'; 
     }
+
+    function formatKeyInput(input) {
+        // Povolí jen písmena a číslice, zbytek smaže a vše hodí na velká písmena
+        let v = input.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+        
+        // Automaticky vloží pomlčky pro formát YG-XXXX-XXXX
+        if (v.length > 2 && v.length <= 6) {
+            v = v.slice(0, 2) + '-' + v.slice(2);
+        } else if (v.length > 6) {
+            v = v.slice(0, 2) + '-' + v.slice(2, 6) + '-' + v.slice(6, 10);
+        }
+        input.value = v;
+    }
     
     function saveLicenseKey() { 
         const key = document.getElementById('license-input').value.trim(); 
-        if (key.length > 5) { 
+        const t = getTexts(currentLang);
+        
+        // Přísná kontrola formátu: YG- pak 4 znaky, pomlčka, 4 znaky
+        const keyRegex = /^YG-[A-Z0-9]{4}-[A-Z0-9]{4}$/;
+        
+        if (keyRegex.test(key)) { 
             localStorage.setItem('yes_genius_license_v1', key); 
             userLicense = key; 
             closeModal('key-modal'); 
             document.getElementById('success-modal').style.display = 'flex'; 
             updateButtonStatus(); 
         } else { 
-            alert("Invalid Key"); 
+            alert("Invalid Key Format. Please use YG-XXXX-XXXX"); 
+            document.getElementById('license-input').focus();
         } 
     }
 
@@ -3569,6 +3588,7 @@ function toggleLangDropdown(event) {
 </script>
 </body>
 </html>
+
 
 
 
